@@ -4,12 +4,14 @@
 - npm start
 
 ## Environment variables
+
 - locally create a '.env' file in the root of the project (this directory) and add appropiate environment variables
 
 example:
 
-MONGO_PASSWORD=<password>
-MONGO_USERNAME=<username>
+- MONGO_PASSWORD='password'
+  
+- MONGO_USERNAME='username'
 
 # Architecture
 
