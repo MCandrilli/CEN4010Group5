@@ -11,7 +11,7 @@ example:
 
 - MONGO_PASSWORD=password
   
-- MONGO_USERNAME=username
+- MONGO_USER=username
 
 # Architecture
 
