@@ -3,10 +3,16 @@ const httpResponse = require('../util/http');
 
 const create = async (req, res) => {
   try{
-    const { title, author } = req.body;
+    const { author, country, imageLink, language, link, pages, title, year } = req.body;
     const fields = {
+      author,
+      country,
+      imageLink,
+      language,
+      link,
+      pages,
       title,
-      author
+      year
     }
 
     const book = await Book.create(fields);

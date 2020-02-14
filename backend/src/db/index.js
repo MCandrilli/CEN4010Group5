@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 
-const { MONGO_USER, MONGO_PASSWORD } = process.env;
-
-const CONN_STRING = `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@g5-sz0bc.mongodb.net/test?retryWrites=true&w=majority`
+const CONN_STRING = `mongodb+srv://dbUser:dbadmin@g5-sz0bc.mongodb.net/test?retryWrites=true&w=majority`
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true
