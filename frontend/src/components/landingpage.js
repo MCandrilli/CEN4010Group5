@@ -16,8 +16,7 @@ class LandingPage extends Component {
         this.getItems();
       }
     
-      getItems() {
-          
+      getItems() {      
           fetch('/books')
           .then(results => results.json())
           .then(results => this.setState({'items': results.data}));
