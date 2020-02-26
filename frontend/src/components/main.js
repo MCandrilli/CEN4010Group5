@@ -7,6 +7,7 @@ import Profile from './profile';
 import Searchforbooks from './searchforbooks';
 import Shoppingcart from './shoppingcart';
 import Wishlist from './wishlist';
+import BookDetails from './bookdetails';
 
 const Main = () => {
     return (
@@ -18,6 +19,8 @@ const Main = () => {
             <Route path="/searchforbooks" component={Searchforbooks} />
             <Route path="/shoppingcart" component={Shoppingcart} />
             <Route path="/wishlist" component={Wishlist} />
+            <Route path="/bookdetails" component={BookDetails} />
+            
         
         </Switch>
     )

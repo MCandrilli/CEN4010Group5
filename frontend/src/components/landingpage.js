@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Card, CardTitle, CardText, CardActions, Button, Grid, Cell} from 'react-mdl';
+import SimpleMenu from './SimpleMenu'
+import {Link} from 'react-router-dom';
 var NumberFormat = require('react-number-format');
+
 
 class LandingPage extends Component {
     
@@ -24,31 +27,51 @@ class LandingPage extends Component {
     
       }
     
+    addToCart(){
+        alert("Added to Cart!");
+    }
+    
     render() {
+        
         return (
             
             <div style={{width: '80%', margin: 'auto'}}>
-                
+               
                 <Grid className="demo-grid-1">
                      {this.state.items.map(function(item, index) {
-                    let url = 'background: url(https://github.com/benoitvallon/100-best-books/blob/master/static/' + item.imageLink + ') bottom right 15% no-repeat #46B6AC';
+                    let imageUrl = 'https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/' + item.imageLink;
             
             
-                    return <Cell col={4}><Card shadow={0} style={{ width: '320px', height: '620px', margin: 'auto'}}>
-                        <CardTitle expand style={{ color: '#fff', background: 'url(https://firstfreerockford.org/wp-content/uploads/2018/08/placeholder-book-cover-default.png) bottom right 15% no-repeat rgb(207,217,226)'}}>{item.title}</CardTitle>
+                    return <Cell col={4}>
+                        
+                        <Card shadow={0} style={{ width: '360px', height: '720px', margin: '50px'}}>
+                            
+                        <CardTitle expand style={{ color: '#fff', background: 'url(' + imageUrl + ') center / cover rgb(207,217,226)'}}></CardTitle>
+
                         <CardText>
-                            <p><strong> Author: {item.author} </strong></p>
-                            <p> Language: {item.language} </p>
-                            <p> Pages: {item.pages} </p>
-                            <p> Year: {item.pages} </p>
+                            <p style={{lineHeight: '24px', fontSize: '24px', textAlign:"center"}}><strong>{item.title} </strong></p>
+                            <p style={{lineHeight: '10px', textAlign:"center"}}><strong> by: {item.author} </strong></p>
+                        
                         </CardText>
+
                         <CardActions border>
-                            <Button colored>View Book</Button>
-                        </CardActions>
-                    </Card></Cell>
-                }
+                            <Link to="/bookdetails" style={{textDecoration: 'none'}}> 
+                            <Button colored style={{marginLeft:'25%'}} onclick="addtoCart()">View Book Details</Button>
+                            </Link><br/>
+                                
+                                <div style={{marginLeft:'10%'}}>
+                            <Button colored style={{float:'left'}}>Add to Cart</Button>
+                            
+                            <SimpleMenu style={{float:'left'}} />
+                                </div>
+</CardActions>
+                    </Card>
+                        
+                    </Cell>
+                }   
                  
                  )}
+                 
                 </Grid>
               
             </div>
