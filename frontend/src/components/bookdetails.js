@@ -38,8 +38,6 @@ class BookDetails extends Component {
                                 <p> by: {myData.book.author}</p>
                             <h5>
                                 About author
-
-
                             </h5>
                             <Button>
                                 Option1
@@ -51,7 +49,7 @@ class BookDetails extends Component {
                                 Option3
                             </Button>
                             <br />
-                            <Button>
+                            <Button style = {{marginTop: '20px'}}>
                                 Add to Shoping Cart
                             </Button>
                         </Cell>
