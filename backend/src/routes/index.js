@@ -14,6 +14,6 @@ apiRouter.post('/books', book.create);
 /* ------ User Routes ------ */
 apiRouter.get('/user', user.read);
 apiRouter.post('/user', user.create);
-apiRouter.update('/user', user.update);
+apiRouter.put('/user', user.update);
 
 module.exports = { apiRouter };

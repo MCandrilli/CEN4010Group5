@@ -6,7 +6,7 @@ const read = async (req, res) => {
   try{
     const { id } = req.body;
     
-    const user = await User.findOne({id});
+    const user = await User.findOne({ id });
 
     httpResponse.successResponse(res, user);
   } catch (e) {
@@ -16,12 +16,12 @@ const read = async (req, res) => {
 
 const create = async (req, res) => {
   try{
-    const { email, id, name, password, homeAddress, nickname, creditCards, shippingAddresses } = req.body
+    const { email, id, firstName, lastName, password, homeAddress, nickname, creditCards, shippingAddresses } = req.body
 
-    const exists = await User.find({ id });
+    const exists = await User.findOne({ id });
 
     if(exists){
-      throw new Error(`User with id already: ${id} exists`);
+      throw new Error(`User with id: ${id} already exists`);
     }
 
     const hashedPass = bcrypt.hashSync(password);
@@ -29,7 +29,8 @@ const create = async (req, res) => {
     const fields = {
       email,
       id,
-      name,
+      firstName,
+      lastName,
       password:hashedPass,
       homeAddress,
       nickname,
