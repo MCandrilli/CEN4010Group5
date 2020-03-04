@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card, CardTitle, CardText, CardActions, Button, Grid, Cell} from 'react-mdl';
-import SimpleMenu from './SimpleMenu'
+import SimpleMenu from './SimpleMenu';
+import WishlistDropMenu from './wishlistdropmenu';
 import {Link} from 'react-router-dom';
 var NumberFormat = require('react-number-format');
 
@@ -11,12 +12,14 @@ class LandingPage extends Component {
           super();
           
           this.state = {
-              'items': []
+              'items': [],
+              'wishlists': []
           }
       }
     
       componentDidMount() {
         this.getItems();
+         this.getWishLists();
       }
     
       getItems() {
@@ -27,9 +30,15 @@ class LandingPage extends Component {
     
       }
     
-    addToCart(){
-        alert("Added to Cart!");
-    }
+        getWishLists() {
+          
+          fetch('/wishlists')
+          .then(results => results.json())
+          .then(results => this.setState({'wishlists': results.data}));
+    
+      }
+
+    
     
     render() {
         
@@ -39,43 +48,38 @@ class LandingPage extends Component {
                
                 <Grid className="demo-grid-1">
                      {this.state.items.map(function(item, index) {
+                    
                     let imageUrl = 'https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/' + item.imageLink;
-            
-            
+                    let lists = this.state.wishlists;
+                 
                     return <Cell col={4}>
                         
-                        <Card shadow={0} style={{ width: '360px', height: '720px', margin: '50px'}}>
+                            <Card shadow={0} style={{ width: '360px', height: '720px', margin: '50px'}}>
                             
-                        <CardTitle expand style={{ color: '#fff', background: 'url(' + imageUrl + ') center / cover rgb(207,217,226)'}}></CardTitle>
+                                <CardTitle expand style={{ color: '#fff', background: 'url(' + imageUrl + ') center / cover rgb(207,217,226)'}}></CardTitle>
 
-                        <CardText>
-                            <p style={{lineHeight: '24px', fontSize: '24px', textAlign:"center"}}><strong>{item.title} </strong></p>
-                            <p style={{lineHeight: '10px', textAlign:"center"}}><strong> by: {item.author} </strong></p>
-                        
-                        </CardText>
+                                    <CardText>
+                                        <p style={{lineHeight: '24px', fontSize: '24px', textAlign:"center"}}><strong>{item.title} </strong></p>
+                                        <p style={{lineHeight: '10px', textAlign:"center"}}><strong> by: {item.author} </strong></p>
 
-                        <CardActions border>
-                            <Link to={{
-                                pathname: "/bookdetails",
-                                aboutProps:{
-                                    book: item
-                                }
-                            }} style={{textDecoration: 'none'}}> 
-                            <Button colored style={{marginLeft:'30%'}}>Book Details</Button>
-                            </Link><br/>
-                                
-                                <div style={{marginLeft:'10%'}}>
-                            <Button colored style={{float:'left'}}>Add to Cart</Button>
-                            
-                            <SimpleMenu style={{float:'left'}} />
-                                </div>
-</CardActions>
-                    </Card>
+                                    </CardText>
+
+                                 <CardActions border>
+                                        <Link to="/bookdetails" style={{textDecoration: 'none'}}> 
+                                        <Button colored style={{marginLeft:'25%'}} onclick="addtoCart()">View Book Details</Button>
+                                        </Link><br/>
+
+                                    <div style={{marginLeft:'10%'}}>
+                                         <Button colored style={{float:'left'}}>Add to Cart</Button>
+                                        
+                                        <WishlistDropMenu booktitle={item.title} id={item._id} lists={lists} style={{float:'left'}}/>
+                                       
+                                    </div>
+                            </CardActions>
+                            </Card>
                         
                     </Cell>
-                }   
-                 
-                 )}
+                }, this)}
                  
                 </Grid>
               
