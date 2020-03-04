@@ -1,65 +1,127 @@
 import React, { Component } from 'react';
 import { DataTable, TableHeader, Grid, Cell} from 'react-mdl';
+import axios from 'axios';
 
 
 class Wishlist extends Component {
+
+    constructor() {
+        super();
+        
+        this.state = {
+            'items': [],
+            'listItems': [],
+            'list1': [],
+            'list2': [],
+            'list3': [],
+            value: '',
+            errorMessage: ''
+        }
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.deleteSubmit = this.deleteSubmit.bind(this);
+
+    }
+  
+    componentDidMount() {
+      this.getItems();
+      this.getListItems();
+    }
+  
+    getItems() {
+        
+        fetch('/wishlists')
+        .then(results => results.json())
+        .then(results => this.setState({'items': results.data}));
+  
+    }
+    
+    getListItems(){
+        fetch('/wishlistItems')
+        .then(results => results.json())
+        .then(results => this.setState({'listItems': results.data}));
+       
+    }
+    
+    handleSubmit() {
+        let submissiondata = {
+            "title": this.state.value
+        }
+    
+        if (this.state.items.length < 3){
+            fetch('/wishlists', {
+                method: 'POST',
+                body: JSON.stringify(submissiondata),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(res => res.json())
+            .then(data => console.log(data));    
+        } else {
+            this.setState({errorMessage: "Too many lists!"});
+        }
+        
+    }
+
+    handleChange(event) {
+        this.setState({value: event.target.value});
+      }
+
+
+    deleteSubmit(_id) {
+        
+        axios.delete(`http://localhost:5000/wishlists/delete/` + _id)
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      });
+        
+       this.setState({items: this.state.items.filter(item => item._id != _id)});
+    }
+    
+    
     render() {
          return(
              <div style={{width: '80%', margin: '5%'}}>
+                 <form onSubmit= {this.handleSubmit}>
+                    <label>
+                        Create a WishList:   
+                        <input type="text" value={this.state.value} onChange={this.handleChange}/>
+                    </label>
+                    <input type="submit" value="Create" />
+                </form>
+            
+                
              <Grid className="demo-grid-1">
-                     <Cell col={4}>
-                        <h3> Wish List 1 </h3>
-                            <DataTable
+                {this.state.items.map(function(item, index) {
+                    return <Cell col={4} key={item._id} >
+                        <h3>{item.title}</h3>
+                            <DataTable style={{width: '30%'}}
                                 shadow={0}
+                                
                                 rows={[
-                                    {booktitle: 'The Catcher in the Rye', quantity: 1, price: 9.99},
-                                    {booktitle: 'The Divine Comedy: Dante\'s Inferno', quantity: 2, price: 19.99},
-                                    {booktitle: 'The Great Gatsby', quantity: 1, price: 14.99},
-                                    {booktitle: 'One Hundred Years of Solitude', quantity: 1, price: 9.99},
-                                    {booktitle: 'The Art of War', quantity: 2, price: 19.99},
-                                    {booktitle: 'Hamlet', quantity: 1, price: 14.99}
+                                    
+                                    {booktitle: 'Book name goes here, need to adjust formatting width'}
+                                      
+                                      
+                                
                                 ]}
                             >
+                                    
+                                    
+                                    
                                 <TableHeader name="booktitle" tooltip="The Book' title">Book Title</TableHeader>
-                                <TableHeader numeric name="quantity" tooltip="Number of Books">Quantity</TableHeader>
-                                <TableHeader numeric name="price" cellFormatter={(price) => `\$${price.toFixed(2)}`} tooltip="Price per Book">Price</TableHeader>
+                                        
+                                <button key={item._id} onClick={()=> {this.deleteSubmit(item._id)}}>Delete</button>
                             </DataTable>
+                            {this.state.listItems.map(function(element, index) {
+                                if (element.belongsTo == item._id)
+                                return <div>{element.title}</div>
+                            },this)}
                         </Cell>
-
-                        <Cell col={4}>
-                        <h3> Wish List 2 </h3>
-                            <DataTable
-                                shadow={0}
-                                rows={[
-                                    {booktitle: 'The Odyssey', quantity: 1, price: 9.99},
-                                    {booktitle: 'The Brothers Karamazov', quantity: 2, price: 19.99},
-                                    {booktitle: 'Crime and Punishment', quantity: 1, price: 14.99},
-                                ]}
-                            >
-                                <TableHeader name="booktitle" tooltip="The Book' title">Book Title</TableHeader>
-                                <TableHeader numeric name="quantity" tooltip="Number of Books">Quantity</TableHeader>
-                                <TableHeader numeric name="price" cellFormatter={(price) => `\$${price.toFixed(2)}`} tooltip="Price per Book">Price</TableHeader>
-                            </DataTable>
-                        </Cell>
-
-                    <Cell col={4}>
-                        <h3> Wish List 3 </h3>
-                            <DataTable
-                                shadow={0}
-                                rows={[
-                                    {booktitle: 'Madame Bovary', quantity: 1, price: 9.99},
-                                    {booktitle: 'The Adventures of Huckleberry Finn', quantity: 2, price: 19.99},
-                                    {booktitle: 'Alice\'s Adventures', quantity: 1, price: 14.99},
-                                    {booktitle: 'Pride and Prejudicce', quantity: 1, price: 9.99},
-                                    {booktitle: 'To the Lighthouse', quantity: 2, price: 19.99},
-                                   
-                                ]}
-                            >
-                                <TableHeader name="booktitle" tooltip="The Book' title">Book Title</TableHeader>
-                                <TableHeader numeric name="quantity" tooltip="Number of Books">Quantity</TableHeader>
-                                <TableHeader numeric name="price" cellFormatter={(price) => `\$${price.toFixed(2)}`} tooltip="Price per Book">Price</TableHeader>
-                            </DataTable>
-                        </Cell>
+                    }, this)}
              </Grid>
              </div>
         )
