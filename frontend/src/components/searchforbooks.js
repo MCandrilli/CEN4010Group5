@@ -12,8 +12,13 @@ class Searchforbooks extends Component {
         constructor() {
             super()
             this.state = {
+                //posts: [{
                 'items': [],
-                sortTitle : false
+                //selected : false,
+                //},{
+                //'sortTitle' : [], 
+                //selected : false
+               // }]
             }
             //this.state = {
             //    'sorteditems': []
@@ -22,8 +27,11 @@ class Searchforbooks extends Component {
             //this.state = {sortByTitle: false};
             
         }
-        //handleSortTitleClick() {
-         //   const sortByTitle = this.state.sortByTitle;
+        //handleSortTitleClick = (e) =>{
+        //    const {posts} = this.state;
+        //    const {id} = e.target;
+        //    posts[id].selected =!this.state.posts[id].selected
+        //    this.setState({posts})
          //   if (sortByTitle){
          //       this.setState({sortByTitle: true});
           //  }
@@ -46,7 +54,7 @@ class Searchforbooks extends Component {
          //   this.sortBooks();
         //}
         parseData(response){
-            if(!this.state.sortTitle){
+            if(this.state.sortTitle){
                 response.data.sort((a,b) => a.title.localeCompare(b.title))
             }
             
@@ -56,18 +64,27 @@ class Searchforbooks extends Component {
             this.setState({
                 data: this.parseData(data) 
             });
-            this.setState({sortTitle : false});
+            //if(this.state.sortTitle){
+              //  this.setState({
+                //    data: this.parseData(data) 
+            //});
+        //}
+            //this.setState({sortTitle : false});
 
+        } 
+        componentDidUpdate(){
         }
-        sortBooks(){
+        sortBooks(item){
             //if(sortTitle){
             //sortTitle = true;
-            this.setState({sortTitle : true});
+            //this.setState({sortTitle : true});
            // }
             //else{
             //    sortTitle = true;
             //}
-            this.getItems()
+            item.data.sort((a,b) => a.title.localeCompare(b.title))
+            //this.componentDidUpdate()
+            
             //fetch('/books')
             //.then((results) => results.json())
             //.then(results =>
@@ -108,8 +125,8 @@ class Searchforbooks extends Component {
           alert("Added to Cart!");
       }
       render(){
-          const{data} = this.state;
-          return data ?
+        const{data} = this.state;
+        return data ?
             this.renderData(data) :
             this.renderLoading()
 
@@ -124,16 +141,13 @@ class Searchforbooks extends Component {
                     style={{margin: '20px',width: '95%', justifyContent:'center', alignItems:'center'}}
                     />
                     
-
-                                <Button colored style={{marginLeft:'25%'}} onclick={() => this.setState({sortTitle : true})}>Sort by Title</Button>
-                                
+                    <Button colored style={{marginLeft:'25%'}} onclick  ={() => this.sortBooks(data)} >Sort by Title</Button>   
                                     
         
-
                     <Grid className="demo-grid-1">
-                        {data.map(item => (
+                        {this.props.data.map(item => (
                             <div key = {item.id}>                 
-                            
+                             
                          <Cell col={4}>
                             
                             <Card shadow={0} style={{ width: '360px', height: '720px', margin: '50px'}}>
@@ -175,6 +189,8 @@ class Searchforbooks extends Component {
         
             )
         }
+    
+    
         else{
             return <div> No Items found</div>
         }
