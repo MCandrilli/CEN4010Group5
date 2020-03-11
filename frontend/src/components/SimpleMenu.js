@@ -4,15 +4,10 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 export default function SimpleMenu() {
-    var wishlists = [];
-    
- 
-  console.log(wishlists);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
-    
   };
 
   const handleClose = () => {
