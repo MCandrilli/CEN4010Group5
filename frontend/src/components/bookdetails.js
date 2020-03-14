@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Textfield, Button, Switch} from 'react-mdl';
 import Starrating from './starrating';
+import {Link} from 'react-router-dom';
 
 class BookDetails extends Component {
     render() {
@@ -10,19 +11,11 @@ class BookDetails extends Component {
                 <h1>book details!</h1>
 
                 <div id = 'NewComment' style={{width: '80%', margin: 'auto'}}>       
-                    <Switch ripple id="Anonymous" defaultChecked>Anonymous comment</Switch>
-
-                    <Textfield
-                    // onChange={() => {}}
-                    label="Book Comments"
-                    rows={3}
-                    style={{width: '100%'}}
-                    maxLength = {'200'}
-                    />
-                    <div>
-                        <Starrating style={{float:'left'}}/>                    
-                        <Button border colored style={{float:'left'}}>Submit Comment</Button>
-                    </div>
+                
+                <Link to={{pathname:"/customerReview" }}>
+                {/* // , state: {bookname: item.title}}}> */}
+                    <Button style={{width: '80%', height: '50%'}}> Book Reviews </Button>
+                </Link>
                 </div>        
             </div>
         )
