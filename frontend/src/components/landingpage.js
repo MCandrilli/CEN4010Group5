@@ -77,7 +77,12 @@ class LandingPage extends Component {
                         </CardText>
 
                         <CardActions border>
-                            <Link to="/bookdetails" style={{textDecoration: 'none'}}> 
+                        <Link to={{
+                                pathname: "/bookdetails",
+                                aboutProps:{
+                                    book: item
+                                }
+                            }} style={{textDecoration: 'none'}}> 
                             <Button colored style={{marginLeft:'25%'}}>View Book Details</Button>
                             </Link><br/>
                                 
