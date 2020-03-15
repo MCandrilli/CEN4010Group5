@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import {Button, Menu, MenuItem, IconButton} from 'react-mdl';
+import {Link} from 'react-router-dom';
+
 
 
 
@@ -32,16 +32,24 @@ class WishlistDropMenu extends Component {
 
     
     render(){
+        
      const list1 = this.props.lists.map(name => name.title);
-    
+     let createlist;
+     if (this.props.lists.length < 3)
+         createlist = <MenuItem><Link  to="/wishlist">Add a Wishlist</Link></MenuItem>;
+        
+
     return(
-            //{this.props.id} = book id
-         <div>
+        <div style={{position: 'relative', float: 'left'}}>
+          <Button colored id={this.props.booktitle} >ADD TO WISHLIST</Button>
+            <Menu target={this.props.booktitle} valign="top" ripple>
             {this.props.lists.map(function(list, index) {
-                return <div><button onClick={this.handleClick.bind(this, this.props.booktitle, list._id)}>Add to {list.title}</button></div>
+                return <div style={{float: 'left'}}><MenuItem onClick={this.handleClick.bind(this, this.props.booktitle, list._id)}>Add to Wishlist: {list.title}</MenuItem></div>
             }, this)}
-            
+            {createlist}
+            </Menu>
         </div>
+        
         )
     }
 }

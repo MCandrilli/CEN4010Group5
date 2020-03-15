@@ -44,10 +44,10 @@ const removeByID = async (req, res) => {
   try {
     const wishlists = await WishListItem.deleteOne({_id: req.params.id});
     res.send(wishlists);
-    httpResponse.successResponse(res, wishlists);
+    //httpResponse.successResponse(res, wishlists);
   } catch (e) {
     console.log(e);
-    httpResponse.failureResponse(res, e.toString());
+    //httpResponse.failureResponse(res, e.toString());
   }
 }
 

@@ -4,6 +4,7 @@ const book = require('../controllers/book');
 const user = require('../controllers/user');
 const wishlist = require('../controllers/wishlist');
 const wishlistitems = require('../controllers/wishlistItem');
+const comments = require('../controllers/comments');
 
 const apiRouter = Router();
 
@@ -30,5 +31,11 @@ apiRouter.post('/wishlistItems', wishlistitems.create);
 apiRouter.get('/wishlistItems', wishlistitems.read);
 apiRouter.delete('/wishlistItems/delete', wishlistitems.removeEntry);
 apiRouter.delete('/wishlistItems/delete/:id', wishlistitems.removeByID);
+
+/*---------Comments-----------*/
+
+apiRouter.post('/comments', comments.create);
+apiRouter.get('/comments', comments.read);
+apiRouter.delete('/comments/delete/:id', comments.removeByID);
 
 module.exports = { apiRouter };

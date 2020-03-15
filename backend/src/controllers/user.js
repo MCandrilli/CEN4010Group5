@@ -4,9 +4,12 @@ const bcrypt = require('bcrypt-nodejs');
 
 const read = async (req, res) => {
   try{
-    const { id } = req.body;
+    const { id } = req.query;
+    console.log(id);
     
     const user = await User.findOne({ id });
+    console.log('sending')
+    console.log(user)
 
     httpResponse.successResponse(res, user);
   } catch (e) {

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Card, CardTitle, CardText, CardActions, Button, Grid, Cell} from 'react-mdl';
-import SimpleMenu from './SimpleMenu';
+import SimpleMenu from './SimpleMenu'
 import WishlistDropMenu from './wishlistdropmenu';
 import {Link} from 'react-router-dom';
+import {addToCart} from './shoppingcart';
 var NumberFormat = require('react-number-format');
 
 
@@ -13,13 +14,15 @@ class LandingPage extends Component {
           
           this.state = {
               'items': [],
-              'wishlists': []
+              'wishlists': [],
+              is_cart_toggle_on: true
           }
+          this.handleClick = this.handleClick.bind(this);
       }
     
       componentDidMount() {
         this.getItems();
-         this.getWishLists();
+        this.getWishLists();
       }
     
       getItems() {
@@ -29,57 +32,74 @@ class LandingPage extends Component {
           .then(results => this.setState({'items': results.data}));
     
       }
-    
-        getWishLists() {
-          
-          fetch('/wishlists')
-          .then(results => results.json())
-          .then(results => this.setState({'wishlists': results.data}));
-    
-      }
 
-    
+      getWishLists() {
+          
+        fetch('/wishlists')
+        .then(results => results.json())
+        .then(results => this.setState({'wishlists': results.data}));
+  
+    }
+
+      handleClick(item) {
+        this.setState(prevState => ({
+            is_cart_toggle_on: !prevState.is_cart_toggle_on
+        }));
+        addToCart(item);
+    }
+
+    sendToCart(item) {
+        console.log("The helper function was called.");
+        this.addToCart(item);
+    }
     
     render() {
         
         return (
             
-            <div style={{width: '80%', margin: 'auto'}}>
+            <div style={{boxShadow: "0px 0px 5px 5px #ddd", backgroundColor: '#f0f0f0', width: '85%', marginLeft: 'auto', marginRight: 'auto', marginTop: '50px'}}>
                
                 <Grid className="demo-grid-1">
-                     {this.state.items.map(function(item, index) {
-                    
+                     {this.state.items.map((item, index) => {
                     let imageUrl = 'https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/' + item.imageLink;
                     let lists = this.state.wishlists;
-                 
+            
                     return <Cell col={4}>
                         
-                            <Card shadow={0} style={{ width: '360px', height: '720px', margin: '50px'}}>
+                        <Card shadow={0} style={{ width: '360px', height: '720px', margin: '50px'}}>
                             
-                                <CardTitle expand style={{ color: '#fff', background: 'url(' + imageUrl + ') center / cover rgb(207,217,226)'}}></CardTitle>
+                        <CardTitle expand style={{ color: '#fff', background: 'url(' + imageUrl + ') center / cover rgb(207,217,226)'}}></CardTitle>
 
-                                    <CardText>
-                                        <p style={{lineHeight: '24px', fontSize: '24px', textAlign:"center"}}><strong>{item.title} </strong></p>
-                                        <p style={{lineHeight: '10px', textAlign:"center"}}><strong> by: {item.author} </strong></p>
+                        <CardText>
+                            <p style={{lineHeight: '24px', fontSize: '24px', textAlign:"center"}}><strong>{item.title} </strong></p>
+                            <p style={{lineHeight: '10px', textAlign:"center"}}><strong> by: {item.author} </strong></p>
+                        
+                        </CardText>
 
-                                    </CardText>
-
-                                 <CardActions border>
-                                        <Link to="/bookdetails" style={{textDecoration: 'none'}}> 
-                                        <Button colored style={{marginLeft:'25%'}} onclick="addtoCart()">View Book Details</Button>
-                                        </Link><br/>
-
-                                    <div style={{marginLeft:'10%'}}>
-                                         <Button colored style={{float:'left'}}>Add to Cart</Button>
-                                        
-                                        <WishlistDropMenu booktitle={item.title} id={item._id} lists={lists} style={{float:'left'}}/>
-                                       
-                                    </div>
-                            </CardActions>
-                            </Card>
+                        <CardActions border>
+                        <Link to={{
+                                pathname: "/bookdetails",
+                                aboutProps:{
+                                    book: item
+                                }
+                            }} style={{textDecoration: 'none'}}> 
+                            <Button colored style={{marginLeft:'25%'}}>View Book Details</Button>
+                            </Link><br/>
+                                
+                                <div style={{marginLeft:'10%'}}>
+                            {/* <Link to={{pathname: "/shoppingcart", aboutProps: {book: item}}} style={{textDecoration: "none"}}> */}
+                            <Button colored style={{float:'left'}} onClick = {() => this.handleClick(item)} >Add to Cart</Button>
+                            {/* </Link><br /> */}
+                            
+                            <WishlistDropMenu style={{float: 'left'}} booktitle={item.title} id={item._id} lists={lists} />
+                                </div>
+</CardActions>
+                    </Card>
                         
                     </Cell>
-                }, this)}
+                }   
+                 
+                 )}
                  
                 </Grid>
               
