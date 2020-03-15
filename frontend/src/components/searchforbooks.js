@@ -1,204 +1,145 @@
 import React, { Component } from 'react';
-import {Textfield} from 'react-mdl';
 import { Card, CardTitle, CardText, CardActions, Button, Grid, Cell} from 'react-mdl';
-import SimpleMenu from './SimpleMenu'
+import SimpleMenu from './SimpleMenu';
+import WishlistDropMenu from './wishlistdropmenu';
 import {Link} from 'react-router-dom';
 var NumberFormat = require('react-number-format');
-//var sortTitle = false;
 
-class Searchforbooks extends Component {
-    state ={}
-   
-        constructor() {
-            super()
-            this.state = {
-                //posts: [{
-                'items': [],
-                //selected : false,
-                //},{
-                //'sortTitle' : [], 
-                //selected : false
-               // }]
-            }
-            //this.state = {
-            //    'sorteditems': []
-            //}
-            //this.handleSortTitleClick = this.handleSortTitleClick.bind(this);
-            //this.state = {sortByTitle: false};
-            
-        }
-        //handleSortTitleClick = (e) =>{
-        //    const {posts} = this.state;
-        //    const {id} = e.target;
-        //    posts[id].selected =!this.state.posts[id].selected
-        //    this.setState({posts})
-         //   if (sortByTitle){
-         //       this.setState({sortByTitle: true});
-          //  }
-          //  else {
-              //  this.setState({sortByTitle: false});  
-            //}
-        //}
-        
-     
-        componentDidMount() {
-            //const sortByTitle = this.state.sortByTitle;
-           // if(sortByTitle){
-             //   this.getItems();
-            //}
-            //else{
-                this.getItems()
-            //}
-        }
-       // componetDidUpdate(){
-         //   this.sortBooks();
-        //}
-        parseData(response){
-            if(this.state.sortTitle){
-                response.data.sort((a,b) => a.title.localeCompare(b.title))
-            }
-            
-            return response.data;
-        }
-        onLoad = (data) => {
-            this.setState({
-                data: this.parseData(data) 
-            });
-            //if(this.state.sortTitle){
-              //  this.setState({
-                //    data: this.parseData(data) 
-            //});
-        //}
-            //this.setState({sortTitle : false});
 
-        } 
-        componentDidUpdate(){
-        }
-        sortBooks(item){
-            //if(sortTitle){
-            //sortTitle = true;
-            //this.setState({sortTitle : true});
-           // }
-            //else{
-            //    sortTitle = true;
-            //}
-            item.data.sort((a,b) => a.title.localeCompare(b.title))
-            //this.componentDidUpdate()
-            
-            //fetch('/books')
-            //.then((results) => results.json())
-            //.then(results =>
-            //this.setState((state)=>{
-            //var obj = [this.state.data]
-            //obj.sort((a,b) => a.title.localeCompare(b.title));
-            //return {'items':obj.data}
-            //});
-            //this.setState({'items': obj.data});
-            //.then(this.setState({'items':(results => {results.data.sort((a,b) => a.title.localeCompare(b.title))})}));
-            //.then(results => this.setState({'items': results.data}));
-            }
-        
-        getItems() {
-            //const sortByTitle = this.state.sortByTitle;
-            //if(sortByTitle){
-                fetch('/books')
-                .then(results => results.json())
-                .then(this.onLoad);
-            //}
-            //else{
-            //    fetch('/books')
-            //    .then((result) => result.json())
-            //    .then(this.setState({'sorteditems':(result => {result.data.sort((a,b) => a.title.localeCompare(b.title))})}));
-                //.then(results => this.setState({'items': results.data}));
-           // }
-        }
-       //componentDidUpdate(){
-         //  this.sortBooks();
-       //}
-        
+class LandingPage extends Component {
+    
+      constructor() {
+          super();
+          
+          this.state = {
+              'items': [],
+              'wishlists': []
+          }
+      }
+    
+      componentDidMount() {
+        this.getItems();
+         this.getWishLists();
+      }
+    
+      getItems() {
+          
+          fetch('/books')
+          .then(results => results.json())
+          .then(results => this.setState({'items': results.data}));
+    
+      }
+      sortByTitle(){
+        let tempArray =[];
+        tempArray = this.state.items;
+        tempArray.sort(function(a,b){
+          if (a.title >b.title){
+            return 1;
+          }
+          if (b.title > a.title){
+            return -1;
+          }
+          return 0
+        });
+        this.setState({'items' : tempArray})
+      }
+      sortByAuthor(){
+        let tempArray =[];
+        tempArray = this.state.items;
+        tempArray.sort(function(a,b){
+          if (a.author >b.author){
+            return 1;
+          }
+          if (b.author > a.author){
+            return -1;
+          }
+          return 0
+        });
+        this.setState({'items' : tempArray})
+      }
+
+      sortByPages(){
+        let tempArray =[];
+        tempArray = this.state.items;
+        tempArray.sort(function(a,b){
+          return parseInt(a.pages) - parseInt(b.pages)
+        });
+        this.setState({'items' : tempArray})
+      }
+      sortByYear(){
+        let tempArray =[];
+        tempArray = this.state.items;
+        tempArray.sort(function(a,b){
+          return parseInt(a.year) - parseInt(b.year)
+        });
+        this.setState({'items' : tempArray})
+      }
+    
+        getWishLists() {
+          
+          fetch('/wishlists')
+          .then(results => results.json())
+          .then(results => this.setState({'wishlists': results.data}));
+    
+      }
+
     
     
-          
-          
-      
-      addToCart(){
-          alert("Added to Cart!");
-      }
-      render(){
-        const{data} = this.state;
-        return data ?
-            this.renderData(data) :
-            this.renderLoading()
+    render() {
+        
+        return (
+            
+            <div style={{boxshadow: "0px 0px 5px #ddd", backgroundcolor: '#f0f0f0', width: '80%', margin: 'auto'}}>
+              <Button onClick = {this.sortByTitle.bind(this)}> SORT BY TITLE </Button>
+              <Button onClick = {this.sortByAuthor.bind(this)}> SORT BY AUTHOR </Button>
+              <Button onClick = {this.sortByPages.bind(this)}> SORT BY PAGES </Button>
+              <Button onClick = {this.sortByYear.bind(this)}> SORT BY YEAR PUBLISHED </Button>
 
-      }
-    renderData(data) {
-        if(data && data.length){
-            return(
-            <div style={{width: '90%', margin: '2%', border: '1px solid #888', borderRadius: '15px'}}>
-                            <Textfield
-                    onChange={() => {}}
-                    label="Enter Title of Book to Search..."
-                    style={{margin: '20px',width: '95%', justifyContent:'center', alignItems:'center'}}
-                    />
+                <Grid className="demo-grid-1">
+                     {this.state.items.map((item, index) => {
                     
-                    <Button colored style={{marginLeft:'25%'}} onclick  ={() => this.sortBooks(data)} >Sort by Title</Button>   
-                                    
-        
-                    <Grid className="demo-grid-1">
-                        {this.props.data.map(item => (
-                            <div key = {item.id}>                 
-                             
-                         <Cell col={4}>
-                            
-                            <Card shadow={0} style={{ width: '360px', height: '720px', margin: '50px'}}>
-                                
-                            <CardTitle expand style={{ color: '#fff', background: 'url(' + 'https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/' + item.imageLink + ') center / cover rgb(207,217,226)'}}></CardTitle>
-
-                            <CardText>
-                                <p style={{lineHeight: '24px', fontSize: '24px', textAlign:"center"}}><strong>{item.title} </strong></p>
-                                <p style={{lineHeight: '10px', textAlign:"center"}}><strong> by: {item.author} </strong></p>
-                            
-                            </CardText>
-
-                            <CardActions border>
-                                <Link to="/bookdetails" style={{textDecoration: 'none'}}> 
-                                <Button colored style={{marginLeft:'25%'}} onclick="addtoCart()">View Book Details</Button>
-                                </Link><br/>
-                                    
-                                    <div style={{marginLeft:'10%'}}>
-                                <Button colored style={{float:'left'}}>Add to Cart</Button>
-                                
-                                <SimpleMenu style={{float:'left'}} />
-                                    </div>
-    </CardActions>
-                        </Card>
-                            
-                        </Cell>
+                    let imageUrl = 'https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/' + item.imageLink;
+                    let lists = this.state.wishlists;
+                 
+                    return <Cell col={4}>
                         
-                    
-                        }
-                    /</div>
-                        ))
-                    } 
-                    
-                    </Grid>
-                
-                </div>
-            
-            
+                            <Card shadow={0} style={{ width: '360px', height: '720px', margin: '50px'}}>
+                            
+                                <CardTitle expand style={{ color: '#fff', background: 'url(' + imageUrl + ') center / cover rgb(207,217,226)'}}></CardTitle>
+
+                                    <CardText>
+                                        <p style={{lineHeight: '24px', fontSize: '24px', textAlign:"center"}}><strong>{item.title} </strong></p>
+                                        <p style={{lineHeight: '10px', textAlign:"center"}}><strong> by: {item.author} </strong></p>
+                                        <p style={{lineHeight: '10px', textAlign:"center"}}><strong> Year Published: {item.year} </strong></p>
+
+                                    </CardText>
+
+                                 <CardActions border>
+                                        <Link to="/bookdetails" style={{textDecoration: 'none'}}> 
+                                        <Button colored style={{marginLeft:'25%'}} onclick="addtoCart()">View Book Details</Button>
+                                        </Link><br/>
+
+                                    <div style={{marginLeft:'10%'}}>
+                                         <Button colored style={{float:'left'}}>Add to Cart</Button>
+                                        
+                                        <WishlistDropMenu booktitle={item.title} id={item._id} lists={lists} style={{float:'left'}}/>
+                                       
+                                    </div>
+                            </CardActions>
+                            </Card>
+                        
+                    </Cell>
+                }, this)}
+                 
+                </Grid>
+              
+            </div>
         
-            )
-        }
-    
-    
-        else{
-            return <div> No Items found</div>
-        }
+        
+       
+        )
     }
-    renderLoading(){
-        return <div>Loading...</div>
-    }
-    
+
 }
 
-export default Searchforbooks;
+export default LandingPage;
