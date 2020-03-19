@@ -42,7 +42,7 @@ class customerReview extends Component {
     handleSubmit() {
 
         let userName = '';
-        if (this.state.checked == true){
+        if (this.state.checked === true){
             userName = "Anonymous";
         } else {
             userName = "Generic User Name";

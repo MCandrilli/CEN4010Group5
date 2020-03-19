@@ -3,7 +3,7 @@ import { Card, CardTitle, CardText, CardActions, Grid, Cell} from 'react-mdl';
 import {Button} from 'reactstrap';
 import WishlistDropMenu from './wishlistdropmenu';
 import {Link} from 'react-router-dom';
-var NumberFormat = require('react-number-format');
+
 
 
 class LandingPage extends Component {

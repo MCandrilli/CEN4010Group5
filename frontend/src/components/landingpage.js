@@ -5,6 +5,7 @@ import {Button} from 'reactstrap';
 import WishlistDropMenu from './wishlistdropmenu';
 import {Link} from 'react-router-dom';
 import {addToCart} from './shoppingcart';
+import StarRatings from 'react-star-ratings';
 
 
 
@@ -47,6 +48,11 @@ class LandingPage extends Component {
             is_cart_toggle_on: !prevState.is_cart_toggle_on
         }));
         addToCart(item);
+    }
+
+    displayStarRating = rating => {
+      return(
+      <StarRatings rating={rating} starRatedColor="goldenrod" numberOfStars={5} name="rating" starDimension="20px" starSpacing="2px"/>);
     }
 
     sendToCart(item) {
@@ -125,7 +131,7 @@ class LandingPage extends Component {
                         <CardText>
                             <p style={{lineHeight: '24px', fontSize: '24px', textAlign:"center"}}><strong>{item.title} </strong></p>
                             <p style={{lineHeight: '10px', textAlign:"center"}}><strong> by: {item.author} </strong></p>
-                            <p style={{lineHeight: '10px', textAlign:"center"}}><strong> Rating: {item.rating} </strong></p>
+                            <p style={{lineHeight: '10px', textAlign:"center"}}><strong>{this.displayStarRating(item.rating)} </strong></p>
                             <p style={{lineHeight: '10px', textAlign:"center"}}><strong> Rating Count: {item.ratingCount} </strong></p>
                             <p style={{lineHeight: '10px', textAlign:"center"}}><strong> Genre: {item.genre} </strong></p>
                         
@@ -145,7 +151,7 @@ class LandingPage extends Component {
                                 
                             <div style={{marginLeft:'10%'}}>
                                 <Button color="success" style={{float:'left', marginLeft:'20px'}} onClick = {() => this.handleClick(item)} >Add to Cart</Button>                            
-                                <WishlistDropMenu style={{float: 'left', paddingLeft:'5px'}} booktitle={item.title} id={item._id} lists={lists} />
+                                <WishlistDropMenu style={{float: 'left', paddingLeft:'5px'}} booktitle={item.title} id={item._id} lists={lists} imageLink={item.imageLink} price={item.price}/>
                             </div>
                         </CardActions>
                     </Card>
