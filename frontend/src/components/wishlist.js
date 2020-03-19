@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { DataTable, Button, TableHeader, Grid, Cell, Textfield} from 'react-mdl';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import {addToCart} from './shoppingcart'
 
 
 
@@ -134,7 +135,8 @@ class Wishlist extends Component {
                             
                                 
                         
-                            }}>X</Button>});
+                            }}>X</Button>, 
+                            action2: <Button onClick = {() => (element != null) && addToCart(element)}>Add To Cart</Button>});
                        
                     });
                     
@@ -160,7 +162,8 @@ class Wishlist extends Component {
                                     
                                     
                                 <TableHeader name="booktitle" tooltip="The Book' title">Book Title</TableHeader>
-                                 <TableHeader name="action" tooltip="Delete"> </TableHeader>
+                                <TableHeader name="action" tooltip="Delete"> </TableHeader>
+                                <TableHeader name="action2" tooltip="Add To Shopping Cart"> </TableHeader>
         
         
                                 
