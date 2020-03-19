@@ -8,12 +8,14 @@ import {Link} from 'react-router-dom';
 class WishlistDropMenu extends Component {
     
    
-    handleClick(title, listid){
+    handleClick(title, listid, imageLink, price){
         console.log(title, listid);
         
         let submissiondata = {
             "title": title,
-            "belongsTo": listid
+            "belongsTo": listid,
+            "imageLink": imageLink,
+            "price": price
         }
     
       
@@ -44,8 +46,8 @@ class WishlistDropMenu extends Component {
           <Button colored id={this.props.booktitle} >ADD TO WISHLIST</Button>
             <Menu target={this.props.booktitle} valign="top" ripple>
             {this.props.lists.map(function(list, index) {
-                return <div style={{float: 'left'}}><MenuItem onClick={this.handleClick.bind(this, this.props.booktitle, list._id)}>Add to Wishlist: {list.title}</MenuItem></div>
-            }, this)}
+                return <div style={{float: 'left'}}><MenuItem onClick={this.handleClick.bind(this, this.props.booktitle, list._id, this.props.imageLink, this.props.price)}>Add to Wishlist: {list.title}</MenuItem></div>
+            }, this)} 
             {createlist}
             </Menu>
         </div>

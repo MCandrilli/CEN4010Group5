@@ -56,7 +56,7 @@ const addToCart = book =>
     let duplicate = findBookInCartByIndex(book._id);           // Find index of possible duplicate
     if (duplicate == -1)        // No duplicate present
     {
-        cart.push({id: book._id, img_link: book.imageLink, title: book.title, quantity: 1, price: 9.99});
+        cart.push({id: book._id, img_link: book.imageLink, title: book.title, quantity: 1, price: book.price});
     }
     else                        // Duplicate present
     {
@@ -74,7 +74,6 @@ const getSubtotal = () =>
         newTotal += (book.price * book.quantity);
     }
     return <StyledSubtotal>${newTotal.toFixed(2)}</StyledSubtotal>;
-    //return <StyledSubtotal>Subtotal: ${newTotal.toFixed(2)}</StyledSubtotal>
 }
 
 /* 
@@ -121,13 +120,15 @@ const removeFromSFL = id =>
 
 const backToCart = id =>
 {
-    let index = findBookInSFLByIndex(id);
-    if (index != -1)
+    let sfl_index = findBookInSFLByIndex(id);
+    if (sfl_index != -1)
     {
-        let newBook = save_for_later[index];
+        let newBook = save_for_later[sfl_index];
         newBook.quantity = 1;
-        cart.push(newBook);
-        save_for_later.splice(index, 1);
+        save_for_later.splice(sfl_index, 1);
+
+        let cart_index = findBookInCartByIndex(id);
+        (cart_index != -1) ? cart[cart_index].quantity++ : cart.push(newBook);  
     }
 }
 
@@ -197,7 +198,7 @@ class ShoppingCart extends Component
         >
             <TableHeader name="cover_art" style={{color: "transparent"}}>Cover Art</TableHeader>
             <TableHeader name="booktitle" style={{fontSize: "16px", minWidth: "350px"}}>Book Title</TableHeader>
-            <TableHeader numeric name="price" cellFormatter={(price) => `\$${price.toFixed(2)}`} style={{fontSize: "16px"}}>Price</TableHeader>
+            <TableHeader numeric name="price" style={{fontSize: "16px"}}>Price</TableHeader>
             <TableHeader name="add_to_cart" style={{color: "transparent"}}>BTC</TableHeader>
             <TableHeader name="delete" style={{color: "transparent"}}>Delete</TableHeader>
         </DataTable>
