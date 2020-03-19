@@ -72,9 +72,6 @@ class LandingPage extends Component {
                         <CardText>
                             <p style={{lineHeight: '24px', fontSize: '24px', textAlign:"center"}}><strong>{item.title} </strong></p>
                             <p style={{lineHeight: '10px', textAlign:"center"}}><strong> by: {item.author} </strong></p>
-                            <p style={{lineHeight: '10px', textAlign:"center"}}><strong> Rating: {item.rating} </strong></p>
-                            <p style={{lineHeight: '10px', textAlign:"center"}}><strong> Rating Count: {item.ratingCount} </strong></p>
-                            <p style={{lineHeight: '10px', textAlign:"center"}}><strong> Genre: {item.genre} </strong></p>
                         
                         </CardText>
 

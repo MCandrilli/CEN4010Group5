@@ -1,31 +1,9 @@
 import React, { Component } from 'react';
-import { DataTable, TableHeader, Grid, Cell, Textfield} from 'react-mdl';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { DataTable, Button, TableHeader, Grid, Cell, Textfield} from 'react-mdl';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
-import styled from "styled-components";
-import {Dropdown, DropdownButton } from 'react-bootstrap';
-import {Button} from 'reactstrap'
 
 
-const StyledWishListTitle = styled.h3`
-    font-variant: all-petite-caps;
-    text-decoration: overline;
-    color: dimgrey;
-    font-size: 40px;
-    font-weight: lighter;
-    padding-top: 10px;
-    padding-left: 300px`;
-
-const StyledCreateWishlist = styled.h3`
-    font-variant: all-petite-caps;
-    text-decoration: overline;
-    color: dimgrey;
-    font-size: 24px;
-    font-weight: lighter;
-    margin-bottom: 0px;
-    padding-bottom: 0px;
-    margin-left: 25%; 
-    padding-top: 25px`;
 
 class Wishlist extends Component {
 
@@ -79,8 +57,7 @@ class Wishlist extends Component {
                 },
             })
             .then(res => res.json())
-            .then(data => console.log(data));  
-            this.getItems();  
+            .then(data => console.log(data));    
         } else {
             this.setState({errorMessage: "Too many lists!"});
         }
@@ -115,68 +92,16 @@ class Wishlist extends Component {
         
        this.setState({items: this.state.items.filter(item => item._id != _id)});
     }
-
-    moveItem(id, title, listID){
-        axios.delete(`http://localhost:5000/wishlistItems/delete/` + id)
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
-        });
-
-        let submissiondata = {
-            "title": title,
-            "belongsTo": listID
-        }
-
-        fetch('/wishlistItems', {
-            method: 'POST',
-            body: JSON.stringify(submissiondata),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-        .then(res => res.json())
-        .then(data => console.log(data)); 
-
-        window.location.reload();
-
-    }
-
-
     
-    moveListDropdown(listTitle, listID, listItem, itemID) {
-
-        if (this.state.items.length == 1) {
-            return <DropdownButton id="dropdown-basic-button" title="Move">
-                         <Dropdown.Item>No other lists available.</Dropdown.Item>
-                    </DropdownButton>
-        }
-        else return (
-            <div>
-            <DropdownButton id="dropdown-basic-button" title="Move">
-                 {this.state.items.map(function(item, index){
-                    if (item.title != listTitle)
-                        return <Dropdown.Item onClick={this.moveItem.bind(this, itemID, listItem, item._id)}>{item.title}</Dropdown.Item>
-                 }, this)}
-                
-            </DropdownButton>
-            </div>
-        );
-    }
-
+    
     render() {
         
+    
         
          return(
-             <div style={{width: '95%', marginLeft: 'auto', marginRight: 'auto', marginTop: '30px'}}>
-                 
-                
-                
-
-
-                <StyledWishListTitle>Wishlist</StyledWishListTitle>
+             <div style={{width: '85%', marginLeft: 'auto', marginRight: 'auto', marginTop: '30px'}}>
                 <div style={{width: '25%', margin: 'auto', boxShadow: "0px 0px 3px 3px #ccc"}}>
-                <StyledCreateWishlist>Create a Wishlist</StyledCreateWishlist>
+                <p style={{marginLeft: '25%', paddingTop: '25px', fontSize: '24px'}}>Create a wishlist</p>
                     <form style={{margin: '10px'}}onSubmit= {this.handleSubmit}>
                         <label style={{marginLeft:'15%', marginTop: '10px'}}>  
                             <Textfield value={this.state.value}
@@ -185,7 +110,7 @@ class Wishlist extends Component {
                                 style={{width: '200px'}}
                             />  
                         </label>
-                        <Button color="primary" style={{marginLeft: '10px'}} type="submit" value="Create">Create</Button>
+                        <Button  type="submit" value="Create">Create</Button>
                     </form>
                 </div>
                 
@@ -197,7 +122,7 @@ class Wishlist extends Component {
                     let wishListItems = []; 
                     this.state.listItems.forEach(element => {
                         if (element.belongsTo == item._id)
-                            wishListItems.push({booktitle: element.title, action: <Button outline color="danger" onClick={()=>{
+                            wishListItems.push({booktitle: element.title, action: <Button onClick={()=>{
                                                 axios.delete(`http://localhost:5000/wishlistItems/delete/` + element._id)
                                   .then(res => {
                                     console.log(res);
@@ -209,7 +134,7 @@ class Wishlist extends Component {
                             
                                 
                         
-                            }}>X</Button>, moveto1: this.moveListDropdown(item.title, item._id, element.title, element._id)});
+                            }}>X</Button>});
                        
                     });
                     
@@ -236,14 +161,11 @@ class Wishlist extends Component {
                                     
                                 <TableHeader name="booktitle" tooltip="The Book' title">Book Title</TableHeader>
                                  <TableHeader name="action" tooltip="Delete"> </TableHeader>
-                                 <TableHeader name="moveto1" tooltip="1"> </TableHeader>
-                                 
         
         
                                 
                             </DataTable>
-                            
-                           <Button style={{marginLeft: '30px', marginTop: '10px'}} color="danger" key={item._id} onClick={()=> {this.deleteSubmit(item._id)}}>Delete List</Button>
+                           <Button key={item._id} onClick={()=> {this.deleteSubmit(item._id)}}>Delete</Button>
                         </Cell>
                     }, this)}
                 </Grid>
