@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Card, CardTitle, CardText, CardActions, Button, Grid, Cell} from 'react-mdl';
 import SimpleMenu from './SimpleMenu';
 import WishlistDropMenu from './wishlistdropmenu';
+import {addToCart} from "./shoppingcart"
 import {Link} from 'react-router-dom';
 var NumberFormat = require('react-number-format');
 
@@ -13,7 +14,8 @@ class LandingPage extends Component {
           
           this.state = {
               'items': [],
-              'wishlists': []
+              'wishlists': [],
+              is_cart_toggle_on: true
           }
       }
     
@@ -83,6 +85,13 @@ class LandingPage extends Component {
     
       }
 
+      handleClick(item) {
+        this.setState(prevState => ({
+            is_cart_toggle_on: !prevState.is_cart_toggle_on
+        }));
+        (item != null) && addToCart(item);
+    }
+
     
     
     render() {
@@ -120,7 +129,7 @@ class LandingPage extends Component {
                                         </Link><br/>
 
                                     <div style={{marginLeft:'10%'}}>
-                                         <Button colored style={{float:'left'}}>Add to Cart</Button>
+                                         <Button colored style={{float:'left'}} onClick = {() => this.handleClick(item)}>Add to Cart</Button>
                                         
                                         <WishlistDropMenu booktitle={item.title} id={item._id} lists={lists} style={{float:'left'}}/>
                                        
