@@ -4,6 +4,7 @@ import SimpleMenu from './SimpleMenu'
 import WishlistDropMenu from './wishlistdropmenu';
 import {Link} from 'react-router-dom';
 import {addToCart} from './shoppingcart';
+import StarRatings from 'react-star-ratings';
 var NumberFormat = require('react-number-format');
 
 
@@ -51,6 +52,11 @@ class LandingPage extends Component {
         console.log("The helper function was called.");
         this.addToCart(item);
     }
+
+    displayStarRating = rating => {
+        return(
+        <StarRatings rating={rating} starRatedColor="goldenrod" numberOfStars={5} name="rating" starDimension="20px" starSpacing="2px"/>);
+    }
     
     render() {
         
@@ -72,7 +78,7 @@ class LandingPage extends Component {
                         <CardText>
                             <p style={{lineHeight: '24px', fontSize: '24px', textAlign:"center"}}><strong>{item.title} </strong></p>
                             <p style={{lineHeight: '10px', textAlign:"center"}}><strong> by: {item.author} </strong></p>
-                            <p style={{lineHeight: '10px', textAlign:"center"}}><strong> Rating: {item.rating} </strong></p>
+                            <p style={{lineHeight: '10px', textAlign:"center"}}><strong>{this.displayStarRating(item.rating)} </strong></p>
                             <p style={{lineHeight: '10px', textAlign:"center"}}><strong> Rating Count: {item.ratingCount} </strong></p>
                             <p style={{lineHeight: '10px', textAlign:"center"}}><strong> Genre: {item.genre} </strong></p>
                         
