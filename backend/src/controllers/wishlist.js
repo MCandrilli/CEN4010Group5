@@ -6,12 +6,7 @@ const create = async (req, res) => {
     const { title, imageLink, price} = req.body;
     const fields = {
       title,
-<<<<<<< HEAD
       
-=======
-      imageLink,
-      price
->>>>>>> 97dd1c3907d70647c4e4a659a58e029b44a1accc
     }
 
     const wishlist = await WishList.create(fields);
