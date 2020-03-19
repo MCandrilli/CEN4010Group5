@@ -17,7 +17,6 @@ class LandingPage extends Component {
               'wishlists': [],
               is_cart_toggle_on: true
           }
-          this.handleClick = this.handleClick.bind(this);
       }
     
       componentDidMount() {
@@ -87,9 +86,7 @@ class LandingPage extends Component {
                             </Link><br/>
                                 
                                 <div style={{marginLeft:'10%'}}>
-                            {/* <Link to={{pathname: "/shoppingcart", aboutProps: {book: item}}} style={{textDecoration: "none"}}> */}
                             <Button colored style={{float:'left'}} onClick = {() => this.handleClick(item)} >Add to Cart</Button>
-                            {/* </Link><br /> */}
                             
                             <WishlistDropMenu style={{float: 'left'}} booktitle={item.title} id={item._id} lists={lists} />
                                 </div>

@@ -52,6 +52,7 @@ const img_url_prefix = 'https://raw.githubusercontent.com/benoitvallon/100-best-
 /* Add a book to the shopping cart */
 const addToCart = book =>
 {   
+    //if (book == null){return;}
     let duplicate = findBookInCartByIndex(book._id);           // Find index of possible duplicate
     if (duplicate == -1)        // No duplicate present
     {
@@ -61,6 +62,7 @@ const addToCart = book =>
     {
         cart[duplicate].quantity++;
     }
+    console.log(cart);
 }
 
 /* Calculate and update cart's subtotal */
@@ -137,7 +139,6 @@ class ShoppingCart extends Component
             delete_toggle_on: true,
             save_for_later_toggle_on: true
         }
-        this.handleClick = this.handleClick.bind(this);
     }
 
     handleClick = (id, action) =>
@@ -152,7 +153,7 @@ class ShoppingCart extends Component
     {
         return( 
             <Tooltip title="Delete">
-                <StyledDeleteButton onClick={() => this.handleClick(id, action)}>
+                <StyledDeleteButton onClick={() => {this.handleClick(id, action)}}>
                     <img src={delete_logo} alt="delete logo" style={{height: "30px"}} />
                 </StyledDeleteButton>
             </Tooltip>);

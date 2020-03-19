@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Starrating from './starrating';
 import { Slider, ButtonBase } from '@material-ui/core';
 import {Link} from 'react-router-dom';
+import {addToCart} from "./shoppingcart";
 
 class BookDetails extends Component {
 
@@ -50,8 +51,8 @@ class BookDetails extends Component {
                                 Option3
                             </Button>
                             <br />
-                            <Button style = {{marginTop: '20px'}}>
-                                Add to Shoping Cart
+                            <Button style = {{marginTop: '20px'}} onClick = {() => {(myData.book != null) && (addToCart(myData.book))}}>
+                                Add to Shopping Cart
                             </Button>
                         </Cell>
                     </Grid>
