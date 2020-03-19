@@ -8,7 +8,6 @@ import {addToCart} from './shoppingcart';
 import StarRatings from 'react-star-ratings';
 
 
-
 class LandingPage extends Component {
     
       constructor() {
@@ -19,7 +18,6 @@ class LandingPage extends Component {
               'wishlists': [],
               is_cart_toggle_on: true
           }
-          this.handleClick = this.handleClick.bind(this);
       }
     
       componentDidMount() {
@@ -58,6 +56,11 @@ class LandingPage extends Component {
     sendToCart(item) {
         console.log("The helper function was called.");
         this.addToCart(item);
+    }
+
+    displayStarRating = rating => {
+        return(
+        <StarRatings rating={rating} starRatedColor="goldenrod" numberOfStars={5} name="rating" starDimension="20px" starSpacing="2px"/>);
     }
     
     sortByTitle(){

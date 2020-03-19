@@ -1,32 +1,10 @@
 import React, { Component } from 'react';
-import { DataTable, TableHeader, Grid, Cell, Textfield} from 'react-mdl';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { DataTable, Button, TableHeader, Grid, Cell, Textfield} from 'react-mdl';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
 import styled from "styled-components";
 import {Dropdown, DropdownButton } from 'react-bootstrap';
-import {Button} from 'reactstrap'
 import {addToCart} from './shoppingcart'
-
-
-const StyledWishListTitle = styled.h3`
-    font-variant: all-petite-caps;
-    text-decoration: overline;
-    color: dimgrey;
-    font-size: 40px;
-    font-weight: lighter;
-    padding-top: 10px;
-    padding-left: 300px`;
-
-const StyledCreateWishlist = styled.h3`
-    font-variant: all-petite-caps;
-    text-decoration: overline;
-    color: dimgrey;
-    font-size: 24px;
-    font-weight: lighter;
-    margin-bottom: 0px;
-    padding-bottom: 0px;
-    margin-left: 25%; 
-    padding-top: 25px`;
 
 class Wishlist extends Component {
 
@@ -80,8 +58,7 @@ class Wishlist extends Component {
                 },
             })
             .then(res => res.json())
-            .then(data => console.log(data));  
-            this.getItems();  
+            .then(data => console.log(data));    
         } else {
             this.setState({errorMessage: "Too many lists!"});
         }
@@ -174,17 +151,12 @@ class Wishlist extends Component {
 
     render() {
         
+    
         
          return(
-             <div style={{width: '95%', marginLeft: 'auto', marginRight: 'auto', marginTop: '30px'}}>
-                 
-                
-                
-
-
-                <StyledWishListTitle>Wishlist</StyledWishListTitle>
+             <div style={{width: '85%', marginLeft: 'auto', marginRight: 'auto', marginTop: '30px'}}>
                 <div style={{width: '25%', margin: 'auto', boxShadow: "0px 0px 3px 3px #ccc"}}>
-                <StyledCreateWishlist>Create a Wishlist</StyledCreateWishlist>
+                <p style={{marginLeft: '25%', paddingTop: '25px', fontSize: '24px'}}>Create a wishlist</p>
                     <form style={{margin: '10px'}}onSubmit= {this.handleSubmit}>
                         <label style={{marginLeft:'15%', marginTop: '10px'}}>  
                             <Textfield value={this.state.value}
@@ -193,7 +165,7 @@ class Wishlist extends Component {
                                 style={{width: '200px'}}
                             />  
                         </label>
-                        <Button color="primary" style={{marginLeft: '10px'}} type="submit" value="Create">Create</Button>
+                        <Button  type="submit" value="Create">Create</Button>
                     </form>
                 </div>
                 
@@ -248,8 +220,7 @@ class Wishlist extends Component {
         
                                 
                             </DataTable>
-                            
-                           <Button style={{marginLeft: '30px', marginTop: '10px'}} color="danger" key={item._id} onClick={()=> {this.deleteSubmit(item._id)}}>Delete List</Button>
+                           <Button key={item._id} onClick={()=> {this.deleteSubmit(item._id)}}>Delete</Button>
                         </Cell>
                     }, this)}
                 </Grid>
