@@ -131,7 +131,7 @@ class LandingPage extends Component {
                                     <div style={{marginLeft:'10%'}}>
                                          <Button colored style={{float:'left'}} onClick = {() => this.handleClick(item)}>Add to Cart</Button>
                                         
-                                        <WishlistDropMenu booktitle={item.title} id={item._id} lists={lists} style={{float:'left'}}/>
+                                        <WishlistDropMenu booktitle={item.title} id={item._id} lists={lists} style={{float:'left'}} imageLink={item.imageLink} price={item.price}/>
                                        
                                     </div>
                             </CardActions>
