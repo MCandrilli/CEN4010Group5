@@ -23,13 +23,6 @@ function App() {
                     <Link to="/profile">My Profile</Link>
             </Navigation>
         </Header>
-            <Drawer title="Main Menu">
-                <Navigation>
-                    <Link to="/searchforbooks">Search for books</Link>
-                    <Link to="/aboutus">About Us</Link>
-                    <Link to="/contact">Contact Us</Link>
-            </Navigation>
-        </Drawer>
         <Content>
             <div className="page-content" />
                 <Main/>
