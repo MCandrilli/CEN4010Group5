@@ -1,28 +1,29 @@
 import React, { Component } from 'react';
-import {Textfield, Button, Switch} from 'react-mdl';
+import {Textfield, Button, Switch , CardText, Grid, Cell, Card} from 'react-mdl';
 import Starrating from './starrating';
-import { Card,  CardText} from 'react-mdl';
+import Typography from '@material-ui/core/Typography';
 
 
 class customerReview extends Component {
 
-
     constructor() {    
-        super();
-        
+        super();          
+
         this.state = {
-            'comments': [],
+            'books': [],
             value: '',
             user: '',
-            checked: 'false'
+            rating: 1,
+            checked: false,
+            isLoggedUser : true,
+            bookIsPurchased : true
+
         }
 
         this.handleChange = this.handleChange.bind(this);       
-        // this.state = { checked: false };    
         this.handleAnonyousSwitch = this.handleAnonyousSwitch.bind(this);
-        // this.state = {isLoggedIn: false};
     }
-  
+      
     componentDidMount() {
       this.getItems();
     }
@@ -31,18 +32,26 @@ class customerReview extends Component {
         
         fetch('/comments')
         .then(results => results.json())
-        .then(results => this.setState({'comments': results.data}));
+        .then(results => this.setState({'books': results.data}));
   
     }
-    
-    handleSubmit() {
+   
+    handleSubmit(bookName) {
+        let userName = '';
+        if (this.state.checked == true){
+            userName = "Anonymous";
+        } else {
+            userName = "Generic User Name";
+        }
+ 
         let submissiondata = {
-
-            "title": "Book" ,
-            "user" : "yousuck1",
+ 
+            "title": bookName ,
+            "Comments" :  "",
+            "user" : userName,
             "comment" : this.state.value
         }
-    
+   
         fetch('/comments', {
             method: 'POST',
             body: JSON.stringify(submissiondata),
@@ -53,75 +62,95 @@ class customerReview extends Component {
         .then(res => res.json())
         .then(data => console.log(data));  
     }
-
+ 
     handleChange(event) {
         console.log(event.target.value)
         this.setState({value: event.target.value});
       }
-      
-    handleAnonyousSwitch(checked)
+     
+    handleAnonyousSwitch()
     {
-
-        console.log(checked)
-        this.setState({ checked });
+        this.setState({checked: !this.state.checked});
+        console.log(this.state.checked)
     }
 
-    // defineuser (event)
-    // {
-    //     console.log("inside define user");
-    //     console.log("the event switch is " , this.);
-
-
-    // }
-    
     render() {
+        const isLoggedIn = this.state.isLoggedUser;
+        const isPurchased = this.state.bookIsPurchased;
+        const commentdisabled = !this.state.isLoggedUser || !this.state.bookIsPurchased;
+        let errorMessage;
 
-        return(
-            
+        let bookProps = this.props.location.aboutProps || {}    
+        let imageUrl = 'https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/' + bookProps.book.imageLink;
+        
+
+        if(isLoggedIn && isPurchased) errorMessage = null;
+        else if (isLoggedIn && !isPurchased) errorMessage = <span style = {{color:'red'}}  > Purchase book to comment </span>
+        else if (!isLoggedIn) errorMessage = <span style = {{color:'red'}}  > Log in to comment </span>
+
+        return(          
             <div style={{width: '80%', margin: 'auto'}}>  
-                {/*add book title and image */}              
-
+                <Grid>
+                    <Cell style = {{width:'50%'}} align = 'middle'>
+                        <img style={{ alignItems:'center'}}src={imageUrl}/>
+                    </Cell>
+                    <Cell align = 'middle'>
+                        <br/>
+                        <h2> {bookProps.book.title}</h2>
+                        <strong> by: {bookProps.book.author}</strong>  
+                    </Cell>                            
+                </Grid>   
+ 
                 <hr></hr>
-
                 <h2>Book Reviews</h2>
-
-                <div id = 'NewComment' style={{width: '80%', margin: 'auto'}}> 
-                      
-                    <form style={{margin: '10px'}} onSubmit= {this.handleSubmit.bind(this)}>
-                        {/* <Switch ripple id="Anonymous" onChange={this.handleAnonyousSwitch} checked={this.state.checked} >Anonymous comment</Switch> */}
-                        <Switch ripple id="Anonymous" >Anonymous comment</Switch>
+                <div id = 'NewComment' style={{width: '80%', margin: 'auto'}}>
+                    <form style={{margin: '10px'}} onSubmit= {this.handleSubmit(bookProps.book.title)} >
+                        <Switch ripple id="Anonymous" onChange={this.handleAnonyousSwitch(this)} disabled = {commentdisabled}>Anonymous comment</Switch>
                         <div style={{width: '100%', margin: 'auto'}}>  
                             <Textfield  value= {this.state.value}
                                 onChange={this.handleChange}                                
                                 label="Book Comments"
-                                // rows={3}
                                 style={{width: '100%'}}
                                 rows={3}                                
                                 maxLength = {'200'}
+                                disabled = {commentdisabled}
                                 />  
-                            <Starrating style={{float:'left'}}/>   
-                        </div>                 
-                            <Button onClick = {this.handleSubmit.bind()} >Submit Comment</Button>
+                            <Starrating style={{float:'left'}} disabled = {commentdisabled}/>  
+                        </div>                
+                            <Button 
+                            //disable if 
+                                disabled={commentdisabled} 
+                                onClick = {this.handleSubmit.bind(this)} >Submit Comment
+                            </Button>
+                            {errorMessage}                           
                     </form>
-                </div>  
-
+                </div>   
                 <hr></hr>
-                
+               
                 <h4>Previous Comments</h4>
-                  <div>
-                      
-                {this.state.comments.map(function(element , index){
-                    return <Card shadow={0} style={{ width: '80%', height: '10%', margin: '50px'}}>
-                    <CardText>
-                        <p> <strong> {element.user} : &nbsp; </strong> {element.comment} </p>
-                    </CardText>
-                    </Card>
-                })}
-                
+                <div>
+                    {/* {loop through bookS} */}
+                    {this.state.books.map(function(element){
+                    
+                    {/* {find correct book} */}
+                        if(element.title === bookProps.book.title)
+                        {
+                            {/* {loop through nested array of user and comments} */}
+                            return element.Comments.map(function(comm)
+                            {
+                                {/* {Create cards for each user and its comment} */}
+                                return <Card shadow={0} key={comm.User} style={{ width: '80%', height: '10%', margin: '50px'}}>
+                                <CardText>
+                                    <p> <strong> {comm.User} : &nbsp; </strong> {comm.Comment} </p>
+                                </CardText>
+                                </Card>
+                            })
+                        }
+                    })}           
                 </div>
             </div>
         )
     }
-    
+   
 }
 export default customerReview;

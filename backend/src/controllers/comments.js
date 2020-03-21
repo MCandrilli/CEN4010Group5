@@ -3,11 +3,13 @@ const httpResponse = require('../util/http');
 
 const create = async (req, res) => {
   try{
-    const {title ,  user, comment } = req.body;
+    const {title , Comments ,  user, comment } = req.body;
     const fields = {
       title,
+      Comments,
       user,
       comment
+      
     }
 
     const singleComment = await Comment.create(fields);
