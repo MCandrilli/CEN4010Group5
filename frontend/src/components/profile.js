@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {List, ListItem, ListItemContent, ListItemAction, Icon} from 'react-mdl';
-import {Card, CardActions, CardMenu, CardText, CardTitle, Button, IconButton, Textfield} from 'react-mdl';
+
+import {Card, CardText, CardTitle, Button, Textfield} from 'react-mdl';
 
 class Profile extends Component {
   constructor(props){
@@ -13,7 +13,6 @@ class Profile extends Component {
       lastName: null,
       nickname: null,
       homeAddress: null,
-      nickname: null,
       creditCards: null,
       shippingAddresses: null,
       emailAddresses: null,
