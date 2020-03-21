@@ -3,7 +3,7 @@ const httpResponse = require('../util/http');
 
 const create = async (req, res) => {
   try{
-    const { title, imageLink, price} = req.body;
+    const { title } = req.body;
     const fields = {
       title,
       
