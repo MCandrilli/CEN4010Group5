@@ -1,12 +1,14 @@
 import React from 'react';
 import { StyledSubtotal } from './shoppingCartStyles';
-import {cart, save_for_later, updateSessionStorage} from "./shoppingCartStorage";
+import { cart, save_for_later, updateSessionStorage } from './shoppingCartStorage';
 
-const img_url_prefix = 'https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/'; 
+const img_url_prefix = 'https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/';
 
 /* Add a book to the shopping cart */
 const addToCart = (book) => {
-	if (book == null){return;}
+	if (book == null) {
+		return;
+	}
 	let duplicate = findBookInCartByIndex(book._id); // Find index of possible duplicate
 	if (duplicate === -1) {
 		// No duplicate present
@@ -47,7 +49,7 @@ const findBookInSFLByIndex = (id) => {
 const saveForLater = (id) => {
 	let index = findBookInCartByIndex(id);
 	if (index !== -1) {
-		(findBookInSFLByIndex(id) === -1) && save_for_later.push(cart[index]);
+		findBookInSFLByIndex(id) === -1 && save_for_later.push(cart[index]);
 		cart.splice(index, 1);
 	}
 };
@@ -81,6 +83,18 @@ const backToCart = (id) => {
 	}
 };
 
+const updateQuantity = (id, new_quantity) => {
+	let index = findBookInCartByIndex(id);
+	if (new_quantity === 0)
+	{
+		removeFromCart(id);
+		return;
+	}
+	if (index !== -1) {
+		cart[index].quantity = new_quantity;
+	}
+};
+
 export {
 	cart,
 	save_for_later,
@@ -90,5 +104,6 @@ export {
 	saveForLater,
 	removeFromCart,
 	removeFromSFL,
-	backToCart
+	backToCart,
+	updateQuantity
 };

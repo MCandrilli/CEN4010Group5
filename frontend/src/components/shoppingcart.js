@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react';
 import { DataTable, TableHeader, Textfield } from 'react-mdl';
 import delete_logo from './images/delete_bin.png';
 import Tooltip from '@material-ui/core/Tooltip';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import {
 	StyledCoverArt,
 	StyledDeleteButton,
@@ -18,7 +19,8 @@ import {
 	saveForLater,
 	removeFromCart,
 	removeFromSFL,
-	backToCart
+	backToCart,
+	updateQuantity
 } from './ShoppingCart/useShoppingCart';
 import {
 	cart,
@@ -32,14 +34,14 @@ class ShoppingCart extends Component {
 	constructor() {
 		super();
 		this.state = {
-			delete_toggle_on: true,
-			save_for_later_toggle_on: true
+			click_toggle_on: true,
+			quantity_toggles: this.initQuantityToggles(cart.length)
 		};
 	}
 
 	/* Direct all button clicks to the proper functions and update changes to local storage */
 	handleClick = (id, action) => {
-		this.setState((prevState) => ({ delete_toggle_on: !prevState.delete_toggle_on }));
+		this.setState((prevState) => ({ click_toggle_on: !prevState.click_toggle_on }));
 		action === 'delete_cart'
 			? removeFromCart(id)
 			: action === 'save_for_later'
@@ -62,11 +64,57 @@ class ShoppingCart extends Component {
 		);
 	};
 
+	initQuantityToggles = (num_items) => {
+		let new_toggles = [];
+		for (let i = 0; i < num_items; i++) new_toggles.push(true);
+		return new_toggles;
+	};
+
+	toggleQuantity = (item, value) => {
+		let new_toggles = this.state.quantity_toggles;
+		new_toggles[item] = value;
+		this.setState({ quantity_toggles: new_toggles });
+	};
+
+	handleQuantityChange = (e, id) => {
+		const { value } = e.target;
+		let numerical_value = value - 0;
+		if (numerical_value !== NaN) {
+			updateQuantity(id, numerical_value);
+		}
+		updateSessionStorage();
+	};
+
+	quantityField = (id, index) => {
+		return (
+			<ClickAwayListener
+				onClickAway={() => {
+					this.toggleQuantity(index, true);
+				}}
+			>
+				<Textfield
+					onChange={(e) => {
+						this.handleQuantityChange(e, id);
+					}}
+					pattern="-?[0-9]*(\.[0-9]+)?"
+					error="invalid input"
+					label="..."
+					floatingLabel
+					style={{ width: '30px' }}
+				/>
+			</ClickAwayListener>
+		);
+	};
+
 	createCart = () => {
 		let items = cart.map((book, index) => ({
 			cover_art: <StyledCoverArt src={img_url_prefix + book.img_link} alt={book.title + ' cover art'} />,
 			booktitle: <StyledBookTitle>{book.title}</StyledBookTitle>,
-			quantity: book.quantity,
+			quantity: (
+				<p1 onClick={() => this.toggleQuantity(index, false)}>
+					{this.state.quantity_toggles[index] === false ? this.quantityField(book.id, index) : book.quantity}
+				</p1>
+			),
 			price: '$' + book.price,
 			delete: this.displayDeleteButton(book.id, 'delete_cart'),
 			save_for_later: (
@@ -148,10 +196,6 @@ class ShoppingCart extends Component {
 	render() {
 		updateShoppingCart();
 		updateSFL();
-		console.log('const cart:');
-		console.log(cart);
-		console.log('const sfl: ');
-		console.log(save_for_later);
 		return (
 			<div style={{ padding: '5px 350px' }}>
 				<StyledShoppingCartTitle>Shopping Cart</StyledShoppingCartTitle>
