@@ -80,9 +80,8 @@ class ShoppingCart extends Component {
 	handleQuantityChange = (e, id) => {
 		const { value } = e.target;
 		let numerical_value = value - 0;
-		console.log(numerical_value);
 		if (numerical_value > 0) {
-			updateQuantity(id, numerical_value);
+			(numerical_value < 5000) ? updateQuantity(id, numerical_value) : updateQuantity(id, 5000);
 		}
 		updateSessionStorage();
 	};
@@ -98,6 +97,7 @@ class ShoppingCart extends Component {
 					onChange={(e) => {
 						this.handleQuantityChange(e, id);
 					}}
+					onKeyPress={(e) => {e.key === "Enter" && this.toggleQuantity(index, true)}}
 					pattern="-?[0-9]*(\.[0-9]+)?"
 					error="invalid input"
 					label="..."
