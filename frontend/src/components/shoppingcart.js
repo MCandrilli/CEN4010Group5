@@ -97,7 +97,7 @@ class ShoppingCart extends Component {
 					onChange={(e) => {
 						this.handleQuantityChange(e, id);
 					}}
-					pattern="-?[0-9]*(\.[0-9]+)?-"
+					pattern="-?[0-9]*(\.[0-9]+)?"
 					error="invalid input"
 					label="..."
 					floatingLabel
