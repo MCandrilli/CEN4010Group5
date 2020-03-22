@@ -10,7 +10,8 @@ import {
 	StyledBookTitle,
 	StyledShoppingCartTitle,
 	StyledSFLTitle,
-	StyledSubtotal
+	StyledSubtotal,
+	StyledCheckoutButton
 } from './ShoppingCart/shoppingCartStyles';
 import {
 	img_url_prefix,
@@ -203,6 +204,7 @@ class ShoppingCart extends Component {
 				{cart.length === 0 ? <p1 style={{ fontSize: '20px' }}>Your cart is empty.</p1> : <this.createCart />}
 				{save_for_later.length > 0 && <StyledSFLTitle>Save For Later</StyledSFLTitle>}
 				{save_for_later.length > 0 && <this.createSFL />}
+				{cart.length > 0 && <StyledCheckoutButton>Checkout</StyledCheckoutButton>}
 			</div>
 		);
 	}

@@ -15,6 +15,19 @@ const StyledActionButton = styled.button`
 	text-decoration: underline;
 `;
 
+const StyledCheckoutButton = styled.button`
+	background: darkblue;
+	color: honeydew;
+	border: outset;
+	border-radius: 12px;
+	padding: 5px 10px;
+	font-variant-caps: all-petite-caps;
+	font-size: 30px;
+	font-weight: lighter;
+	margin-left: 770px;
+	margin-top: 50px;
+`;
+
 const StyledBookTitle = styled.text`white-space: normal;`;
 
 const StyledShoppingCartTitle = styled.h3`
@@ -48,5 +61,6 @@ export {
 	StyledBookTitle,
 	StyledShoppingCartTitle,
 	StyledSFLTitle,
-	StyledSubtotal
+	StyledSubtotal,
+	StyledCheckoutButton
 };
