@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyledSubtotal } from './shoppingCartStyles';
-import { cart, save_for_later, updateSessionStorage } from './shoppingCartStorage';
+import { cart, save_for_later, updateLocalStorage } from './shoppingCartStorage';
 
 const img_url_prefix = 'https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/';
 
@@ -17,7 +17,7 @@ const addToCart = (book) => {
 		// Duplicate present
 		cart[duplicate].quantity++;
 	}
-	updateSessionStorage();
+	updateLocalStorage();
 };
 
 /* Calculate and update cart's subtotal */
@@ -93,6 +93,7 @@ const updateQuantity = (id, new_quantity) => {
 	if (index !== -1) {
 		cart[index].quantity = new_quantity;
 	}
+	updateLocalStorage();
 };
 
 export {

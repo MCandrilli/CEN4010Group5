@@ -29,7 +29,7 @@ import {
 	save_for_later,
 	updateShoppingCart,
 	updateSFL,
-	updateSessionStorage
+	updateLocalStorage
 } from './ShoppingCart/shoppingCartStorage';
 
 class ShoppingCart extends Component {
@@ -49,7 +49,7 @@ class ShoppingCart extends Component {
 			: action === 'save_for_later'
 				? saveForLater(id)
 				: action === 'delete_SFL' ? removeFromSFL(id) : backToCart(id);
-		updateSessionStorage();
+		updateLocalStorage();
 	};
 
 	displayDeleteButton = (id, action) => {
@@ -84,7 +84,6 @@ class ShoppingCart extends Component {
 		if (numerical_value > 0 && numerical_value % 1 === 0) {
 			updateQuantity(id, numerical_value);
 		}
-		updateSessionStorage();
 	};
 
 	quantityField = (id, index) => {

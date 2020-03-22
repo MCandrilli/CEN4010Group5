@@ -5,6 +5,7 @@ import axios from 'axios';
 import styled from "styled-components";
 import {Dropdown, DropdownButton } from 'react-bootstrap';
 import {addToCart} from './shoppingcart'
+import {beforeReload, afterReload} from './ShoppingCart/shoppingCartStorage';
 
 class Wishlist extends Component {
 
@@ -119,7 +120,6 @@ class Wishlist extends Component {
         .then(data => console.log(data)); 
 
         window.location.reload();
-
     }
 
 
@@ -183,7 +183,6 @@ class Wishlist extends Component {
                                     console.log(res);
                                     console.log(res.data);
                                   });
-                            
                                     window.location.reload();
                             }}>X</Button>, 
                             moveTo: this.moveListDropdown(item.title, item._id, element.title, element._id, element.imageLink, element.price, element)});
