@@ -11,7 +11,8 @@ import {
 	StyledShoppingCartTitle,
 	StyledSFLTitle,
 	StyledSubtotal,
-	StyledCheckoutButton
+	StyledCheckoutButton,
+	StyledTooltip
 } from './ShoppingCart/shoppingCartStyles';
 import {
 	img_url_prefix,
@@ -53,7 +54,7 @@ class ShoppingCart extends Component {
 
 	displayDeleteButton = (id, action) => {
 		return (
-			<Tooltip title="Delete">
+			<StyledTooltip title="Delete">
 				<StyledDeleteButton
 					onClick={() => {
 						this.handleClick(id, action);
@@ -61,7 +62,7 @@ class ShoppingCart extends Component {
 				>
 					<img src={delete_logo} alt="delete logo" style={{ height: '30px' }} />
 				</StyledDeleteButton>
-			</Tooltip>
+			</StyledTooltip>
 		);
 	};
 
@@ -80,8 +81,8 @@ class ShoppingCart extends Component {
 	handleQuantityChange = (e, id) => {
 		const { value } = e.target;
 		let numerical_value = value - 0;
-		if (numerical_value > 0) {
-			(numerical_value < 5000) ? updateQuantity(id, numerical_value) : updateQuantity(id, 5000);
+		if (numerical_value > 0 && numerical_value % 1 === 0) {
+			updateQuantity(id, numerical_value);
 		}
 		updateSessionStorage();
 	};
@@ -92,19 +93,19 @@ class ShoppingCart extends Component {
 				onClickAway={() => {
 					this.toggleQuantity(index, true);
 				}}
-			>
+			><StyledTooltip title="Quantity should only contain integer numbers from 1-9999.">
 				<Textfield
 					onChange={(e) => {
 						this.handleQuantityChange(e, id);
 					}}
 					onKeyPress={(e) => {e.key === "Enter" && this.toggleQuantity(index, true)}}
-					pattern="-?[0-9]*(\.[0-9]+)?"
+					pattern="[0-9]{1,4}"
+					maxLength = "4"
 					error="invalid input"
 					label="..."
-					floatingLabel
 					style={{ width: '30px' }}
 				/>
-			</ClickAwayListener>
+			</StyledTooltip></ClickAwayListener>
 		);
 	};
 

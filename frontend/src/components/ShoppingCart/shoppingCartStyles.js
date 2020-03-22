@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { withStyles} from '@material-ui/core/styles';
+import { Tooltip } from '@material-ui/core';
 
 const StyledCoverArt = styled.img`height: 150px;`;
 
@@ -54,6 +56,13 @@ const StyledSubtotal = styled.p`
 	margin: unset;
 `;
 
+const StyledTooltip = withStyles(() =>({
+	tooltip: {
+		maxWidth: 210,
+		fontSize: 12
+	}
+}))(Tooltip)
+
 export {
 	StyledCoverArt,
 	StyledDeleteButton,
@@ -62,5 +71,6 @@ export {
 	StyledShoppingCartTitle,
 	StyledSFLTitle,
 	StyledSubtotal,
-	StyledCheckoutButton
+	StyledCheckoutButton,
+	StyledTooltip
 };
