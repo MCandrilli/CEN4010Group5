@@ -79,7 +79,8 @@ class ShoppingCart extends Component {
 	handleQuantityChange = (e, id) => {
 		const { value } = e.target;
 		let numerical_value = value - 0;
-		if (numerical_value !== NaN) {
+		console.log(numerical_value);
+		if (numerical_value > 0) {
 			updateQuantity(id, numerical_value);
 		}
 		updateSessionStorage();
@@ -96,7 +97,7 @@ class ShoppingCart extends Component {
 					onChange={(e) => {
 						this.handleQuantityChange(e, id);
 					}}
-					pattern="-?[0-9]*(\.[0-9]+)?"
+					pattern="-?[0-9]*(\.[0-9]+)?-"
 					error="invalid input"
 					label="..."
 					floatingLabel
