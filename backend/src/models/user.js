@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
   lastName: { type: String, required: true },
   password: { type: String, required: true },
   homeAddress: { type: String, required: true },
-  nickname: { type: String, required: true }
+  nickname: { type: String, required: true },
+  recentlyPurchased: { type: Array, default: [] }
 });
 
 const User = mongoose.model('User', userSchema);
