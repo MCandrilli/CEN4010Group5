@@ -9,6 +9,11 @@ const bookSchema = new mongoose.Schema({
     pages: {type: Number, required: true},
     title: {type: String, required: true},
     year: {type: Number, required: true},
+    genre: {type: String, required: true},
+    price: {type: Number, required: true},
+    rating: {type: Number, required: true},
+    ratingCount: {type: Number, required: true},
+    overview: {type: String, required: false}
     
 })
 

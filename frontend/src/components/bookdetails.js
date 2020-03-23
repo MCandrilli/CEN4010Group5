@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import {Textfield, Button, Switch} from 'react-mdl';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import {ListGroupItem,ListGroup, CardTitle, CardText, CardActions, Grid, Cell} from 'react-mdl';
+import {Button} from 'react-mdl';
+import {Grid, Cell} from 'react-mdl';
 import Typography from '@material-ui/core/Typography';
-import Starrating from './starrating';
-import { Slider, ButtonBase } from '@material-ui/core';
 import {Link} from 'react-router-dom';
+import {addToCart} from "./shoppingcart";
 
 class BookDetails extends Component {
 
@@ -30,7 +28,7 @@ class BookDetails extends Component {
                     <Grid>
                         <Cell></Cell>
                         <Cell style = {{width:'320px'}}>
-                            <img src={imageUrl}/>
+                            <img alt="Book Cover" src={imageUrl}/>
                         </Cell>
                         <Cell>
                             <Typography variant="h4" gutterBottom>
@@ -50,8 +48,8 @@ class BookDetails extends Component {
                                 Option3
                             </Button>
                             <br />
-                            <Button style = {{marginTop: '20px'}}>
-                                Add to Shoping Cart
+                            <Button style = {{marginTop: '20px'}} onClick = {() => {(myData.book != null) && (addToCart(myData.book))}}>
+                                Add to Shopping Cart
                             </Button>
                         </Cell>
                     </Grid>

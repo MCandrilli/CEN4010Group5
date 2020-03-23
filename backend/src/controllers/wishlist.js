@@ -5,7 +5,8 @@ const create = async (req, res) => {
   try{
     const { title } = req.body;
     const fields = {
-      title
+      title,
+      
     }
 
     const wishlist = await WishList.create(fields);
