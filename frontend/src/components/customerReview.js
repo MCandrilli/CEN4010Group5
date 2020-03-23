@@ -14,7 +14,7 @@ class customerReview extends Component {
             'comments': [],
             value: '',
             user: '',
-            checked: 'false'
+            checked: false
         }
 
         this.handleChange = this.handleChange.bind(this);       
@@ -25,6 +25,10 @@ class customerReview extends Component {
   
     componentDidMount() {
       this.getItems();
+      console.log(this.state.checked);
+      this.setState({
+          checked: false
+      });
     }
   
     getItems() {
@@ -36,10 +40,18 @@ class customerReview extends Component {
     }
     
     handleSubmit() {
+
+        let userName = '';
+        if (this.state.checked === true){
+            userName = "Anonymous";
+        } else {
+            userName = "Generic User Name";
+        }
+
         let submissiondata = {
 
             "title": "Book" ,
-            "user" : "yousuck1",
+            "user" : userName,
             "comment" : this.state.value
         }
     
@@ -59,20 +71,15 @@ class customerReview extends Component {
         this.setState({value: event.target.value});
       }
       
-    handleAnonyousSwitch(checked)
+    handleAnonyousSwitch()
     {
 
-        console.log(checked)
-        this.setState({ checked });
+        this.setState({checked: !this.state.checked});
+        console.log(this.state.checked)
+
     }
 
-    // defineuser (event)
-    // {
-    //     console.log("inside define user");
-    //     console.log("the event switch is " , this.);
-
-
-    // }
+    
     
     render() {
 
@@ -87,9 +94,9 @@ class customerReview extends Component {
 
                 <div id = 'NewComment' style={{width: '80%', margin: 'auto'}}> 
                       
-                    <form style={{margin: '10px'}} onSubmit= {this.handleSubmit.bind(this)}>
+                    <form style={{margin: '10px'}} onSubmit= {this.handleSubmit}>
                         {/* <Switch ripple id="Anonymous" onChange={this.handleAnonyousSwitch} checked={this.state.checked} >Anonymous comment</Switch> */}
-                        <Switch ripple id="Anonymous" >Anonymous comment</Switch>
+                        <Switch ripple id="Anonymous" onChange={this.handleAnonyousSwitch.bind(this)} >Anonymous comment</Switch>
                         <div style={{width: '100%', margin: 'auto'}}>  
                             <Textfield  value= {this.state.value}
                                 onChange={this.handleChange}                                
@@ -101,7 +108,7 @@ class customerReview extends Component {
                                 />  
                             <Starrating style={{float:'left'}}/>   
                         </div>                 
-                            <Button onClick = {this.handleSubmit.bind()} >Submit Comment</Button>
+                            <Button onClick = {this.handleSubmit.bind(this)} >Submit Comment</Button>
                     </form>
                 </div>  
 

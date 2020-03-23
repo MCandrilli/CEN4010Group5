@@ -19,7 +19,6 @@ class Profile extends Component {
       lastName: null,
       nickname: null,
       homeAddress: null,
-      nickname: null,
       creditCards: null,
       shippingAddresses: null,
       emailAddresses: null,

@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Main from './components/main';
 import './App.css';
-import { Layout, Header, Navigation, Drawer, Content, Textfield} from 'react-mdl';
+import { Layout, Header, Navigation, Content, Textfield} from 'react-mdl';
 import { Link } from 'react-router-dom';
 
 function App() {
@@ -23,13 +23,6 @@ function App() {
                     <Link to="/profile">My Profile</Link>
             </Navigation>
         </Header>
-            <Drawer title="Main Menu">
-                <Navigation>
-                    <Link to="/searchforbooks">Search for books</Link>
-                    <Link to="/aboutus">About Us</Link>
-                    <Link to="/contact">Contact Us</Link>
-            </Navigation>
-        </Drawer>
         <Content>
             <div className="page-content" />
                 <Main/>
