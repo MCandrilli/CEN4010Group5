@@ -70,9 +70,14 @@ class BookDetails extends Component {
 
                         <div id = 'NewComment' style={{width: '80%', margin: 'auto'}}>       
                         
-                        <Link to={{pathname:"/customerReview" }}>
-                        {/* // , state: {bookname: item.title}}}> */}
-                            <Button style={{width: '80%', height: '50%'}}> Book Reviews </Button>
+                        <br/>
+                        <br/>
+                        <Link to={{pathname:"/customerReview" ,
+                            aboutProps:{
+                                book: myData.book
+                            }
+                        }}>
+                            <Button shadow={0} align = {'center'} style={{width: '100%', height: '50%'}}> Book Reviews </Button>
                         </Link>
                         </div>        
                 </div>

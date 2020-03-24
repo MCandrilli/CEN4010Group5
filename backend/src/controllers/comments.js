@@ -3,14 +3,20 @@ const httpResponse = require('../util/http');
 
 const create = async (req, res) => {
   try{
-    const {title ,  user, comment } = req.body;
+    const {title , Comments ,  User, CommentPOST } = req.body;
     const fields = {
       title,
-      user,
-      comment
+      Comments,
+      User,
+      CommentPOST
+
     }
 
     const singleComment = await Comment.create(fields);
+    
+    console.log('sending')
+    console.log(singleComment)
+
 
     httpResponse.successResponse(res, 'success')
   } catch (e) {
