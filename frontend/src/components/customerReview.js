@@ -18,7 +18,7 @@ class customerReview extends Component {
             rating: 1,
             checked: false,
             isLoggedUser : true,
-            bookIsPurchased : false
+            bookIsPurchased : false,
             checked: false
         }
 
