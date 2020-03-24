@@ -5,6 +5,8 @@ const user = require('../controllers/user');
 const wishlist = require('../controllers/wishlist');
 const wishlistitems = require('../controllers/wishlistItem');
 const comments = require('../controllers/comments');
+const creditCard = require('../controllers/creditCard');
+const shippingAddress = require('../controllers/shippingAddress');
 
 const apiRouter = Router();
 
@@ -18,6 +20,19 @@ apiRouter.post('/books', book.create);
 apiRouter.get('/user', user.read);
 apiRouter.post('/user', user.create);
 apiRouter.put('/user', user.update);
+apiRouter.put('/user/password', user.updatePassword);
+
+/* ------ Credit Card Routes ------ */
+apiRouter.get('/card', creditCard.read);
+apiRouter.post('/card', creditCard.create);
+apiRouter.put('/card', creditCard.update);
+apiRouter.delete('/card', creditCard.remove);
+
+/* ------ Shipping Address Routes ------ */
+apiRouter.get('/address', shippingAddress.read);
+apiRouter.post('/address', shippingAddress.create);
+apiRouter.put('/address', shippingAddress.update);
+apiRouter.delete('/address', shippingAddress.remove);
 
 /*------ WishList Routes -----*/
 apiRouter.post('/wishlists', wishlist.create);

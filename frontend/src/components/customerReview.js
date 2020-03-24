@@ -19,7 +19,7 @@ class customerReview extends Component {
             checked: false,
             isLoggedUser : true,
             bookIsPurchased : false
-
+            checked: false
         }
 
         this.handleChange = this.handleChange.bind(this);       
@@ -28,6 +28,10 @@ class customerReview extends Component {
       
     componentDidMount() {
       this.getItems();
+      console.log(this.state.checked);
+      this.setState({
+          checked: false
+      });
     }
   
     getItems() {
@@ -39,14 +43,13 @@ class customerReview extends Component {
     }
    
     handleSubmit() {
+
         let userName = '';
-        if (this.state.checked == true){
+        if (this.state.checked === true){
             userName = "Anonymous";
         } else {
             userName = "Generic User Name";
         }
- 
-        
         console.log(this.props.location.aboutProps.book.title);
 
         let submissiondata = {
@@ -76,7 +79,6 @@ class customerReview extends Component {
         console.log(event.target.value)
         this.setState({value: event.target.value});
       }
-     
     handleAnonyousSwitch()
     {
         this.setState({checked: !this.state.checked});
@@ -140,7 +142,7 @@ class customerReview extends Component {
                         </form>
                     </div>   
                     <hr></hr>
-                
+
                     <h4>Previous Comments</h4>
                     <div>
                         {/* {loop through bookS} */}

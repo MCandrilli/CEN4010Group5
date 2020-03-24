@@ -8,8 +8,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   homeAddress: { type: String, required: true },
   nickname: { type: String, required: true },
-  creditCards: { type: Array, default: [] },
-  shippingAddresses: { type: Array, default: [] }
+  recentlyPurchased: { type: Array, default: [] }
 });
 
 const User = mongoose.model('User', userSchema);

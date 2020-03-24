@@ -5,11 +5,8 @@ const bcrypt = require('bcrypt-nodejs');
 const read = async (req, res) => {
   try{
     const { id } = req.query;
-    console.log(id);
     
     const user = await User.findOne({ id });
-    console.log('sending')
-    console.log(user)
 
     httpResponse.successResponse(res, user);
   } catch (e) {
@@ -52,12 +49,27 @@ const create = async (req, res) => {
 const update = async (req, res) => {
   try{
     const { id, fields } = req.body;
-    const updated = await User.findOneAndUpdate({ id }, fields).exec();
-    httpResponse.successResponse(res, 'success');
 
+    const updated = await User.findOneAndUpdate({ id }, fields).exec();
+
+    httpResponse.successResponse(res, 'success');
   } catch (e) {
     httpResponse.failureResponse(res, e.toString());
   }
 }
 
-module.exports = { read, create, update };
+const updatePassword = async (req, res) => {
+  try{
+    const { password, _id } = req.body;
+    const hashedPass = bcrypt.hashSync(password);
+
+    const updated = await User.findOneAndUpdate({ _id }, { password: hashedPass });
+
+    httpResponse.successResponse(res, 'success');
+  } catch(e) {
+    console.log(e);
+    httpResponse.failureResponse(res, e.toString());
+  }
+}
+
+module.exports = { read, create, update, updatePassword };
