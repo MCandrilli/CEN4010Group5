@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import {Textfield, Button, Switch , CardText, Grid, Cell, Card} from 'react-mdl';
+import axios from 'axios';
+import {Textfield, Switch , CardText, Grid, Cell, Card} from 'react-mdl';
 import Starrating from './starrating';
 import Typography from '@material-ui/core/Typography';
 import {Link} from 'react-router-dom';
 import { browserHistory } from 'react-router';
-
+import {Button} from 'reactstrap';
 
 class customerReview extends Component {
 
@@ -15,10 +16,12 @@ class customerReview extends Component {
             'books': [],
             value: '',
             user: '',
+            
+            nickname: null,
             rating: 1,
             checked: false,
-            isLoggedUser : true,
-            bookIsPurchased : false,
+            isLoggedUser : false,
+            bookIsPurchased : true,
             checked: false
         }
 
@@ -26,12 +29,21 @@ class customerReview extends Component {
         this.handleAnonyousSwitch = this.handleAnonyousSwitch.bind(this);
     }
       
-    componentDidMount() {
-      this.getItems();
-      console.log(this.state.checked);
-      this.setState({
-          checked: false
-      });
+    async componentDidMount() {
+        
+        const { data: profileData }  = await axios.get('http://localhost:5000' + '/user?id=john123');
+        const profileInfo = profileData.data;
+        console.log(profileInfo);
+
+        this.getItems();
+        this.setState({checked: false});
+        if(profileInfo !== null) 
+        {
+            this.setState({isLoggedUser : true});
+        }
+
+
+        this.setState(profileInfo);
     }
   
     getItems() {
@@ -48,7 +60,7 @@ class customerReview extends Component {
         if (this.state.checked === true){
             userName = "Anonymous";
         } else {
-            userName = "Generic User Name";
+            userName = this.state.nickname;
         }
         console.log(this.props.location.aboutProps.book.title);
 
@@ -91,6 +103,9 @@ class customerReview extends Component {
         const commentdisabled = !this.state.isLoggedUser || !this.state.bookIsPurchased;
         let errorMessage;
 
+        console.log(this.state.nickname)
+        console.log('logged in user set to: ' + isLoggedIn)
+
         if(isLoggedIn && isPurchased) errorMessage = null;
         else if (isLoggedIn && !isPurchased) errorMessage = <span style = {{color:'red'}}  > Purchase book to comment </span>
         else if (!isLoggedIn) errorMessage = <span style = {{color:'red'}}  > Log in to comment </span>
@@ -103,6 +118,14 @@ class customerReview extends Component {
         
             return(          
                 <div style={{width: '80%', margin: 'auto'}}>  
+                
+                <Link to={{pathname: "/bookdetails" , aboutProps:{book: bookProps.book}}} style={{textDecoration: 'none'}}> 
+                    <Button color="info" style={{margin: '5px'}}> Back : {bookProps.book.title}</Button>
+                </Link><br/>                
+                <Link to={{pathname: "/"}} style={{textDecoration: 'none'}}> 
+                    <Button color="info" style={{margin: '5px'}}>Back to Home Page</Button>
+                </Link><br/>
+
                     <Grid>
                         <Cell style = {{width:'50%'}} align = 'middle'>
                             <img style={{ alignItems:'center'}}src={imageUrl}/>
