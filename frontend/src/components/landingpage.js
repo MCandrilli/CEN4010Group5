@@ -174,7 +174,8 @@ class LandingPage extends Component {
 											to={{
 												pathname: '/bookdetails',
 												aboutProps: {
-													book: item
+													book: item,
+													lists: lists
 												}
 											}}
 											style={{ textDecoration: 'none' }}
