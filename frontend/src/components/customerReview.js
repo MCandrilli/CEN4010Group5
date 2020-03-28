@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {Textfield, Switch , CardText, Grid, Cell, Card} from 'react-mdl';
-import Starrating from './starrating';
 import {Link} from 'react-router-dom';
 import {Button} from 'reactstrap';
 import StarRatings from 'react-star-ratings';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+let data;
 class customerReview extends Component {
 
     constructor() {    
@@ -21,33 +21,49 @@ class customerReview extends Component {
             rating: 1,
             checked: false,
             isLoggedUser : false,
-            bookIsPurchased : true,
-            checked: false,
-
-            
+            bookIsPurchased : true,            
             userSelectedStarValue: 1,
         }
 
-        this.handleChange = this.handleChange.bind(this);       
-        this.handleAnonyousSwitch = this.handleAnonyousSwitch.bind(this);
-        this.displayStarRating = this.displayStarRating.bind(this);
+        this.handleChange = this.handleChange.bind(this); 
     }
-      
+    
+    setStrorage(){
+        if(this.props.location.aboutProps){
+        localStorage.setItem('state', JSON.stringify(this.props.location.aboutProps))
+        }
+
+    }
+
+     getStorage(){
+        return JSON.parse(localStorage.getItem('state') || '{}');
+     }
+    
+    componentWillMount(){
+        console.log('inside the will mount');
+        // this.setStrorage()  //this make it change but saves when leaves!!
+        data = this.getStorage()
+        console.log(data);
+    }
+
+
     async componentDidMount() {
-        
-        const { data: profileData }  = await axios.get('http://localhost:5000' + '/user?id=john123');
+        const id = localStorage.getItem('id');
+
+        console.log('id: ' + id);
+
+        const { data: profileData }  = await axios.get('http://localhost:5000' + `/user?id=${ id }`);
         const profileInfo = profileData.data;
-        console.log(profileInfo);
+        console.log (' profile date: ' + profileInfo);
 
         this.getItems();
-        this.setState({checked: false});
         if(profileInfo !== null) 
         {
             this.setState({isLoggedUser : true});
         }
 
-
         this.setState(profileInfo);
+        this.setState({checked: false});
     }
   
     getItems() {
@@ -55,7 +71,6 @@ class customerReview extends Component {
         fetch('/comments')
         .then(results => results.json())
         .then(results => this.setState({'books': results.data}));
-  
     }
    
     handleSubmit(book) {
@@ -118,23 +133,29 @@ class customerReview extends Component {
             .catch((error) => {
             console.error('Error:', error);
             });
+
+            window.location.reload();
     }
  
     handleChange(event) {
         console.log(event.target.value)
         this.setState({value: event.target.value});
       }
-    handleAnonyousSwitch()
-    {
-        this.setState({checked: !this.state.checked});
-        console.log(this.state.checked)
-    };
 
-    updateStarValue(value){
-        this.setState({userSelectedStarValue: value});
-        console.log(this.state.userSelectedStarValue);
-    }
- 
+      
+  toggleforToggleOne(event) {
+    console.clear();
+    console.log('check in toggle before set state', this.state.checked);
+    this.setState({
+        checked: !this.state.checked
+    }, function afterStateChange () {this.useNewState();});
+    console.log('check in toggle after set state', this.state.checked);
+  }
+  
+  useNewState() {
+    console.log('check in useNewState callback', this.state.checked);
+  }
+  
  
     changeRating( newRating, name ) {
         this.setState({
@@ -142,12 +163,6 @@ class customerReview extends Component {
         })
         console.log(newRating);
     }; 
-
-    displayStarRating = rating => {
-        return(
-        <StarRatings rating={rating} starRatedColor="goldenrod" numberOfStars={5} name="rating" starDimension="20px" starSpacing="2px"/>);
-      }
-
 
     render() {
         const isLoggedIn = this.state.isLoggedUser;
@@ -162,7 +177,7 @@ class customerReview extends Component {
         else if (isLoggedIn && !isPurchased) errorMessage = <span style = {{color:'red'}}  > Purchase book to comment </span>
         else if (!isLoggedIn) errorMessage = <span style = {{color:'red'}}  > Log in to comment </span>
 
-        let bookProps = this.props.location.aboutProps || {}    
+        let bookProps =data || {}    
         {/*if props is not empty, load the page*/}
         if(bookProps.book)
         { 
@@ -192,8 +207,8 @@ class customerReview extends Component {
                     <hr></hr>
                     <h2>Book Reviews</h2>
                     <div id = 'NewComment' style={{width: '80%', margin: 'auto'}}>
-                        <form style={{margin: '10px'}} onSubmit= {this.handleSubmit.bind(this)} >
-                            <Switch ripple id="Anonymous" onChange={this.handleAnonyousSwitch.bind(this)} disabled = {commentdisabled}>Anonymous comment</Switch>
+                        <form style={{margin: '10px'}} onSubmit= {this.handleSubmit} >
+                            <Switch ripple id="Anonymous" onChange={this.toggleforToggleOne.bind(this)} defaultValue={true}  disabled = {commentdisabled}>Anonymous comment</Switch>
                             <div style={{width: '100%', margin: 'auto'}}>  
                                 <Textfield  value= {this.state.value}
                                     onChange={this.handleChange}                                
