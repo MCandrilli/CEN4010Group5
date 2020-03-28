@@ -16,7 +16,7 @@ const read = async (req, res) => {
 
 const create = async (req, res) => {
   try{
-    const { email, id, firstName, lastName, password, homeAddress, nickname, creditCards, shippingAddresses } = req.body
+    const { email, id, firstName, lastName, password, homeAddress, nickname } = req.body
 
     const exists = await User.findOne({ id });
 
@@ -34,8 +34,6 @@ const create = async (req, res) => {
       password:hashedPass,
       homeAddress,
       nickname,
-      creditCards,
-      shippingAddresses
     }
 
     const newUser = await User.create(fields);
