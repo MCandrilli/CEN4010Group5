@@ -4,10 +4,17 @@ import {Card, CardText} from 'react-mdl';
 import {addToCart} from "./shoppingcart";
 import {Link} from 'react-router-dom'
 import StarRatings from 'react-star-ratings';
+import WishlistDropMenu from './wishlistdropmenu';
 
 let data
 class BookDetails extends Component {
 
+    constructor(){
+        super();
+        this.state ={
+            'wishlists': []
+        };
+    }
 
     setStrorage(){
         if(this.props.location.aboutProps){
@@ -23,11 +30,20 @@ class BookDetails extends Component {
     componentWillMount(){
         this.setStrorage()  //this make it change but saves when leaves!!
         data = this.getStorage()
+        this.getWishLists();
     }
 
+    getWishLists() {
+		fetch('/wishlists')
+			.then((results) => results.json())
+			.then((results) => this.setState({ 'wishlists': results.data }));
+	}
     
     render() {
         let myData = data || {}      
+       
+        
+
         console.log(myData)          
         if (myData.book) {
             let imageUrl = 'https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/' + myData.book.imageLink;
@@ -74,10 +90,11 @@ class BookDetails extends Component {
                                 <h5><strong>
                                     ${myData.book.price}
                                 </strong></h5>
-                                <Button style = {{backgroundColor: '#6fa3f7'}} onClick = {() => {(myData.book != null) && (addToCart(myData.book))}}>
+                                <Button style = {{float: 'left', height: '33px',backgroundColor: '#6fa3f7'}} onClick = {() => {(myData.book != null) && (addToCart(myData.book))}}>
                                     Add to Shopping Cart
                                 </Button>
-    
+                                <WishlistDropMenu style={{paddingLeft:'5px'}} booktitle={myData.book.title} id={myData.book._id} lists={this.state.wishlists} imageLink={myData.book.imageLink} price={myData.book.price}/>
+                                        
                                     <Link to={{pathname:"/customerReview" ,
                                         aboutProps:{
                                             book: myData.book
