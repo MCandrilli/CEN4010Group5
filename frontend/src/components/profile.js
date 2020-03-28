@@ -27,11 +27,17 @@ class Profile extends Component {
   }
 
   async componentDidMount(){
-    const { data: profileData }  = await axios.get(SERVER_URL + '/user?id=john123');
-    const { data: creditCardData } = await axios.get(SERVER_URL + '/card?id=john123')
-    const { data: shippingAddressData } = await axios.get(SERVER_URL + '/address?id=john123');
+    const { history } = this.props;
+    const id = localStorage.getItem('id');
+
+    if(!id){
+      history.push('/login');
+    }
+
+    const { data: profileData }  = await axios.get(SERVER_URL + `/user?id=${ id }`);
+    const { data: creditCardData } = await axios.get(SERVER_URL + `/card?id=${ id }`)
+    const { data: shippingAddressData } = await axios.get(SERVER_URL + `/address?id=${ id }`);
     const profileInfo = profileData.data;
-    console.log(profileInfo);
     const creditCardInfo = creditCardData.data;
     const shippingAddressInfo = shippingAddressData.data;
 
@@ -140,6 +146,12 @@ class Profile extends Component {
     this.setState({ shippingAddresses: arr });
   }
 
+  handleSignOut = () => {
+    const { history } = this.props;
+    localStorage.clear();
+    history.push('/login');
+  }
+
   render() {
     const { edit, id, passwordDisplay, confirmPassword, homeAddress, firstName, lastName, nickname, creditCards, shippingAddresses } = this.state;
     return(
@@ -153,6 +165,9 @@ class Profile extends Component {
               </Button>
               <Button raised colored disabled={ !edit } onClick={ this.handleSaveProfile } style={{ marginLeft: 20 }}>
                 Save Changes
+              </Button>
+              <Button raised accent onClick={ this.handleSignOut } style={{ marginLeft: 20 }}>
+                Sign Out
               </Button>
           </CardText>
           <CardText>
