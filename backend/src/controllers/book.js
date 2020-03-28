@@ -41,4 +41,17 @@ const read = async (req, res) => {
   }
 }
 
-module.exports = { read, create };
+const update = async (req, res) => {
+  try{
+    const books = await Book.findByIdAndUpdate(req.params.id, {rating: req.body.rating, ratingCount: req.body.ratingCount});
+    httpResponse.successResponse(res, books);
+  } catch (e) {
+    console.log(e)
+    httpResponse.failureResponse(res, e.toString());
+  }
+
+
+
+}
+
+module.exports = { read, create, update };
