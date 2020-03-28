@@ -2,6 +2,31 @@ const User = require('../models/user');
 const httpResponse = require('../util/http');
 const bcrypt = require('bcrypt-nodejs');
 
+const login = async (req, res) => {
+  try{
+    const { id, password } = req.body;
+
+    const user = await User.findOne({ id });
+
+    if(!user){
+      throw new Error('user does not exist');
+    }
+
+    const { password:hashedPass } = user;
+
+    const same = bcrypt.compareSync(password, hashedPass);
+
+    if(!same){
+      throw new Error('Incorrect Password');
+    }
+
+    httpResponse.successResponse(res, 'success');
+  } catch (e) {
+    console.log(e);
+    httpResponse.failureResponse(res, e.toString());
+  } 
+}
+
 const read = async (req, res) => {
   try{
     const { id } = req.query;
@@ -16,24 +41,19 @@ const read = async (req, res) => {
 
 const create = async (req, res) => {
   try{
-    const { email, id, firstName, lastName, password, homeAddress, nickname } = req.body
+    const { id, password } = req.body
 
     const exists = await User.findOne({ id });
 
     if(exists){
-      throw new Error(`User with id: ${id} already exists`);
+      throw new Error(`User with id: ${ id } already exists`);
     }
 
     const hashedPass = bcrypt.hashSync(password);
 
     const fields = {
-      email,
       id,
-      firstName,
-      lastName,
       password:hashedPass,
-      homeAddress,
-      nickname,
     }
 
     const newUser = await User.create(fields);
@@ -70,4 +90,4 @@ const updatePassword = async (req, res) => {
   }
 }
 
-module.exports = { read, create, update, updatePassword };
+module.exports = { read, create, update, updatePassword, login };
