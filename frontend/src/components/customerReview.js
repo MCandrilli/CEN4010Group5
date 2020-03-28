@@ -58,7 +58,7 @@ class customerReview extends Component {
   
     }
    
-    handleSubmit() {
+    handleSubmit(book) {
 
         let userName = '';
         if (this.state.checked === true){
@@ -74,9 +74,8 @@ class customerReview extends Component {
             "Comments" :
             [
                 {
-                    // "User" : userName,
-                    "User" : 'AnthonyCommentWith1Star',
-                    "Comment" : this.state.value,
+                    "User" : userName,
+                    "Comment" : this.state.value,                    
                     "Rating" : this.state.userSelectedStarValue
                 }
             ]
@@ -91,6 +90,34 @@ class customerReview extends Component {
         })
         .then(res => res.json())
         .then(data => console.log(data));  
+
+
+        
+        
+        let newRating = (book.rating*book.ratingCount + this.state.userSelectedStarValue)/(book.ratingCount+1);
+        let newCount = (book.ratingCount+1);
+       
+        
+        let commentUpdateData = {
+            "rating": newRating,
+            "ratingCount": newCount
+        };
+
+        fetch('/books/' + book._id, {
+            method: 'PUT',
+            body: JSON.stringify(commentUpdateData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+            })
+            
+            .then((response) => response.json())
+            .then((result) => {
+            console.log('Success:', result);
+            })
+            .catch((error) => {
+            console.error('Error:', error);
+            });
     }
  
     handleChange(event) {
@@ -192,7 +219,7 @@ class customerReview extends Component {
                                 <Button 
                                 //disable if 
                                     disabled={commentdisabled} 
-                                    onClick = {this.handleSubmit.bind(this)} >Submit Comment
+                                    onClick = {this.handleSubmit.bind(this, bookProps.book)} >Submit Comment
                                 </Button>
                                 {errorMessage}  
                             </Link>                            
