@@ -3,13 +3,13 @@ const httpResponse = require('../util/http');
 
 const create = async (req, res) => {
 	try {
-		const { title, belongsTo, imageLink, price, id } = req.body;
+		const { title, belongsTo, imageLink, price} = req.body;
 		const fields = {
 			title,
 			belongsTo,
 			imageLink,
-			price,
-			id
+			price
+			
 		};
 
 		const wishlistItem = await WishListItem.create(fields);

@@ -49,9 +49,16 @@ const update = async (req, res) => {
     console.log(e)
     httpResponse.failureResponse(res, e.toString());
   }
-
-
-
 }
 
-module.exports = { read, create, update };
+const readByAuthor = async (req, res) => {
+  try {
+    const bookByAuthor = await Book.find({author: req.params.author});
+    httpResponse.successResponse(res, bookByAuthor);
+  } catch (e) {
+    console.log(e);
+    httpResponse.failureResponse(res, e.toString());
+  }
+}
+
+module.exports = { read, create, update, readByAuthor };
