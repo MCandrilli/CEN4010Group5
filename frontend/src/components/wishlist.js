@@ -37,7 +37,8 @@ class Wishlist extends Component {
 			items: [],
 			listItems: [],
 			value: '',
-			errorMessage: ''
+			errorMessage: '',
+			loaded: false
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -103,29 +104,29 @@ class Wishlist extends Component {
 		this.setState({ items: this.state.items.filter((item) => item._id !== _id) });
 	}
 
-	moveItem(id, title, listID, imageLink, price, itemId) {
-		axios.delete(`http://localhost:5000/wishlistItems/delete/` + id).then((res) => {
-			console.log(res);
-			console.log(res.data);
-		});
+	moveItem(id, title, listID, imageLink, price){
+        axios.delete(`http://localhost:5000/wishlistItems/delete/` + id)
+        .then(res => {
+          console.log(res);
+          console.log(res.data);
+        });
 
-		let submissiondata = {
-			title: title,
-			belongsTo: listID,
-			imageLink: imageLink,
-			price: price,
-			id: itemId
-		};
+        let submissiondata = {
+            "title": title,
+            "belongsTo": listID,
+            "imageLink": imageLink,
+            "price" : price
+        }
 
-		fetch('/wishlistItems', {
-			method: 'POST',
-			body: JSON.stringify(submissiondata),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
-			.then((res) => res.json())
-			.then((data) => console.log(data));
+        fetch('/wishlistItems', {
+            method: 'POST',
+            body: JSON.stringify(submissiondata),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(res => res.json())
+        .then(data => console.log(data)); 
 
 		window.location.reload();
 	}
