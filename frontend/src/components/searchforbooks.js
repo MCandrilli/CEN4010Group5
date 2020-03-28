@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { Card, CardTitle, CardText, CardActions, Grid, Cell} from 'react-mdl';
-import {Button} from 'reactstrap';
+import { Card, CardTitle, CardText, CardActions, Button, Grid, Cell} from 'react-mdl';
+import SimpleMenu from './SimpleMenu';
+import Select from 'react-select';
+import 'bootstrap/dist/css/bootstrap.min.css'
 import WishlistDropMenu from './wishlistdropmenu';
 import {Link} from 'react-router-dom';
+var NumberFormat = require('react-number-format');
 
 
-
-class LandingPage extends Component {
+class SearchForBooks extends Component {
     
       constructor() {
           super();
@@ -90,7 +92,7 @@ class LandingPage extends Component {
         return (
             
             <div style={{boxshadow: "0px 0px 5px #ddd", backgroundcolor: '#f0f0f0', width: '80%', margin: 'auto'}}>
-              <Button color="success" onClick = {this.sortByTitle.bind(this)}> SORT BY TITLE </Button>
+              <Button onClick = {this.sortByTitle.bind(this)}> SORT BY TITLE </Button>
               <Button onClick = {this.sortByAuthor.bind(this)}> SORT BY AUTHOR </Button>
               <Button onClick = {this.sortByPages.bind(this)}> SORT BY PAGES </Button>
               <Button onClick = {this.sortByYear.bind(this)}> SORT BY YEAR PUBLISHED </Button>
@@ -138,8 +140,9 @@ class LandingPage extends Component {
         
        
         )
+    
     }
-
+    
 }
 
-export default LandingPage;
+export default SearchForBooks;
