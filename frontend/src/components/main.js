@@ -9,6 +9,7 @@ import Shoppingcart from './shoppingcart';
 import Wishlist from './wishlist';
 import BookDetails from './bookdetails';
 import customerReview from './customerReview';
+import bookByAuthor from './bookByAuthor';
 
 const Main = () => {
     return (
@@ -22,8 +23,8 @@ const Main = () => {
             <Route path="/wishlist" component={Wishlist} />
             <Route path="/bookdetails" component={BookDetails} />
             <Route path="/customerReview" component={customerReview} />
+            <Route path="/bookByAuthor" component={bookByAuthor} />
             
-        
         </Switch>
     )
     

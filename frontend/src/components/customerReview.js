@@ -174,6 +174,6 @@ class customerReview extends Component {
                     <Button colored style={{marginLeft:'25%'}}>Back to Home Page</Button>
                 </Link><br/>
             </div>}       
-}
+    }
 }
 export default customerReview;

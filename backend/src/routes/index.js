@@ -15,6 +15,7 @@ apiRouter.get('/', (req, res) => res.send('ayy group 5'));
 /* ------ Book Routes ------ */
 apiRouter.get('/books', book.read);
 apiRouter.post('/books', book.create);
+apiRouter.get('/books/:author', book.readByAuthor);
 
 /* ------ User Routes ------ */
 apiRouter.get('/user', user.read);
