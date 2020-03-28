@@ -21,6 +21,7 @@ function App() {
                     <Link to="/shoppingcart">Shopping Cart</Link>
                     <Link to="/wishlist">My Wish List</Link>
                     <Link to="/profile">My Profile</Link>
+                    <Link to="/login">login</Link>
             </Navigation>
         </Header>
         <Content>
