@@ -2,14 +2,36 @@ const User = require('../models/user');
 const httpResponse = require('../util/http');
 const bcrypt = require('bcrypt-nodejs');
 
+const login = async (req, res) => {
+  try{
+    const { id, password } = req.body;
+
+    const user = await User.findOne({ id });
+
+    if(!user){
+      throw new Error('user does not exist');
+    }
+
+    const { password:hashedPass } = user;
+
+    const same = bcrypt.compareSync(password, hashedPass);
+
+    if(!same){
+      throw new Error('Incorrect Password');
+    }
+
+    httpResponse.successResponse(res, 'success');
+  } catch (e) {
+    console.log(e);
+    httpResponse.failureResponse(res, e.toString());
+  } 
+}
+
 const read = async (req, res) => {
   try{
     const { id } = req.query;
-    console.log(id);
     
     const user = await User.findOne({ id });
-    console.log('sending')
-    console.log(user)
 
     httpResponse.successResponse(res, user);
   } catch (e) {
@@ -19,26 +41,19 @@ const read = async (req, res) => {
 
 const create = async (req, res) => {
   try{
-    const { email, id, firstName, lastName, password, homeAddress, nickname, creditCards, shippingAddresses } = req.body
+    const { id, password } = req.body
 
     const exists = await User.findOne({ id });
 
     if(exists){
-      throw new Error(`User with id: ${id} already exists`);
+      throw new Error(`User with id: ${ id } already exists`);
     }
 
     const hashedPass = bcrypt.hashSync(password);
 
     const fields = {
-      email,
       id,
-      firstName,
-      lastName,
       password:hashedPass,
-      homeAddress,
-      nickname,
-      creditCards,
-      shippingAddresses
     }
 
     const newUser = await User.create(fields);
@@ -52,12 +67,27 @@ const create = async (req, res) => {
 const update = async (req, res) => {
   try{
     const { id, fields } = req.body;
-    const updated = await User.findOneAndUpdate({ id }, fields).exec();
-    httpResponse.successResponse(res, 'success');
 
+    const updated = await User.findOneAndUpdate({ id }, fields).exec();
+
+    httpResponse.successResponse(res, 'success');
   } catch (e) {
     httpResponse.failureResponse(res, e.toString());
   }
 }
 
-module.exports = { read, create, update };
+const updatePassword = async (req, res) => {
+  try{
+    const { password, _id } = req.body;
+    const hashedPass = bcrypt.hashSync(password);
+
+    const updated = await User.findOneAndUpdate({ _id }, { password: hashedPass });
+
+    httpResponse.successResponse(res, 'success');
+  } catch(e) {
+    console.log(e);
+    httpResponse.failureResponse(res, e.toString());
+  }
+}
+
+module.exports = { read, create, update, updatePassword, login };
