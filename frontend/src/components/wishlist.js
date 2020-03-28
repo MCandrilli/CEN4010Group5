@@ -178,7 +178,8 @@ class Wishlist extends Component {
 											listItem,
 											item._id,
 											itemImageLink,
-											itemPrice
+											itemPrice,
+											element.id
 										)}
 									>
 										{item.title}
