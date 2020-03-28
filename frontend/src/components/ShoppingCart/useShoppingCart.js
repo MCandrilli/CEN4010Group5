@@ -1,14 +1,15 @@
 import React from 'react';
 import { StyledSubtotal } from './shoppingCartStyles';
-import { cart, save_for_later, updateLocalStorage } from './shoppingCartStorage';
+import { cart, save_for_later, updateLocalStorage, updateShoppingCart } from './shoppingCartStorage';
 
 const img_url_prefix = 'https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/';
 
 /* Add a book to the shopping cart */
 const addToCart = (book) => {
-	if (book == null) {
+	if (book === null) {
 		return;
 	}
+	updateShoppingCart();
 	let duplicate = findBookInCartByIndex(book._id); // Find index of possible duplicate
 	if (duplicate === -1) {
 		// No duplicate present
@@ -85,8 +86,7 @@ const backToCart = (id) => {
 
 const updateQuantity = (id, new_quantity) => {
 	let index = findBookInCartByIndex(id);
-	if (new_quantity === 0)
-	{
+	if (new_quantity === 0) {
 		removeFromCart(id);
 		return;
 	}
