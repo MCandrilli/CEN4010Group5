@@ -1,98 +1,102 @@
 import React, { Component } from 'react';
-import {Button} from 'react-mdl';
-import {Grid, Cell} from 'react-mdl';
-import Typography from '@material-ui/core/Typography';
-import {Link} from 'react-router-dom';
+import {Grid, Cell,Button} from 'react-mdl';
+import {Card, CardText} from 'react-mdl';
 import {addToCart} from "./shoppingcart";
+import {Link} from 'react-router-dom'
+import StarRatings from 'react-star-ratings';
 
+let data
 class BookDetails extends Component {
 
-    getNumbers() {
-        let myData = this.props.location.aboutProps || {}
-        if (myData.book) {
-            return Object.keys(myData.book).map(function(item, index){
-                     return item
-                });
-        } else {
-            return false;
+
+    setStrorage(){
+        if(this.props.location.aboutProps){
+        localStorage.setItem('state', JSON.stringify(this.props.location.aboutProps))
         }
+
     }
 
+     getStorage(){
+        return JSON.parse(localStorage.getItem('state') || '{}');
+     }
+    
+    componentWillMount(){
+        this.setStrorage()  //this make it change but saves when leaves!!
+        data = this.getStorage()
+    }
+
+    
     render() {
-        let myData = this.props.location.aboutProps || {}                
+        let myData = data || {}      
+        console.log(myData)          
         if (myData.book) {
             let imageUrl = 'https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/' + myData.book.imageLink;
+            
             return(
                 <div> 
-                    {console.log(myData.book)}
                     <Grid>
-                        <Cell></Cell>
-                        <Cell style = {{width:'320px'}}>
-                            <img alt="Book Cover" src={imageUrl}/>
+                        
+                        <Cell style={{ width: '25%'}}>                        
+                            
                         </Cell>
-                        <Cell>
-                            <Typography variant="h4" gutterBottom>
-                                <b>{myData.book.title}</b>       
-                            </Typography>
-                                <p> by: {myData.book.author}</p>
-                            <h5>
-                                About author
-                            </h5>
-                            <Button>
-                                Option1
-                            </Button>
-                            <Button>
-                                Option2
-                            </Button>
-                            <Button>
-                                Option3
-                            </Button>
-                            <br />
-                            <Button style = {{marginTop: '20px'}} onClick = {() => {(myData.book != null) && (addToCart(myData.book))}}>
-                                Add to Shopping Cart
-                            </Button>
+                        <Cell  style={{ width: '360px'}}>
+                            <Card shadow={0} style={{ width: '360px', height: '720px',  background: 'url(' + imageUrl + ') center / cover rgb(207,217,226)'}}>
+                            </Card> 
+                            
+                        </Cell >
+                        <Cell>       
+                            <Card style={{ width: '500px', height: 'auto'}}>
+                                <CardText style = {{paddingTop:'5px'}}>
+                                <h3 style = {{marginTop:'0px', marginBottom: '5px'}}>{myData.book.title}</h3>
+                                <overline style ={{marginTop:'0px'}}>by: 
+                                    <Link to={{pathname:"/bookByAuthor",
+                                        aboutProps:{
+                                            book: myData.book
+                                        }
+                                        }} 
+                                        style = {{color: '#6fa3f7'}}>
+                                        {myData.book.author}
+                                    </Link></overline>
+                                <h4>About author
+                                    <p>{myData.book.aboutAuthor}</p>
+                                </h4>
+                                
+                                <h4 style = {{backgroundColor: '#f0f0f0', padding: '10px'}}>Overview
+                                <p>{myData.book.Overview}</p>
+                                <p>
+                                    Genre: {myData.book.genre}<br/>
+                                    Language: {myData.book.language}<br/>
+                                    Year: {myData.book.year}<br/>
+                                    Pages: {myData.book.pages}
+                                </p>
+                                </h4>
+                                <StarRatings rating={myData.book.rating} starRatedColor="goldenrod" numberOfStars={5} name="rating" starDimension="20px" starSpacing="2px"/>
+                                <h5><strong>
+                                    ${myData.book.price}
+                                </strong></h5>
+                                <Button style = {{backgroundColor: '#6fa3f7'}} onClick = {() => {(myData.book != null) && (addToCart(myData.book))}}>
+                                    Add to Shopping Cart
+                                </Button>
+    
+                                    <Link to={{pathname:"/customerReview" ,
+                                        aboutProps:{
+                                            book: myData.book
+                                        }
+                                        }}>
+                                    <Button shadow={0} align = {'center'} style={{width: '100%', height: '50%'}}> Book Reviews </Button>
+                                    </Link>       
+                                
+                                </CardText>
+                            </Card>                     
                         </Cell>
                     </Grid>
-                    <div style={{width: '80%', margin: 'auto'}}>
-                        <h4>Overview</h4>
-                        <span style={{textAlign:'left'}}>
-                            Belonging in the immortal company of the great works of literature, Dante Alighieri's poetic masterpiece, The Divine Comedy, is a moving human drama, 
-                            an unforgettable visionary journey through the infinite torment of Hell, up the arduous slopes of Purgatory, and on to the glorious realm of Paradise—the 
-                            sphere of universal harmony and eternal salvation.
-                            <br />
-                            Now, for the first time, John Ciardi's brilliant and authoritative translations of Dante's three soaring canticles—The Inferno, The Purgatorio, and The 
-                            Paradiso—have been gathered together in a single volume. Crystallizing the power and beauty inherent in the great poet's immortal conception of the aspiring soul, 
-                            The Divine Comedy is a dazzling work of sublime truth and mystical intensity.
-                        </span>
-                    </div>
-                    
-                    <div style={{width: '80%', margin: 'auto'}}>  
-
-                        <div id = 'NewComment' style={{width: '80%', margin: 'auto'}}>       
-                        
-                        <br/>
-                        <br/>
-                        <Link to={{pathname:"/customerReview" ,
-                            aboutProps:{
-                                book: myData.book
-                            }
-                        }}>
-                            <Button shadow={0} align = {'center'} style={{width: '100%', height: '50%'}}> Book Reviews </Button>
-                        </Link>
-                        </div>        
-                </div>
-
-
-
-
                 </div>   
-                )
+            )
         }else{
             return( 
                 <div></div>
             )
         }
-    }
-    
+    }    
 }
 export default BookDetails;
