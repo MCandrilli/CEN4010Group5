@@ -10,7 +10,8 @@ const mongoose = require('mongoose');
 
 const commentSchema = new mongoose.Schema({
     User: String,
-    Comment: String
+    Comment: String,
+    Rating : Number
 })
 
 const bookCommentSchema = new mongoose.Schema({

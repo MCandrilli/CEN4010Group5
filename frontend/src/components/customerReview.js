@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {Textfield, Switch , CardText, Grid, Cell, Card} from 'react-mdl';
 import Starrating from './starrating';
-import Typography from '@material-ui/core/Typography';
 import {Link} from 'react-router-dom';
-import { browserHistory } from 'react-router';
 import {Button} from 'reactstrap';
+import StarRatings from 'react-star-ratings';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class customerReview extends Component {
 
@@ -22,11 +22,15 @@ class customerReview extends Component {
             checked: false,
             isLoggedUser : false,
             bookIsPurchased : true,
-            checked: false
+            checked: false,
+
+            
+            userSelectedStarValue: 1,
         }
 
         this.handleChange = this.handleChange.bind(this);       
         this.handleAnonyousSwitch = this.handleAnonyousSwitch.bind(this);
+        this.displayStarRating = this.displayStarRating.bind(this);
     }
       
     async componentDidMount() {
@@ -70,8 +74,10 @@ class customerReview extends Component {
             "Comments" :
             [
                 {
-                    "User" : userName,
-                    "Comment" : this.state.value
+                    // "User" : userName,
+                    "User" : 'AnthonyCommentWith1Star',
+                    "Comment" : this.state.value,
+                    "Rating" : this.state.userSelectedStarValue
                 }
             ]
         }
@@ -95,7 +101,26 @@ class customerReview extends Component {
     {
         this.setState({checked: !this.state.checked});
         console.log(this.state.checked)
+    };
+
+    updateStarValue(value){
+        this.setState({userSelectedStarValue: value});
+        console.log(this.state.userSelectedStarValue);
     }
+ 
+ 
+    changeRating( newRating, name ) {
+        this.setState({
+          userSelectedStarValue: newRating
+        })
+        console.log(newRating);
+    }; 
+
+    displayStarRating = rating => {
+        return(
+        <StarRatings rating={rating} starRatedColor="goldenrod" numberOfStars={5} name="rating" starDimension="20px" starSpacing="2px"/>);
+      }
+
 
     render() {
         const isLoggedIn = this.state.isLoggedUser;
@@ -125,7 +150,6 @@ class customerReview extends Component {
                 <Link to={{pathname: "/"}} style={{textDecoration: 'none'}}> 
                     <Button color="info" style={{margin: '5px'}}>Back to Home Page</Button>
                 </Link><br/>
-
                     <Grid>
                         <Cell style = {{width:'50%'}} align = 'middle'>
                             <img style={{ alignItems:'center'}}src={imageUrl}/>
@@ -133,6 +157,7 @@ class customerReview extends Component {
                         <Cell align = 'middle'>
                             <br/>
                             <h2> {bookProps.book.title}</h2>
+                            <StarRatings rating={bookProps.book.rating} starRatedColor="goldenrod" numberOfStars={5} name="rating" starDimension="20px" starSpacing="2px"/>
                             <strong> by: {bookProps.book.author}</strong>  
                         </Cell>                            
                     </Grid>   
@@ -151,7 +176,16 @@ class customerReview extends Component {
                                     maxLength = {'200'}
                                     disabled = {commentdisabled}
                                     />  
-                                <Starrating style={{float:'left'}} disabled = {commentdisabled}/>  
+                                <StarRatings
+                                       
+                                       rating={this.state.userSelectedStarValue}
+                                       starRatedColor="gold"
+                                       changeRating={this.changeRating.bind(this)}
+                                       numberOfStars={5}
+                                       name='rating'
+                                       starDimension="20px"
+                                       starSpacing="2px"
+                                       />
                             </div>   
 
                             <Link to={{pathname:"/customerReview" , aboutProps:{ book: bookProps.book}}}>                            
@@ -181,6 +215,10 @@ class customerReview extends Component {
                                     return <Card shadow={0} key={comm.User} style={{ width: '80%', height: '10%', margin: '50px'}}>
                                     <CardText>
                                         <p> <strong> {comm.User} : &nbsp; </strong> {comm.Comment} </p>
+                                        {console.log(comm.Rating)}
+                                        <StarRatings rating={comm.Rating} starRatedColor="goldenrod" numberOfStars={5} name="rating" starDimension="20px" starSpacing="2px"/>
+                            
+                            {/* <p style={{lineHeight: '10px', textAlign:"center"}}><strong>{displayStarRating(comm.Rating)} </strong></p> */}
                                     </CardText>
                                     </Card>
                                 })
