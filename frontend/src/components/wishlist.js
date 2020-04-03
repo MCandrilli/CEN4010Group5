@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { Button } from 'reactstrap';
 import { addToCart } from './shoppingcart';
+import {Link} from 'react-router-dom';
 
 
 
@@ -109,29 +110,29 @@ class Wishlist extends Component {
 		this.setState({ items: this.state.items.filter((item) => item._id !== _id) });
 	}
 
-	moveItem(id, title, listID, imageLink, price, itemId) {
-		axios.delete(`http://localhost:5000/wishlistItems/delete/` + id).then((res) => {
-			console.log(res);
-			console.log(res.data);
-		});
+	moveItem(id, title, listID, imageLink, price){
+        axios.delete(`http://localhost:5000/wishlistItems/delete/` + id)
+        .then(res => {
+          console.log(res);
+          console.log(res.data);
+        });
 
-		let submissiondata = {
-			title: title,
-			belongsTo: listID,
-			imageLink: imageLink,
-			price: price,
-			id: itemId
-		};
+        let submissiondata = {
+            "title": title,
+            "belongsTo": listID,
+            "imageLink": imageLink,
+            "price" : price
+        }
 
-		fetch('/wishlistItems', {
-			method: 'POST',
-			body: JSON.stringify(submissiondata),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
-			.then((res) => res.json())
-			.then((data) => console.log(data));
+        fetch('/wishlistItems', {
+            method: 'POST',
+            body: JSON.stringify(submissiondata),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(res => res.json())
+        .then(data => console.log(data)); 
 
 		window.location.reload();
 	}
@@ -184,8 +185,7 @@ class Wishlist extends Component {
 											listItem,
 											item._id,
 											itemImageLink,
-											itemPrice,
-											element.id
+											itemPrice
 										)}
 									>
 										{item.title}
@@ -203,7 +203,10 @@ class Wishlist extends Component {
 		const user = localStorage.getItem('id');
 		
 		if (user === null) {
-			return <div><h2>Please sign in to use wishlists!</h2></div>
+			return <div style={{marginTop: '10%', marginLeft: '20%'}}><StyledWishListTitle>Login to Use WishLists</StyledWishListTitle>
+			<Link to="/profile">
+			<Button style={{width: '200px', marginLeft: '30%'}}color="success">Login</Button>
+			</Link></div>
 		}
 
 		return (
