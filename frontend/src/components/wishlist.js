@@ -109,29 +109,29 @@ class Wishlist extends Component {
 		this.setState({ items: this.state.items.filter((item) => item._id !== _id) });
 	}
 
-	moveItem(id, title, listID, imageLink, price){
-        axios.delete(`http://localhost:5000/wishlistItems/delete/` + id)
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
-        });
+	moveItem(id, title, listID, imageLink, price, itemId) {
+		axios.delete(`http://localhost:5000/wishlistItems/delete/` + id).then((res) => {
+			console.log(res);
+			console.log(res.data);
+		});
 
-        let submissiondata = {
-            "title": title,
-            "belongsTo": listID,
-            "imageLink": imageLink,
-            "price" : price
-        }
+		let submissiondata = {
+			title: title,
+			belongsTo: listID,
+			imageLink: imageLink,
+			price: price,
+			id: itemId
+		};
 
-        fetch('/wishlistItems', {
-            method: 'POST',
-            body: JSON.stringify(submissiondata),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-        .then(res => res.json())
-        .then(data => console.log(data)); 
+		fetch('/wishlistItems', {
+			method: 'POST',
+			body: JSON.stringify(submissiondata),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then((res) => res.json())
+			.then((data) => console.log(data));
 
 		window.location.reload();
 	}
@@ -184,7 +184,8 @@ class Wishlist extends Component {
 											listItem,
 											item._id,
 											itemImageLink,
-											itemPrice
+											itemPrice,
+											element.id
 										)}
 									>
 										{item.title}
