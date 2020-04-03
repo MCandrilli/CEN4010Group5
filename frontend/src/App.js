@@ -3,25 +3,42 @@ import Main from './components/main';
 import './App.css';
 import { Layout, Header, Navigation, Content } from 'react-mdl';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const StyledTitle = styled(Link)`
+font-size: 32px;
+font-variant: petite-caps;
+font-family: monospace;
+text-decoration: overline;
+padding-top: 15px;
+padding-left: 10px;
+color: #fff;
+&:hover{
+	text-decoration: overline;
+	color: #fff;
+}`;
+
+const StyledPageTitle = styled(Link)`
+color: darkslategrey;    
+font-size: 28px;
+font-variant: all-petite-caps;
+font-family: monospace;`;
 
 function App() {
 	return (
 		<div className="demo-big-content">
 			<Layout>
 				<Header
-					title={
-						<Link to="/" style={{ color: '#fff', textDecoration: 'none' }}>
-							GeekText
-						</Link>
-					}
+					title={<StyledTitle to="/">GeekText</StyledTitle>}
 					scroll
+					style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
 				>
 					<Navigation>
-						<Link to="/">Home</Link>
-						<Link to="/shoppingcart">Shopping Cart</Link>
-						<Link to="/wishlist">My Wish List</Link>
-						<Link to="/profile">My Profile</Link>
-						<Link to="/login">login</Link>
+						<StyledPageTitle to="/">Home</StyledPageTitle>
+						<StyledPageTitle to="/shoppingcart">Shopping Cart</StyledPageTitle>
+						<StyledPageTitle to="/wishlist">My Wish List</StyledPageTitle>
+						<StyledPageTitle to="/profile">My Profile</StyledPageTitle>
+						<StyledPageTitle to="/login">login</StyledPageTitle>
 					</Navigation>
 				</Header>
 				<Content>
