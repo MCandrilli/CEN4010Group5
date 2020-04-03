@@ -29,6 +29,9 @@ class WishlistDropMenu extends Component {
 	handleClose() {}
 
 	render() {
+
+		const user = localStorage.getItem('id');
+
 		let createlist;
 		if (this.props.lists.length < 3)
 			createlist = (
@@ -36,7 +39,25 @@ class WishlistDropMenu extends Component {
 					<Link to="/wishlist">Add a Wishlist</Link>
 				</MenuItem>
 			);
+		
 
+		if (user === null) {
+			return <div style={{ position: 'relative', float: 'left', paddingLeft: '4px' }}>
+			<Button color="success" id={this.props.booktitle}>
+				ADD TO WISHLIST
+			</Button>
+			<Menu target={this.props.booktitle} valign="top" ripple>
+				
+						<div style={{ float: 'left' }}>
+							<MenuItem>
+								<Link to="/profile">
+									Sign in to use
+								</Link>
+							</MenuItem>
+						</div>
+			</Menu>
+		</div>
+		}
 		return (
 			<div style={{ position: 'relative', float: 'left', paddingLeft: '4px' }}>
 				<Button color="success" id={this.props.booktitle}>

@@ -7,6 +7,8 @@ import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { Button } from 'reactstrap';
 import { addToCart } from './shoppingcart';
 
+
+
 const StyledWishListTitle = styled.h3`
 	font-variant: all-petite-caps;
 	text-decoration: overline;
@@ -35,6 +37,7 @@ class Wishlist extends Component {
 
 		this.state = {
 			items: [],
+			wishLists: [],
 			listItems: [],
 			value: '',
 			errorMessage: '',
@@ -52,7 +55,8 @@ class Wishlist extends Component {
 	}
 
 	getItems() {
-		fetch('/wishlists').then((results) => results.json()).then((results) => this.setState({ items: results.data }));
+		fetch('/wishlists').then((results) => results.json()).then((results) => this.setState({ items: results.data.filter(function(element) {return element.owner === localStorage.getItem('id')}) }));
+
 	}
 
 	getListItems() {
@@ -63,6 +67,7 @@ class Wishlist extends Component {
 
 	handleSubmit() {
 		let submissiondata = {
+			owner: localStorage.getItem('id'),
 			title: this.state.value
 		};
 
@@ -191,7 +196,15 @@ class Wishlist extends Component {
 			);
 	}
 
+
 	render() {
+
+		const user = localStorage.getItem('id');
+		
+		if (user === null) {
+			return <div><h2>Please sign in to use wishlists!</h2></div>
+		}
+
 		return (
 			<div style={{ width: '95%', marginLeft: 'auto', marginRight: 'auto', marginTop: '30px' }}>
 				<StyledWishListTitle>Wishlist</StyledWishListTitle>
@@ -248,43 +261,46 @@ class Wishlist extends Component {
 									)
 								});
 							{
-								console.log(element);
+								//console.log(element);
 							}
 						});
 
 						if (wishListItems.length === 0) {
 							wishListItems.push({ booktitle: 'Empty List' });
 						}
-
-						return (
-							<Cell col={4} key={item._id}>
-								<h3 style={{ display: 'flex', justifyContent: 'center' }}>{item.title}</h3>
-
-								<DataTable style={{ width: '30%' }} shadow={0} rows={wishListItems}>
-									<TableHeader name="booktitle" tooltip="The Book' title">
-										Book Title
-									</TableHeader>
-									<TableHeader name="delete" tooltip="Delete">
-										{' '}
-									</TableHeader>
-									<TableHeader name="moveTo" tooltip="1">
-										{' '}
-									</TableHeader>
-									<TableHeader name="toCart" tooltip="" />
-								</DataTable>
-
-								<Button
-									style={{ marginLeft: '30px', marginTop: '10px' }}
-									color="danger"
-									key={item._id}
-									onClick={() => {
-										this.deleteSubmit(item._id);
-									}}
-								>
-									Delete List
-								</Button>
-							</Cell>
-						);
+						
+						if (item.owner === localStorage.getItem('id')) {
+							return (
+								<Cell col={4} key={item._id}>
+									<h3 style={{ display: 'flex', justifyContent: 'center' }}>{item.title}</h3>
+	
+									<DataTable style={{ width: '30%' }} shadow={0} rows={wishListItems}>
+										<TableHeader name="booktitle" tooltip="The Book' title">
+											Book Title
+										</TableHeader>
+										<TableHeader name="delete" tooltip="Delete">
+											{' '}
+										</TableHeader>
+										<TableHeader name="moveTo" tooltip="1">
+											{' '}
+										</TableHeader>
+										<TableHeader name="toCart" tooltip="" />
+									</DataTable>
+	
+									<Button
+										style={{ marginLeft: '30px', marginTop: '10px' }}
+										color="danger"
+										key={item._id}
+										onClick={() => {
+											this.deleteSubmit(item._id);
+										}}
+									>
+										Delete List
+									</Button>
+								</Cell>
+							);
+						}
+						
 					}, this)}
 				</Grid>
 			</div>

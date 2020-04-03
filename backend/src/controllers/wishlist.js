@@ -3,9 +3,10 @@ const httpResponse = require('../util/http');
 
 const create = async (req, res) => {
   try{
-    const { title } = req.body;
+    const { owner, title } = req.body;
     const fields = {
-      title,
+      owner,
+      title
       
     }
 
