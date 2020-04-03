@@ -175,7 +175,11 @@ class LandingPage extends Component {
                         'https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/' +
                         item.imageLink;
                       let lists = this.state.wishlists;
-          
+
+                      var usersLists = lists.filter(function (element) {
+                        return element.owner === localStorage.getItem('id');
+                      });
+
                       return (
                         <Cell col={4}>
                           <Card shadow={0} style={{ width: '360px', height: '720px', margin: '50px' }}>
@@ -211,7 +215,7 @@ class LandingPage extends Component {
                                   pathname: '/bookdetails',
                                   aboutProps: {
                                     book: item,
-                                    lists: lists
+                                    lists: usersLists
                                   }
                                 }}
                                 style={{ textDecoration: 'none' }}
@@ -242,7 +246,7 @@ class LandingPage extends Component {
                                   style={{ float: 'left', paddingLeft: '5px' }}
                                   booktitle={item.title}
                                   id={item._id}
-                                  lists={lists}
+                                  lists={usersLists}
                                   imageLink={item.imageLink}
                                   price={item.price}
                                 />

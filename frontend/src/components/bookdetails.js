@@ -32,9 +32,12 @@ class BookDetails extends Component {
 	}
 
 	getWishLists() {
-		fetch('/wishlists')
-			.then((results) => results.json())
-			.then((results) => this.setState({ wishlists: results.data }));
+		    
+            
+        fetch('/wishlists').then((results) => results.json())
+        .then((results) => this.setState({ wishlists: results.data
+            .filter(function(element) {return element.owner === localStorage.getItem('id')}) }));
+
 	}
 
 	render() {
