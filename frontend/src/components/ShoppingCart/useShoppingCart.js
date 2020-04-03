@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyledSubtotal } from './shoppingCartStyles';
-import { cart, save_for_later, updateLocalStorage, updateShoppingCart } from './shoppingCartStorage';
+import { cart, save_for_later, updateLocalStorage, updateShoppingCart, updateSFL } from './shoppingCartStorage';
 
 const img_url_prefix = 'https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/';
 
@@ -10,6 +10,7 @@ const addToCart = (book) => {
 		return;
 	}
 	updateShoppingCart();
+	updateSFL();
 	let duplicate = findBookInCartByIndex(book._id); // Find index of possible duplicate
 	if (duplicate === -1) {
 		// No duplicate present
