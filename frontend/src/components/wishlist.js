@@ -6,9 +6,7 @@ import styled from 'styled-components';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { Button } from 'reactstrap';
 import { addToCart } from './shoppingcart';
-import {Link} from 'react-router-dom';
-
-
+import { Link } from 'react-router-dom';
 
 const StyledWishListTitle = styled.h3`
 	font-variant: all-petite-caps;
@@ -56,8 +54,13 @@ class Wishlist extends Component {
 	}
 
 	getItems() {
-		fetch('/wishlists').then((results) => results.json()).then((results) => this.setState({ items: results.data.filter(function(element) {return element.owner === localStorage.getItem('id')}) }));
-
+		fetch('/wishlists').then((results) => results.json()).then((results) =>
+			this.setState({
+				items: results.data.filter(function(element) {
+					return element.owner === localStorage.getItem('id');
+				})
+			})
+		);
 	}
 
 	getListItems() {
@@ -110,29 +113,29 @@ class Wishlist extends Component {
 		this.setState({ items: this.state.items.filter((item) => item._id !== _id) });
 	}
 
-	moveItem(id, title, listID, imageLink, price){
-        axios.delete(`http://localhost:5000/wishlistItems/delete/` + id)
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
-        });
+	moveItem(id, title, listID, imageLink, price, itemID) {
+		axios.delete(`http://localhost:5000/wishlistItems/delete/` + id).then((res) => {
+			console.log(res);
+			console.log(res.data);
+		});
 
-        let submissiondata = {
-            "title": title,
-            "belongsTo": listID,
-            "imageLink": imageLink,
-            "price" : price
-        }
+		let submissiondata = {
+			title: title,
+			belongsTo: listID,
+			imageLink: imageLink,
+			price: price,
+			id: itemID
+		};
 
-        fetch('/wishlistItems', {
-            method: 'POST',
-            body: JSON.stringify(submissiondata),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-        .then(res => res.json())
-        .then(data => console.log(data)); 
+		fetch('/wishlistItems', {
+			method: 'POST',
+			body: JSON.stringify(submissiondata),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then((res) => res.json())
+			.then((data) => console.log(data));
 
 		window.location.reload();
 	}
@@ -185,7 +188,8 @@ class Wishlist extends Component {
 											listItem,
 											item._id,
 											itemImageLink,
-											itemPrice
+											itemPrice,
+											element.id
 										)}
 									>
 										{item.title}
@@ -197,16 +201,20 @@ class Wishlist extends Component {
 			);
 	}
 
-
 	render() {
-
 		const user = localStorage.getItem('id');
-		
+
 		if (user === null) {
-			return <div style={{marginTop: '10%', marginLeft: '20%'}}><StyledWishListTitle>Login to Use WishLists</StyledWishListTitle>
-			<Link to="/profile">
-			<Button style={{width: '200px', marginLeft: '30%'}}color="success">Login</Button>
-			</Link></div>
+			return (
+				<div style={{ marginTop: '10%', marginLeft: '20%' }}>
+					<StyledWishListTitle>Login to Use WishLists</StyledWishListTitle>
+					<Link to="/profile">
+						<Button style={{ width: '200px', marginLeft: '30%' }} color="success">
+							Login
+						</Button>
+					</Link>
+				</div>
+			);
 		}
 
 		return (
@@ -272,12 +280,12 @@ class Wishlist extends Component {
 						if (wishListItems.length === 0) {
 							wishListItems.push({ booktitle: 'Empty List' });
 						}
-						
+
 						if (item.owner === localStorage.getItem('id')) {
 							return (
 								<Cell col={4} key={item._id}>
 									<h3 style={{ display: 'flex', justifyContent: 'center' }}>{item.title}</h3>
-	
+
 									<DataTable style={{ width: '30%' }} shadow={0} rows={wishListItems}>
 										<TableHeader name="booktitle" tooltip="The Book' title">
 											Book Title
@@ -290,7 +298,7 @@ class Wishlist extends Component {
 										</TableHeader>
 										<TableHeader name="toCart" tooltip="" />
 									</DataTable>
-	
+
 									<Button
 										style={{ marginLeft: '30px', marginTop: '10px' }}
 										color="danger"
@@ -304,7 +312,6 @@ class Wishlist extends Component {
 								</Cell>
 							);
 						}
-						
 					}, this)}
 				</Grid>
 			</div>
