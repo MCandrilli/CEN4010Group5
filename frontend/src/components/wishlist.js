@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { Button } from 'reactstrap';
 import { addToCart } from './shoppingcart';
+import { Link } from 'react-router-dom';
 
 const StyledWishListTitle = styled.h3`
 	font-variant: all-petite-caps;
@@ -112,7 +113,7 @@ class Wishlist extends Component {
 		this.setState({ items: this.state.items.filter((item) => item._id !== _id) });
 	}
 
-	moveItem(id, title, listID, imageLink, price, itemId) {
+	moveItem(id, title, listID, imageLink, price, itemID) {
 		axios.delete(`http://localhost:5000/wishlistItems/delete/` + id).then((res) => {
 			console.log(res);
 			console.log(res.data);
@@ -123,7 +124,7 @@ class Wishlist extends Component {
 			belongsTo: listID,
 			imageLink: imageLink,
 			price: price,
-			id: itemId
+			id: itemID
 		};
 
 		fetch('/wishlistItems', {
@@ -205,8 +206,13 @@ class Wishlist extends Component {
 
 		if (user === null) {
 			return (
-				<div>
-					<h2>Please sign in to use wishlists!</h2>
+				<div style={{ marginTop: '10%', marginLeft: '20%' }}>
+					<StyledWishListTitle>Login to Use WishLists</StyledWishListTitle>
+					<Link to="/profile">
+						<Button style={{ width: '200px', marginLeft: '30%' }} color="success">
+							Login
+						</Button>
+					</Link>
 				</div>
 			);
 		}
