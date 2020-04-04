@@ -1,7 +1,6 @@
 import React, { Component, useState } from 'react';
 import { DataTable, TableHeader, Textfield } from 'react-mdl';
 import delete_logo from './images/delete_bin.png';
-import Tooltip from '@material-ui/core/Tooltip';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 import {

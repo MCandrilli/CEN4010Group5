@@ -19,7 +19,7 @@ color: #fff;
 }`;
 
 const StyledPageTitle = styled(Link)`
-color: darkslategrey;    
+color: #fff;    
 font-size: 28px;
 font-variant: all-petite-caps;
 font-family: monospace;`;

@@ -12,11 +12,35 @@ import StarRatings from 'react-star-ratings';
 import styled from 'styled-components';
 
 const StyledCard = styled(Card)`
-width: 360px;
-height: 720px;
-margin: 50px;
-background: rgba(0, 0, 0, 0.5);
-border: thin groove white;`;
+	width: 360px;
+	height: 720px;
+	margin: 50px;
+	background: rgba(0, 0, 0, 0.5);
+	border: thin groove white;`;
+
+const styleBW = {
+	color: '#fff',
+	backgroundColor: 'rgba(0, 0, 0, 0.4)',
+	fontFamily: 'monospace',
+	borderStyle: 'groove',
+	borderWidth: 'thin',
+	fontSize: '14px',
+	fontWeight: '800',
+	padding: '10px',
+	margin: '5px',
+	transition: 'backgroundColor 0.5s ease, color 0.5s ease, borderColor 0.5s ease'
+};
+
+const styleBWHover = {
+	backgroundColor: 'rgba(255, 255, 255, 0.6)',
+	color: 'black',
+	borderColor: 'black'
+};
+
+const StyledButtonBW = styled.button`${styleBW} &:hover {${styleBWHover};}`;
+
+const StyledDropdownBW = styled(Dropdown.Item)`
+	${styleBW}`;
 
 class LandingPage extends Component {
 	constructor() {
@@ -149,7 +173,6 @@ class LandingPage extends Component {
 		return (
 			<div
 				style={{
-					//boxShadow: '0px 0px 5px 5px #ddd',
 					backgroundColor: 'transparent',
 					width: '85%',
 					marginLeft: 'auto',
@@ -157,26 +180,26 @@ class LandingPage extends Component {
 					marginTop: '50px'
 				}}
 			>
-				<Button color="info" style={{ margin: '5px' }} onClick={this.sortByTitle.bind(this)}>
+				<StyledButtonBW color="info" style={{ margin: '5px' }} onClick={this.sortByTitle.bind(this)}>
 					{' '}
 					Sort By Title{' '}
-				</Button>
-				<Button color="info" style={{ margin: '5px' }} onClick={this.sortByAuthor.bind(this)}>
+				</StyledButtonBW>
+				<StyledButtonBW color="info" style={{ margin: '5px' }} onClick={this.sortByAuthor.bind(this)}>
 					{' '}
 					Sort By Author{' '}
-				</Button>
-				<Button color="info" style={{ margin: '5px' }} onClick={this.sortByPages.bind(this)}>
+				</StyledButtonBW>
+				<StyledButtonBW color="info" style={{ margin: '5px' }} onClick={this.sortByPages.bind(this)}>
 					{' '}
 					Sort By Pages{' '}
-				</Button>
-				<Button color="info" style={{ margin: '5px' }} onClick={this.sortByYear.bind(this)}>
+				</StyledButtonBW>
+				<StyledButtonBW color="info" style={{ margin: '5px' }} onClick={this.sortByYear.bind(this)}>
 					{' '}
 					Sort By Year Published{' '}
-				</Button>
-				<Button color="info" style={{ margin: '5px' }} onClick={this.sortByBestSellers.bind(this)}>
+				</StyledButtonBW>
+				<StyledButtonBW color="info" style={{ margin: '5px' }} onClick={this.sortByBestSellers.bind(this)}>
 					{' '}
 					Best Sellers{' '}
-				</Button>
+				</StyledButtonBW>
 				<DropdownButton variant="info" style={{ margin: '5px' }} id="dropdown-item-button" title="Select Genre">
 					<Dropdown.Item as="button" onClick={this.filterByGenre.bind(this, 'Historical')}>
 						Historical
@@ -223,8 +246,16 @@ class LandingPage extends Component {
 						});
 
 						return (
-							<Cell col={4}>
-								<StyledCard shadow={0} style={{ width: '360px', height: '720px', margin: '50px' }}>
+							<Cell col={3}>
+								<StyledCard
+									shadow={6}
+									style={{
+										width: '360px',
+										height: '720px',
+										margin: '50px',
+										transform: 'scale(0.85)'
+									}}
+								>
 									<CardTitle
 										expand
 										style={{
