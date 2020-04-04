@@ -4,43 +4,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Select from 'react-select';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { Button } from 'reactstrap';
 import WishlistDropMenu from './wishlistdropmenu';
 import { Link } from 'react-router-dom';
 import { addToCart } from './shoppingcart';
 import StarRatings from 'react-star-ratings';
-import styled from 'styled-components';
-
-const StyledCard = styled(Card)`
-	width: 360px;
-	height: 720px;
-	margin: 50px;
-	background: rgba(0, 0, 0, 0.5);
-	border: thin groove white;`;
-
-const styleBW = {
-	color: '#fff',
-	backgroundColor: 'rgba(0, 0, 0, 0.4)',
-	fontFamily: 'monospace',
-	borderStyle: 'groove',
-	borderWidth: 'thin',
-	fontSize: '14px',
-	fontWeight: '800',
-	padding: '10px',
-	margin: '5px',
-	transition: 'backgroundColor 0.5s ease, color 0.5s ease, borderColor 0.5s ease'
-};
-
-const styleBWHover = {
-	backgroundColor: 'rgba(255, 255, 255, 0.6)',
-	color: 'black',
-	borderColor: 'black'
-};
-
-const StyledButtonBW = styled.button`${styleBW} &:hover {${styleBWHover};}`;
-
-const StyledDropdownBW = styled(Dropdown.Item)`
-	${styleBW}`;
+import { CardBW, ButtonBW, ButtonBlue, ItemTitleLink } from './compStyles';
 
 class LandingPage extends Component {
 	constructor() {
@@ -81,6 +49,7 @@ class LandingPage extends Component {
 			<StarRatings
 				rating={rating}
 				starRatedColor="goldenrod"
+				starEmptyColor="darkslategrey"
 				numberOfStars={5}
 				name="rating"
 				starDimension="20px"
@@ -180,26 +149,11 @@ class LandingPage extends Component {
 					marginTop: '50px'
 				}}
 			>
-				<StyledButtonBW color="info" style={{ margin: '5px' }} onClick={this.sortByTitle.bind(this)}>
-					{' '}
-					Sort By Title{' '}
-				</StyledButtonBW>
-				<StyledButtonBW color="info" style={{ margin: '5px' }} onClick={this.sortByAuthor.bind(this)}>
-					{' '}
-					Sort By Author{' '}
-				</StyledButtonBW>
-				<StyledButtonBW color="info" style={{ margin: '5px' }} onClick={this.sortByPages.bind(this)}>
-					{' '}
-					Sort By Pages{' '}
-				</StyledButtonBW>
-				<StyledButtonBW color="info" style={{ margin: '5px' }} onClick={this.sortByYear.bind(this)}>
-					{' '}
-					Sort By Year Published{' '}
-				</StyledButtonBW>
-				<StyledButtonBW color="info" style={{ margin: '5px' }} onClick={this.sortByBestSellers.bind(this)}>
-					{' '}
-					Best Sellers{' '}
-				</StyledButtonBW>
+				<ButtonBW onClick={this.sortByTitle.bind(this)}> Sort By Title </ButtonBW>
+				<ButtonBW onClick={this.sortByAuthor.bind(this)}> Sort By Author </ButtonBW>
+				<ButtonBW onClick={this.sortByPages.bind(this)}> Sort By Pages </ButtonBW>
+				<ButtonBW onClick={this.sortByYear.bind(this)}> Sort By Year Published </ButtonBW>
+				<ButtonBW onClick={this.sortByBestSellers.bind(this)}> Best Sellers </ButtonBW>
 				<DropdownButton variant="info" style={{ margin: '5px' }} id="dropdown-item-button" title="Select Genre">
 					<Dropdown.Item as="button" onClick={this.filterByGenre.bind(this, 'Historical')}>
 						Historical
@@ -247,15 +201,7 @@ class LandingPage extends Component {
 
 						return (
 							<Cell col={3}>
-								<StyledCard
-									shadow={6}
-									style={{
-										width: '360px',
-										height: '720px',
-										margin: '50px',
-										transform: 'scale(0.85)'
-									}}
-								>
+								<CardBW shadow={6} style={{}}>
 									<CardTitle
 										expand
 										style={{
@@ -264,35 +210,7 @@ class LandingPage extends Component {
 											borderBottom: 'thin groove white'
 										}}
 									/>
-
-									<CardText>
-										<p
-											style={{
-												lineHeight: '24px',
-												fontSize: '30px',
-												textAlign: 'center',
-												color: '#fff',
-												fontFamily: 'monospace',
-												fontVariant: 'all-petite-caps'
-											}}
-										>
-											<strong>{item.title} </strong>
-										</p>
-										<p style={{ lineHeight: '10px', textAlign: 'center', color: '#fff' }}>
-											<strong> by: {item.author} </strong>
-										</p>
-										<p style={{ lineHeight: '10px', textAlign: 'center' }}>
-											<strong>{this.displayStarRating(item.rating)} </strong>
-										</p>
-										<p style={{ lineHeight: '10px', textAlign: 'center', color: '#fff' }}>
-											<strong> Rating Count: {item.ratingCount} </strong>
-										</p>
-										<p style={{ lineHeight: '10px', textAlign: 'center', color: '#fff' }}>
-											<strong> Genre: {item.genre} </strong>
-										</p>
-									</CardText>
-
-									<CardActions border>
+									<CardText style={{ textAlign: 'center' }}>
 										<Link
 											to={{
 												pathname: '/bookdetails',
@@ -301,30 +219,41 @@ class LandingPage extends Component {
 													lists: usersLists
 												}
 											}}
-											style={{ textDecoration: 'none' }}
+											style={{ textDecoration: 'none', color: 'inherit' }}
 										>
-											<Button
-												color="info"
+											<p
 												style={{
-													marginLeft: '18%',
-													paddingLeft: '60px',
-													paddingRight: '60px',
-													marginBottom: '5px'
+													lineHeight: '24px',
+													fontSize: '30px',
+													fontFamily: 'monospace',
+													fontVariant: 'all-petite-caps'
 												}}
 											>
-												View Book Details
-											</Button>
+												<strong>{item.title} </strong>
+											</p>
 										</Link>
-										<br />
+										<p style={{ lineHeight: '10px' }}>
+											<strong> by: {item.author} </strong>
+										</p>
+										<p style={{ lineHeight: '10px' }}>
+											<strong>{this.displayStarRating(item.rating)} </strong>
+										</p>
+										<p style={{ lineHeight: '10px' }}>
+											<strong> Rating Count: {item.ratingCount} </strong>
+										</p>
+										<p style={{ lineHeight: '10px' }}>
+											<strong> Genre: {item.genre} </strong>
+										</p>
+									</CardText>
 
-										<div style={{ marginLeft: '10%' }}>
-											<Button
-												color="success"
+									<CardActions border>
+										<div>
+											<ButtonBlue
 												style={{ float: 'left', marginLeft: '20px' }}
 												onClick={() => this.handleClick(item)}
 											>
 												Add to Cart
-											</Button>
+											</ButtonBlue>
 											<WishlistDropMenu
 												style={{ float: 'left', paddingLeft: '5px' }}
 												booktitle={item.title}
@@ -335,7 +264,7 @@ class LandingPage extends Component {
 											/>
 										</div>
 									</CardActions>
-								</StyledCard>
+								</CardBW>
 							</Cell>
 						);
 					})}
