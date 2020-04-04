@@ -1,7 +1,6 @@
 import React, { Component, useState } from 'react';
 import { DataTable, TableHeader, Textfield } from 'react-mdl';
 import delete_logo from './images/delete_bin.png';
-import Tooltip from '@material-ui/core/Tooltip';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 import {
@@ -93,19 +92,23 @@ class ShoppingCart extends Component {
 				onClickAway={() => {
 					this.toggleQuantity(index, true);
 				}}
-			><StyledTooltip title="Quantity should only contain integer numbers from 1-9999.">
-				<Textfield
-					onChange={(e) => {
-						this.handleQuantityChange(e, id);
-					}}
-					onKeyPress={(e) => {e.key === "Enter" && this.toggleQuantity(index, true)}}
-					pattern="[0-9]{1,4}"
-					maxLength = "4"
-					error="invalid input"
-					label="..."
-					style={{ width: '30px' }}
-				/>
-			</StyledTooltip></ClickAwayListener>
+			>
+				<StyledTooltip title="Quantity should only contain integer numbers from 1-9999.">
+					<Textfield
+						onChange={(e) => {
+							this.handleQuantityChange(e, id);
+						}}
+						onKeyPress={(e) => {
+							e.key === 'Enter' && this.toggleQuantity(index, true);
+						}}
+						pattern="[0-9]{1,4}"
+						maxLength="4"
+						error="invalid input"
+						label="..."
+						style={{ width: '30px' }}
+					/>
+				</StyledTooltip>
+			</ClickAwayListener>
 		);
 	};
 
