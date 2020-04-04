@@ -3,6 +3,7 @@ import Main from './components/main';
 import './App.css';
 import { Layout, Header, Navigation, Content } from 'react-mdl';
 import { Link } from 'react-router-dom';
+import { getCartLength } from './components/ShoppingCart/shoppingCartStorage';
 import styled from 'styled-components';
 
 const StyledTitle = styled(Link)`
@@ -24,7 +25,7 @@ font-size: 28px;
 font-variant: all-petite-caps;
 font-family: monospace;`;
 
-function App() {
+const App = () => {
 	return (
 		<div className="demo-big-content">
 			<Layout>
@@ -48,6 +49,6 @@ function App() {
 			</Layout>
 		</div>
 	);
-}
+};
 
 export default App;

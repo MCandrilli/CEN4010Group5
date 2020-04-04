@@ -8,7 +8,7 @@ import WishlistDropMenu from './wishlistdropmenu';
 import { Link } from 'react-router-dom';
 import { addToCart } from './shoppingcart';
 import StarRatings from 'react-star-ratings';
-import { CardBW, ButtonBW, ButtonBlue, ItemTitleLink } from './compStyles';
+import { CardBW, ButtonBW, ButtonBlue } from './compStyles';
 
 class LandingPage extends Component {
 	constructor() {
@@ -201,7 +201,7 @@ class LandingPage extends Component {
 
 						return (
 							<Cell col={3}>
-								<CardBW shadow={6} style={{}}>
+								<CardBW shadow={6}>
 									<Link
 										to={{
 											pathname: '/bookdetails',
