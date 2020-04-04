@@ -202,14 +202,26 @@ class LandingPage extends Component {
 						return (
 							<Cell col={3}>
 								<CardBW shadow={6} style={{}}>
-									<CardTitle
-										expand
-										style={{
-											color: '#fff',
-											background: 'url(' + imageUrl + ') center / cover rgb(207,217,226)',
-											borderBottom: 'thin groove white'
+									<Link
+										to={{
+											pathname: '/bookdetails',
+											aboutProps: {
+												book: item,
+												lists: usersLists
+											}
 										}}
-									/>
+										style={{ textDecoration: 'none', color: 'inherit' }}
+									>
+										<CardTitle
+											expand
+											style={{
+												color: '#fff',
+												background: 'url(' + imageUrl + ') center / cover rgb(207,217,226)',
+												borderBottom: 'thin groove white',
+												minHeight: '455px'
+											}}
+										/>
+									</Link>
 									<CardText style={{ textAlign: 'center' }}>
 										<Link
 											to={{
@@ -232,6 +244,7 @@ class LandingPage extends Component {
 												<strong>{item.title} </strong>
 											</p>
 										</Link>
+
 										<p style={{ lineHeight: '10px' }}>
 											<strong> by: {item.author} </strong>
 										</p>
@@ -254,6 +267,7 @@ class LandingPage extends Component {
 											>
 												Add to Cart
 											</ButtonBlue>
+
 											<WishlistDropMenu
 												style={{ float: 'left', paddingLeft: '5px' }}
 												booktitle={item.title}
