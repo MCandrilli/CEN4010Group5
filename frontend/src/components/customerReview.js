@@ -14,6 +14,7 @@ class customerReview extends Component {
 
         this.state = {
             'books': [],
+            purchased :[],
             value: '',
             user: '',
             
@@ -21,7 +22,7 @@ class customerReview extends Component {
             rating: 1,
             checked: false,
             isLoggedUser : false,
-            bookIsPurchased : true,            
+            bookIsPurchased : false,            
             userSelectedStarValue: 1,
         }
 
@@ -41,7 +42,7 @@ class customerReview extends Component {
     
     componentWillMount(){
         console.log('inside the will mount');
-        // this.setStrorage()  //this make it change but saves when leaves!!
+        this.setStrorage()  //this make it change but saves when leaves!!
         data = this.getStorage()
         console.log(data);
     }
@@ -50,16 +51,17 @@ class customerReview extends Component {
     async componentDidMount() {
         const id = localStorage.getItem('id');
 
-        console.log('id: ' + id);
+        console.log('id: ' + id); //id of user print to log 
 
-        const { data: profileData }  = await axios.get('http://localhost:5000' + `/user?id=${ id }`);
-        const profileInfo = profileData.data;
-        console.log (' profile date: ' + profileInfo);
+        const { data: profileData }  = await axios.get('http://localhost:5000' + `/user?id=${ id }`); // retrieve user from db
+        const profileInfo = profileData.data; //store data as variable ProfileInfo
 
-        this.getItems();
+        this.getItems(); //get list of book
+
         if(profileInfo !== null) 
         {
-            this.setState({isLoggedUser : true});
+            this.setState({isLoggedUser : true}); //set state of logged in user to true
+            this.setState({purchased : profileInfo.recentlyPurchased});
         }
 
         this.setState(profileInfo);
@@ -71,6 +73,7 @@ class customerReview extends Component {
         fetch('/comments')
         .then(results => results.json())
         .then(results => this.setState({'books': results.data}));
+        
     }
    
     handleSubmit(book) {
@@ -81,11 +84,11 @@ class customerReview extends Component {
         } else {
             userName = this.state.nickname;
         }
-        console.log(this.props.location.aboutProps.book.title);
+        console.log(book.title);
 
         let submissiondata = {
                  
-            "title": this.props.location.aboutProps.book.title,
+            "title": book.title,
             "Comments" :
             [
                 {
@@ -165,20 +168,31 @@ class customerReview extends Component {
     }; 
 
     render() {
-        const isLoggedIn = this.state.isLoggedUser;
-        const isPurchased = this.state.bookIsPurchased;
-        const commentdisabled = !this.state.isLoggedUser || !this.state.bookIsPurchased;
-        let errorMessage;
 
-        console.log(this.state.nickname)
-        console.log('logged in user set to: ' + isLoggedIn)
+        const isLoggedIn = this.state.isLoggedUser; // this constant determines logged in
+        var isPurchased; // this variable determines if book is purchased
 
-        if(isLoggedIn && isPurchased) errorMessage = null;
-        else if (isLoggedIn && !isPurchased) errorMessage = <span style = {{color:'red'}}  > Purchase book to comment </span>
+        let bookProps =data || {}      
+        //if user is logged in and has purchased this book set isPurchased to true
+        if(isLoggedIn && this.state.purchased.includes(bookProps.book.title)){
+            console.log('This user has purchased this book'); 
+            isPurchased = true;
+        }
+        //else set isPurchased to false
+        else{
+            console.log('this user does not have this book purchased');
+            isPurchased = false;
+        }
+        
+        //boolean that checks if buttons should be dissabled
+        const commentdisabled = isLoggedIn !== true || isPurchased !== true;
+        let errorMessage;//this will sore the correct error message
+
+        if(isLoggedIn && isPurchased) errorMessage = null; //if logged in and purchased, no error message
+        else if (isLoggedIn && !isPurchased) errorMessage = <span style = {{color:'red'}} > Purchase book to comment </span>
         else if (!isLoggedIn) errorMessage = <span style = {{color:'red'}}  > Log in to comment </span>
 
-        let bookProps =data || {}    
-        {/*if props is not empty, load the page*/}
+        //if props is not empty, load the page
         if(bookProps.book)
         { 
            let imageUrl = 'https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/' + bookProps.book.imageLink;
@@ -259,8 +273,6 @@ class customerReview extends Component {
                                         <p> <strong> {comm.User} : &nbsp; </strong> {comm.Comment} </p>
                                         {console.log(comm.Rating)}
                                         <StarRatings rating={comm.Rating} starRatedColor="goldenrod" numberOfStars={5} name="rating" starDimension="20px" starSpacing="2px"/>
-                            
-                            {/* <p style={{lineHeight: '10px', textAlign:"center"}}><strong>{displayStarRating(comm.Rating)} </strong></p> */}
                                     </CardText>
                                     </Card>
                                 })
