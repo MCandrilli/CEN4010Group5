@@ -1,6 +1,27 @@
 import { Card } from 'react-mdl';
 import { Link } from 'react-router-dom';
+import { DataTable } from 'react-mdl';
+import { TrashFill } from 'react-bootstrap-icons';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import styled from 'styled-components';
+
+const StyledTitle = styled(Link)`
+	font-size: 32px;
+	font-variant: petite-caps;
+	font-family: monospace;
+	text-decoration: overline;
+	padding-top: 15px;
+	padding-left: 10px;
+	color: #fff;
+	&:hover{
+	text-decoration: overline;
+	color: #fff;`;
+
+const StyledPageTitle = styled(Link)`
+	color: #fff;    
+	font-size: 28px;
+	font-variant: all-petite-caps;
+	font-family: monospace;`;
 
 const CardBW = styled(Card)`
 	width: 360px;
@@ -60,6 +81,14 @@ const ButtonBW = styled.button`
 	}
 `;
 
+const ButtonBW2 = styled.button`
+	${styledButtonBW};
+	background-color: transparent;
+	&:hover {
+		${styledBWHover};
+	}
+`;
+
 const ButtonBlue = styled.button`
 	${styledButtonAction} background-color: dodgerblue;
 	&:hover {
@@ -76,11 +105,93 @@ const ButtonGreen = styled.button`
 	}
 `;
 
-const ItemTitleLink = styled(Link)`
-    text-decoration: none;
-    color: inherit;
-    &:hover {
-        color: red;
-    }`;
+const DropdownBW = styled(DropdownButton)`
+	& > .btn-primary.dropdown-toggle {
+		${styledButtonBW}
+		border-color: #fff;
+		border-radius: unset;
+		&:hover {
+			${styledBWHover}
+		}
+		&:focus{
+			box-shadow: unset;
+			${styledBWHover}
+		}
+	}
+	& > .btn-primary {
+		${styledButtonBW}
+		border-color: #fff;
+		border-radius: unset;
+		&:hover {
+			${styledBWHover}
+		}		
+	}
+	& > .dropdown-menu {
+		border-radius: unset;
+		background-color: rgba(0, 0, 0, 0.8);
+		border: #fff groove thin;
+		& > .dropdown-item {
+			color: #fff;
+			border-bottom: #fff groove thin;
+			font-family: monospace;
+			font-size: 20px;
+			font-weight: 700;
+			font-variant: all-petite-caps;
+			transition: backgroundColor 0.25s ease-out, color 0.25s ease-out;
+			&:hover {
+				color: black;
+				background-color: rgba(255, 255, 255, 0.65);
+			}
+		}
+	}`;
 
-export { CardBW, ButtonBW, ButtonBlue, ButtonGreen, ItemTitleLink };
+const DataTableBW = styled(DataTable)`
+	background-color: rgba(0, 0, 0, 0.5);
+	border: #fff groove thin;
+	> * {
+		color: #fff;
+		font-family: monospace;
+		font-size: 17px;
+	}
+	th {
+		color: #fff;
+	}
+	p {
+		color: #fff;
+	}
+	td {
+		border-bottom: rgba(255, 255, 255, 0.65) solid thin;
+		border-top: rgba(255, 255, 255, 0.65) solid thin;
+	}
+	tr > .mdl-data-table tbody tr:hover {
+			background-color: #eeeeee;
+	}
+	`;
+
+const TrashIcon = styled(TrashFill)`
+	&:hover{
+		fill: darkgray;
+	}`;
+
+const QuantityStyle = styled.p`
+	margin-bottom: unset;
+	font-size: 17px;
+	&:hover {
+		color: darkgray;
+		cursor: pointer;
+	}
+`;
+
+export {
+	StyledTitle,
+	StyledPageTitle,
+	CardBW,
+	ButtonBW,
+	ButtonBW2,
+	ButtonBlue,
+	ButtonGreen,
+	DropdownBW,
+	DataTableBW,
+	TrashIcon,
+	QuantityStyle
+};

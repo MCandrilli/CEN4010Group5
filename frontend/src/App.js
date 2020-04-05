@@ -4,26 +4,7 @@ import './App.css';
 import { Layout, Header, Navigation, Content } from 'react-mdl';
 import { Link } from 'react-router-dom';
 import { getCartLength } from './components/ShoppingCart/shoppingCartStorage';
-import styled from 'styled-components';
-
-const StyledTitle = styled(Link)`
-font-size: 32px;
-font-variant: petite-caps;
-font-family: monospace;
-text-decoration: overline;
-padding-top: 15px;
-padding-left: 10px;
-color: #fff;
-&:hover{
-	text-decoration: overline;
-	color: #fff;
-}`;
-
-const StyledPageTitle = styled(Link)`
-color: #fff;    
-font-size: 28px;
-font-variant: all-petite-caps;
-font-family: monospace;`;
+import { StyledTitle, StyledPageTitle } from './components/compStyles';
 
 const App = () => {
 	return (

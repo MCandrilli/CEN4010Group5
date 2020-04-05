@@ -8,7 +8,8 @@ import WishlistDropMenu from './wishlistdropmenu';
 import { Link } from 'react-router-dom';
 import { addToCart } from './shoppingcart';
 import StarRatings from 'react-star-ratings';
-import { CardBW, ButtonBW, ButtonBlue } from './compStyles';
+import { CardBW, ButtonBW, ButtonBlue, DropdownBW } from './compStyles';
+import styled from 'styled-components';
 
 class LandingPage extends Component {
 	constructor() {
@@ -149,45 +150,47 @@ class LandingPage extends Component {
 					marginTop: '50px'
 				}}
 			>
-				<ButtonBW onClick={this.sortByTitle.bind(this)}> Sort By Title </ButtonBW>
-				<ButtonBW onClick={this.sortByAuthor.bind(this)}> Sort By Author </ButtonBW>
-				<ButtonBW onClick={this.sortByPages.bind(this)}> Sort By Pages </ButtonBW>
-				<ButtonBW onClick={this.sortByYear.bind(this)}> Sort By Year Published </ButtonBW>
-				<ButtonBW onClick={this.sortByBestSellers.bind(this)}> Best Sellers </ButtonBW>
-				<DropdownButton variant="info" style={{ margin: '5px' }} id="dropdown-item-button" title="Select Genre">
-					<Dropdown.Item as="button" onClick={this.filterByGenre.bind(this, 'Historical')}>
-						Historical
-					</Dropdown.Item>
-					<Dropdown.Item as="button" onClick={this.filterByGenre.bind(this, 'Childrens')}>
-						Childrens
-					</Dropdown.Item>
-					<Dropdown.Item as="button" onClick={this.filterByGenre.bind(this, 'Fiction')}>
-						Fiction
-					</Dropdown.Item>
-					<Dropdown.Item as="button" onClick={this.filterByGenre.bind(this, 'Thriller')}>
-						Thriller
-					</Dropdown.Item>
-					<Dropdown.Item as="button" onClick={this.filterByGenre.bind(this, 'Biography')}>
-						Biography
-					</Dropdown.Item>
-				</DropdownButton>
-				<DropdownButton variant="info" style={{ margin: '5px' }} id="dropdown-item-button" title="Star Rating">
-					<Dropdown.Item as="button" onClick={this.filterByRating.bind(this, 1)}>
-						One Star and Up
-					</Dropdown.Item>
-					<Dropdown.Item as="button" onClick={this.filterByRating.bind(this, 2)}>
-						Two Star and Up
-					</Dropdown.Item>
-					<Dropdown.Item as="button" onClick={this.filterByRating.bind(this, 3)}>
-						Three Star and Up
-					</Dropdown.Item>
-					<Dropdown.Item as="button" onClick={this.filterByRating.bind(this, 4)}>
-						Four Star and Up
-					</Dropdown.Item>
-					<Dropdown.Item as="button" onClick={this.filterByRating.bind(this, 5)}>
-						Five Star
-					</Dropdown.Item>
-				</DropdownButton>
+				<div style={{ display: 'flex' }}>
+					<ButtonBW onClick={this.sortByTitle.bind(this)}> Sort By Title </ButtonBW>
+					<ButtonBW onClick={this.sortByAuthor.bind(this)}> Sort By Author </ButtonBW>
+					<ButtonBW onClick={this.sortByPages.bind(this)}> Sort By Pages </ButtonBW>
+					<ButtonBW onClick={this.sortByYear.bind(this)}> Sort By Year Published </ButtonBW>
+					<ButtonBW onClick={this.sortByBestSellers.bind(this)}> Best Sellers </ButtonBW>
+					<DropdownBW id="dropdown-item-button" title="Select Genre">
+						<Dropdown.Item as="button" onClick={this.filterByGenre.bind(this, 'Historical')}>
+							Historical
+						</Dropdown.Item>
+						<Dropdown.Item as="button" onClick={this.filterByGenre.bind(this, 'Childrens')}>
+							Childrens
+						</Dropdown.Item>
+						<Dropdown.Item as="button" onClick={this.filterByGenre.bind(this, 'Fiction')}>
+							Fiction
+						</Dropdown.Item>
+						<Dropdown.Item as="button" onClick={this.filterByGenre.bind(this, 'Thriller')}>
+							Thriller
+						</Dropdown.Item>
+						<Dropdown.Item as="button" onClick={this.filterByGenre.bind(this, 'Biography')}>
+							Biography
+						</Dropdown.Item>
+					</DropdownBW>
+					<DropdownBW id="dropdown-item-button" title="Star Rating">
+						<Dropdown.Item as="button" onClick={this.filterByRating.bind(this, 1)}>
+							One Star and Up
+						</Dropdown.Item>
+						<Dropdown.Item as="button" onClick={this.filterByRating.bind(this, 2)}>
+							Two Star and Up
+						</Dropdown.Item>
+						<Dropdown.Item as="button" onClick={this.filterByRating.bind(this, 3)}>
+							Three Star and Up
+						</Dropdown.Item>
+						<Dropdown.Item as="button" onClick={this.filterByRating.bind(this, 4)}>
+							Four Star and Up
+						</Dropdown.Item>
+						<Dropdown.Item as="button" onClick={this.filterByRating.bind(this, 5)}>
+							Five Star
+						</Dropdown.Item>
+					</DropdownBW>
+				</div>
 				<Grid className="demo-grid-1">
 					{this.state.items.map((item, index) => {
 						let imageUrl =
