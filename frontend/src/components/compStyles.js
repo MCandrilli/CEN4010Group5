@@ -159,12 +159,34 @@ const DataTableBW = styled(DataTable)`
 	p {
 		color: #fff;
 	}
-	td {
-		border-bottom: rgba(255, 255, 255, 0.65) solid thin;
+	tr:first-child > td {
 		border-top: rgba(255, 255, 255, 0.65) solid thin;
 	}
-	tr > .mdl-data-table tbody tr:hover {
-			background-color: #eeeeee;
+	tr:last-child > td {
+		border-bottom: rgba(255, 255, 255, 0.65) solid thin;
+	}
+	`;
+
+const DataTableBW_Cart = styled(DataTable)`
+	background-color: rgba(0, 0, 0, 0.5);
+	border: #fff groove thin;
+	> * {
+		color: #fff;
+		font-family: monospace;
+		font-size: 17px;
+	}
+	th {
+		color: #fff;
+	}
+	p {
+		color: #fff;
+	}
+	tr:first-child > td {
+		border-top: rgba(255, 255, 255, 0.65) solid thin;
+	}
+	tr:last-child > td {
+		border-bottom: rgba(255, 255, 255, 0.65) solid thin;
+		border-top: rgba(255, 255, 255, 0.3) solid 2px;
 	}
 	`;
 
@@ -192,6 +214,7 @@ export {
 	ButtonGreen,
 	DropdownBW,
 	DataTableBW,
+	DataTableBW_Cart,
 	TrashIcon,
 	QuantityStyle
 };

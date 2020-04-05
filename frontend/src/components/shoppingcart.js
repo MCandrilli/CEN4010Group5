@@ -3,7 +3,7 @@ import { DataTable, TableHeader, Textfield } from 'react-mdl';
 import delete_logo from './images/delete_bin.png';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { TrashFill } from 'react-bootstrap-icons';
-import { ButtonBW2, ButtonBlue, DataTableBW, QuantityStyle, TrashIcon } from './compStyles';
+import { ButtonBW2, ButtonBlue, DataTableBW, DataTableBW_Cart, QuantityStyle, TrashIcon } from './compStyles';
 import {
 	StyledCoverArt,
 	StyledDeleteButton,
@@ -141,8 +141,8 @@ class ShoppingCart extends Component {
 		items.push(subtotal);
 
 		return (
-			<DataTableBW
-				className="sc-data-table"
+			<DataTableBW_Cart
+				className="bw-data-table"
 				shadow={0}
 				style={{ width: '800px', width: 'fit-content' }}
 				rows={items}
@@ -165,13 +165,14 @@ class ShoppingCart extends Component {
 				<TableHeader name="delete" style={{ color: 'transparent' }}>
 					Delete
 				</TableHeader>
-			</DataTableBW>
+			</DataTableBW_Cart>
 		);
 	};
 
 	createSFL = () => {
 		return (
 			<DataTableBW
+				className="bw-data-table"
 				shadow={0}
 				style={{ width: '650px', width: 'fit-content' }}
 				rows={save_for_later.map((book, index) => ({

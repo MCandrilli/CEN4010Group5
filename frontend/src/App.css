@@ -7,6 +7,6 @@ body {
 	color: #fff;
 }
 
-.sc-data-table > tr > .mdl-data-table tbody tr:hover {
-	background-color: inherit;
+.bw-data-table tr:hover {
+	background-color: inherit !important;
 }
