@@ -1,8 +1,6 @@
 import React, { Component, useState } from 'react';
-import { DataTable, TableHeader, Textfield } from 'react-mdl';
-import delete_logo from './images/delete_bin.png';
+import { TableHeader, Textfield } from 'react-mdl';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import { TrashFill } from 'react-bootstrap-icons';
 import { ButtonBW2, ButtonBlue, DataTableBW, DataTableBW_Cart, QuantityStyle, TrashIcon } from './compStyles';
 import {
 	StyledCoverArt,
@@ -93,7 +91,7 @@ class ShoppingCart extends Component {
 			>
 				<StyledTooltip title="Quantity should only contain integer numbers from 1-9999.">
 					<Textfield
-						className="quantity-field"
+						className="bw-text-field"
 						onChange={(e) => {
 							this.handleQuantityChange(e, id);
 						}}

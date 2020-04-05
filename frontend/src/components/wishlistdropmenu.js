@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Menu, MenuItem } from 'react-mdl';
 import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
-import { ButtonGreen } from './compStyles';
+import { ButtonRed } from './compStyles';
 
 class WishlistDropMenu extends Component {
 	handleClick(title, listid, imageLink, price, itemId) {
@@ -43,9 +43,9 @@ class WishlistDropMenu extends Component {
 		if (user === null) {
 			return (
 				<div style={{ position: 'relative', float: 'left', paddingLeft: '4px' }}>
-					<Button color="success" id={this.props.booktitle}>
+					<ButtonRed color="success" id={this.props.booktitle}>
 						ADD TO WISHLIST
-					</Button>
+					</ButtonRed>
 					<Menu target={this.props.booktitle} valign="top" ripple>
 						<div style={{ float: 'left' }}>
 							<MenuItem>
@@ -58,7 +58,7 @@ class WishlistDropMenu extends Component {
 		}
 		return (
 			<div style={{ position: 'relative', float: 'left', paddingLeft: '4px' }}>
-				<ButtonGreen id={this.props.booktitle}>ADD TO WISHLIST</ButtonGreen>
+				<ButtonRed id={this.props.booktitle}>ADD TO WISHLIST</ButtonRed>
 				<Menu target={this.props.booktitle} valign="top" ripple>
 					{this.props.lists.map(function(list, index) {
 						return (

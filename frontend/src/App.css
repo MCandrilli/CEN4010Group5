@@ -3,10 +3,11 @@ body {
 	background-size: cover;
 }
 
-.quantity-field > .mdl-textfield__label {
+.bw-text-field > .mdl-textfield__label {
 	color: #fff;
+	font-family: monospace;
 }
 
-.bw-data-table tr:hover {
-	background-color: inherit !important;
+table.bw-data-table tbody tr:hover {
+	background-color: inherit;
 }

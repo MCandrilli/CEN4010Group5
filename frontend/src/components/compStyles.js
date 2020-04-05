@@ -23,6 +23,25 @@ const StyledPageTitle = styled(Link)`
 	font-variant: all-petite-caps;
 	font-family: monospace;`;
 
+const StyledPageTitleStatic = styled.h3`
+	font-variant: petite-caps;
+	font-family: monospace;
+	color: #fff;
+	font-size: 40px;
+	font-weight: lighter;
+	padding-top: 10px;
+	margin-bottom: 10px;
+`;
+
+const StyledSubtitleStatic = styled.h3`
+	font-variant: all-petite-caps;
+	font-family: monospace;
+	color: #fff;
+	font-size: 35px;
+	font-weight: lighter;
+	margin-bottom: 5px;
+`;
+
 const CardBW = styled(Card)`
 	width: 360px;
 	height: 720px;
@@ -97,8 +116,16 @@ const ButtonBlue = styled.button`
 	}
 `;
 
-const ButtonGreen = styled.button`
+const ButtonRed = styled.button`
 	${styledButtonAction} background-color: rosybrown;
+	&:hover {
+		background-color: brown;
+		border-color: transparent;
+	}
+`;
+
+const ButtonRed2 = styled.button`
+	${styledButtonAction} background-color: crimson;
 	&:hover {
 		background-color: brown;
 		border-color: transparent;
@@ -207,11 +234,14 @@ const QuantityStyle = styled.p`
 export {
 	StyledTitle,
 	StyledPageTitle,
+	StyledPageTitleStatic,
+	StyledSubtitleStatic,
 	CardBW,
 	ButtonBW,
 	ButtonBW2,
 	ButtonBlue,
-	ButtonGreen,
+	ButtonRed,
+	ButtonRed2,
 	DropdownBW,
 	DataTableBW,
 	DataTableBW_Cart,
