@@ -77,6 +77,18 @@ const ButtonGreen = styled.button`
 `;
 
 const DropdownBW = styled(DropdownButton)`
+	& > .btn-primary.dropdown-toggle {
+		${styledButtonBW}
+		border-color: #fff;
+		border-radius: unset;
+		&:hover {
+			${styledBWHover}
+		}
+		&:focus{
+			box-shadow: unset;
+			${styledBWHover}
+		}
+	}
 	& > .btn-primary {
 		${styledButtonBW}
 		border-color: #fff;
