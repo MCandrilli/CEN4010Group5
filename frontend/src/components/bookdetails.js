@@ -61,7 +61,8 @@ class BookDetails extends Component {
 									width: '360px',
 									height: '720px',
 									background: 'url(' + imageUrl + ') center / cover rgb(207,217,226)',
-									border: '#fff groove thin'
+									border: '#fff groove thin',
+									boxShadow: '0 10px 4px 0 rgba(0, 0, 0, 0.3)'
 								}}
 							/>
 						</Cell>
@@ -71,7 +72,8 @@ class BookDetails extends Component {
 									width: '500px',
 									height: 'auto',
 									background: 'rgba(0, 0 , 0, 0.5)',
-									border: '#fff groove thin'
+									border: '#fff groove thin',
+									boxShadow: '0 10px 4px 0 rgba(0, 0, 0, 0.3)'
 								}}
 							>
 								<CardText style={{ paddingTop: '5px', color: '#fff' }}>

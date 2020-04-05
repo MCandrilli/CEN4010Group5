@@ -1,8 +1,11 @@
 import styled from 'styled-components';
-import { withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { Tooltip } from '@material-ui/core';
 
-const StyledCoverArt = styled.img`height: 150px;`;
+const StyledCoverArt = styled.img`
+	height: 150px;
+	border: thin groove white;
+`;
 
 const StyledDeleteButton = styled.button`
 	background: transparent;
@@ -17,36 +20,25 @@ const StyledActionButton = styled.button`
 	text-decoration: underline;
 `;
 
-const StyledCheckoutButton = styled.button`
-	background: darkblue;
-	color: white;
-	border: outset;
-	border-radius: 12px;
-	padding: 5px 10px;
-	font-variant-caps: all-petite-caps;
-	font-size: 30px;
-	font-weight: lighter;
-	margin-left: 770px;
-	margin-top: 50px;
-`;
-
 const StyledBookTitle = styled.text`white-space: normal;`;
 
 const StyledShoppingCartTitle = styled.h3`
-	font-variant: all-petite-caps;
-	text-decoration: overline;
-	color: dimgrey;
+	font-variant: petite-caps;
+	font-family: monospace;
+	color: #fff;
 	font-size: 40px;
 	font-weight: lighter;
 	padding-top: 10px;
+	margin-bottom: 10px;
 `;
 
 const StyledSFLTitle = styled.h3`
-	font-variant: all-petite-caps;
-	text-decoration: overline;
-	color: dimgrey;
+	font-variant: petite-caps;
+	font-family: monospace;
+	color: #fff;
 	font-size: 28px;
 	font-weight: lighter;
+	margin-bottom: 5px;
 `;
 
 const StyledSubtotal = styled.p`
@@ -56,12 +48,12 @@ const StyledSubtotal = styled.p`
 	margin: unset;
 `;
 
-const StyledTooltip = withStyles(() =>({
+const StyledTooltip = withStyles(() => ({
 	tooltip: {
 		maxWidth: 210,
 		fontSize: 12
 	}
-}))(Tooltip)
+}))(Tooltip);
 
 export {
 	StyledCoverArt,
@@ -71,6 +63,5 @@ export {
 	StyledShoppingCartTitle,
 	StyledSFLTitle,
 	StyledSubtotal,
-	StyledCheckoutButton,
 	StyledTooltip
 };

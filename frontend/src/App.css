@@ -2,3 +2,11 @@ body {
 	background-image: url('./components/images/background3.jpg');
 	background-size: cover;
 }
+
+.quantity-field > .mdl-textfield__label {
+	color: #fff;
+}
+
+.sc-data-table > tr > .mdl-data-table tbody tr:hover {
+	background-color: inherit;
+}
