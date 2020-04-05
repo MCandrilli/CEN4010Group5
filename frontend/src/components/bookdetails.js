@@ -137,9 +137,7 @@ class BookDetails extends Component {
 									<ButtonBlue
 										style={{
 											float: 'left',
-											height: '33px',
-											backgroundColor: '#6fa3f7',
-											color: '#fff'
+											height: '33px'
 										}}
 										onClick={() => {
 											myData.book != null && addToCart(myData.book);
