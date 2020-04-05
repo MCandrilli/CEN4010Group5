@@ -8,7 +8,8 @@ import WishlistDropMenu from './wishlistdropmenu';
 import { Link } from 'react-router-dom';
 import { addToCart } from './shoppingcart';
 import StarRatings from 'react-star-ratings';
-import { CardBW, ButtonBW, ButtonBlue } from './compStyles';
+import { CardBW, ButtonBW, ButtonBlue, DropdownBW } from './compStyles';
+import styled from 'styled-components';
 
 class LandingPage extends Component {
 	constructor() {
@@ -154,7 +155,7 @@ class LandingPage extends Component {
 				<ButtonBW onClick={this.sortByPages.bind(this)}> Sort By Pages </ButtonBW>
 				<ButtonBW onClick={this.sortByYear.bind(this)}> Sort By Year Published </ButtonBW>
 				<ButtonBW onClick={this.sortByBestSellers.bind(this)}> Best Sellers </ButtonBW>
-				<DropdownButton variant="info" style={{ margin: '5px' }} id="dropdown-item-button" title="Select Genre">
+				<DropdownBW id="dropdown-item-button" title="Select Genre">
 					<Dropdown.Item as="button" onClick={this.filterByGenre.bind(this, 'Historical')}>
 						Historical
 					</Dropdown.Item>
@@ -170,8 +171,8 @@ class LandingPage extends Component {
 					<Dropdown.Item as="button" onClick={this.filterByGenre.bind(this, 'Biography')}>
 						Biography
 					</Dropdown.Item>
-				</DropdownButton>
-				<DropdownButton variant="info" style={{ margin: '5px' }} id="dropdown-item-button" title="Star Rating">
+				</DropdownBW>
+				<DropdownBW id="dropdown-item-button" title="Star Rating">
 					<Dropdown.Item as="button" onClick={this.filterByRating.bind(this, 1)}>
 						One Star and Up
 					</Dropdown.Item>
@@ -187,7 +188,7 @@ class LandingPage extends Component {
 					<Dropdown.Item as="button" onClick={this.filterByRating.bind(this, 5)}>
 						Five Star
 					</Dropdown.Item>
-				</DropdownButton>
+				</DropdownBW>
 				<Grid className="demo-grid-1">
 					{this.state.items.map((item, index) => {
 						let imageUrl =

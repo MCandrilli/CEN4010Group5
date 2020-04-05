@@ -1,5 +1,5 @@
 import { Card } from 'react-mdl';
-import { Link } from 'react-router-dom';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import styled from 'styled-components';
 
 const CardBW = styled(Card)`
@@ -76,11 +76,32 @@ const ButtonGreen = styled.button`
 	}
 `;
 
-const ItemTitleLink = styled(Link)`
-    text-decoration: none;
-    color: inherit;
-    &:hover {
-        color: red;
-    }`;
+const DropdownBW = styled(DropdownButton)`
+	& > .btn-primary {
+		${styledButtonBW}
+		border-color: #fff;
+		border-radius: unset;
+		&:hover {
+			${styledBWHover}
+		}		
+	}
+	& > .dropdown-menu {
+		border-radius: unset;
+		background-color: rgba(0, 0, 0, 0.8);
+		border: #fff groove thin;
+		& > .dropdown-item {
+			color: #fff;
+			border-bottom: #fff groove thin;
+			font-family: monospace;
+			font-size: 20px;
+			font-weight: 700;
+			font-variant: all-petite-caps;
+			transition: backgroundColor 0.25s ease-out, color 0.25s ease-out;
+			&:hover {
+				color: black;
+				background-color: rgba(255, 255, 255, 0.65);
+			}
+		}
+	}`;
 
-export { CardBW, ButtonBW, ButtonBlue, ButtonGreen, ItemTitleLink };
+export { CardBW, ButtonBW, ButtonBlue, ButtonGreen, DropdownBW };

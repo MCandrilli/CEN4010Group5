@@ -2,3 +2,7 @@ body {
 	background-image: url('./components/images/background3.jpg');
 	background-size: cover;
 }
+
+.home-dropdown > .btn-primary {
+	background: red;
+}
