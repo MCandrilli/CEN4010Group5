@@ -1,7 +1,8 @@
 import { Card } from 'react-mdl';
 import { Link } from 'react-router-dom';
-import { DataTable } from 'react-mdl';
+import { DataTable, Button } from 'react-mdl';
 import { TrashFill } from 'react-bootstrap-icons';
+import { Textfield } from 'react-mdl';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import styled from 'styled-components';
 
@@ -26,6 +27,7 @@ const StyledPageTitle = styled(Link)`
 const StyledPageTitleStatic = styled.h3`
 	font-variant: petite-caps;
 	font-family: monospace;
+	text-shadow: rgba(0, 0, 0, 0.7) 2px 4px;
 	color: #fff;
 	font-size: 40px;
 	font-weight: lighter;
@@ -36,6 +38,7 @@ const StyledPageTitleStatic = styled.h3`
 const StyledSubtitleStatic = styled.h3`
 	font-variant: all-petite-caps;
 	font-family: monospace;
+	text-shadow: rgba(0, 0, 0, 0.7) 2px 4px;
 	color: #fff;
 	font-size: 35px;
 	font-weight: lighter;
@@ -61,6 +64,13 @@ const CardBW = styled(Card)`
         }
 	}
 }`;
+
+const CardBW2 = styled(Card)`
+	background-color: rgba(0, 0, 0, 0.5);
+	border: #fff groove thin;
+	color: #fff;
+	font-family: monospace;
+	`;
 
 const styledButtonBW = {
 	color: '#fff',
@@ -108,6 +118,15 @@ const ButtonBW2 = styled.button`
 	}
 `;
 
+const ButtonBW3 = styled(Button)`
+	${styledButtonBW};
+	padding-top: unset;
+	padding-bottom: unset;
+	&:hover {
+		${styledBWHover};
+	}
+`;
+
 const ButtonBlue = styled.button`
 	${styledButtonAction} background-color: dodgerblue;
 	&:hover {
@@ -126,6 +145,16 @@ const ButtonRed = styled.button`
 
 const ButtonRed2 = styled.button`
 	${styledButtonAction} background-color: crimson;
+	&:hover {
+		background-color: brown;
+		border-color: transparent;
+	}
+`;
+
+const ButtonRed3 = styled(Button)`
+	${styledButtonAction} background-color: crimson;
+	padding-top: unset;
+	padding-bottom: unset;
 	&:hover {
 		background-color: brown;
 		border-color: transparent;
@@ -194,6 +223,31 @@ const DataTableBW = styled(DataTable)`
 	}
 	`;
 
+const DataTableBW_SFL = styled(DataTable)`
+	background-color: rgba(0, 0, 0, 0.5);
+	border: #fff groove thin;
+	> * {
+		color: #fff;
+		font-family: monospace;
+		font-size: 17px;
+	}
+	th {
+		color: #fff;
+	}
+	p {
+		color: #fff;
+	}
+	td:nth-child(2) {
+		width: 351px;
+	}
+	tr:first-child > td {
+		border-top: rgba(255, 255, 255, 0.65) solid thin;
+	}
+	tr:last-child > td {
+		border-bottom: rgba(255, 255, 255, 0.65) solid thin;
+	}
+	`;
+
 const DataTableBW_Cart = styled(DataTable)`
 	background-color: rgba(0, 0, 0, 0.5);
 	border: #fff groove thin;
@@ -208,12 +262,15 @@ const DataTableBW_Cart = styled(DataTable)`
 	p {
 		color: #fff;
 	}
+	td:nth-child(2) {
+		width: 351px;
+	}
 	tr:first-child > td {
 		border-top: rgba(255, 255, 255, 0.65) solid thin;
 	}
 	tr:last-child > td {
 		border-bottom: rgba(255, 255, 255, 0.65) solid thin;
-		border-top: rgba(255, 255, 255, 0.3) solid 2px;
+		border-top: rgba(255, 255, 255, 0.3) solid 3px;
 	}
 	`;
 
@@ -231,20 +288,46 @@ const QuantityStyle = styled.p`
 	}
 `;
 
+const StyledDeleteButton = styled.button`
+	background: transparent;
+	border: none;
+`;
+
+const TextfieldBW = styled(Textfield)`
+	width: 200px;
+	margin-top: -10px;
+	margin-bottom: -20px;
+	margin-left: 15px;
+	color: #fff;
+	& > label.mdl-textfield__label:after {
+		background-color: #fff;
+	}
+	& > input {
+		margin-bottom: 10px;
+		border-bottom: rgba(255,255,255,0.5) solid thin;
+	}
+	`;
+
 export {
 	StyledTitle,
 	StyledPageTitle,
 	StyledPageTitleStatic,
 	StyledSubtitleStatic,
 	CardBW,
+	CardBW2,
 	ButtonBW,
 	ButtonBW2,
+	ButtonBW3,
 	ButtonBlue,
 	ButtonRed,
 	ButtonRed2,
+	ButtonRed3,
 	DropdownBW,
 	DataTableBW,
 	DataTableBW_Cart,
+	DataTableBW_SFL,
 	TrashIcon,
-	QuantityStyle
+	TextfieldBW,
+	QuantityStyle,
+	StyledDeleteButton
 };

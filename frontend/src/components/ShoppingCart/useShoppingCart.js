@@ -72,7 +72,7 @@ const removeFromSFL = (id) => {
 	}
 };
 
-/* Remove book from save-for-later list and add it back to the cart*/
+/* Remove book from save-for-later list and add it back to the cart */
 const backToCart = (id) => {
 	let sfl_index = findBookInSFLByIndex(id);
 	if (sfl_index !== -1) {
@@ -85,6 +85,7 @@ const backToCart = (id) => {
 	}
 };
 
+/* Update the quantity of an item in the cart */
 const updateQuantity = (id, new_quantity) => {
 	let index = findBookInCartByIndex(id);
 	if (new_quantity === 0) {

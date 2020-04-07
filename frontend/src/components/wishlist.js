@@ -13,6 +13,7 @@ import {
 	DropdownBW,
 	ButtonRed2,
 	ButtonBW,
+	StyledDeleteButton,
 	StyledPageTitleStatic,
 	StyledSubtitleStatic
 } from './compStyles';
@@ -215,12 +216,10 @@ class Wishlist extends Component {
 
 		if (user === null) {
 			return (
-				<div style={{ marginTop: '10%', marginLeft: '20%' }}>
-					<StyledWishListTitle>Login to Use WishLists</StyledWishListTitle>
+				<div style={{ marginTop: '10%', display: 'flex', flexFlow: 'column', alignItems: 'center' }}>
+					<StyledPageTitleStatic>Login to Use WishLists</StyledPageTitleStatic>
 					<Link to="/profile">
-						<Button style={{ width: '200px', marginLeft: '30%' }} color="success">
-							Login
-						</Button>
+						<ButtonBW style={{ width: '200px', fontSize: '18px', fontWeight: '500' }}>Login</ButtonBW>
 					</Link>
 				</div>
 			);
@@ -274,7 +273,7 @@ class Wishlist extends Component {
 								wishListItems.push({
 									booktitle: element.title,
 									delete: (
-										<button
+										<StyledDeleteButton
 											style={{ border: 'none', background: 'transparent' }}
 											onClick={() => {
 												axios
@@ -288,7 +287,7 @@ class Wishlist extends Component {
 											}}
 										>
 											<TrashIcon color="#fff" size={'30px'} />
-										</button>
+										</StyledDeleteButton>
 									),
 									moveTo: this.moveListDropdown(
 										item.title,
