@@ -1,13 +1,18 @@
-import React, { Component, useState } from 'react';
-import { DataTable, TableHeader, Textfield } from 'react-mdl';
-import delete_logo from './images/delete_bin.png';
+import React, { Component } from 'react';
+import { TableHeader, Textfield } from 'react-mdl';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import { TrashFill } from 'react-bootstrap-icons';
-import { ButtonBW2, ButtonBlue, DataTableBW, QuantityStyle, TrashIcon } from './compStyles';
+import {
+	ButtonBW2,
+	ButtonBlue,
+	DataTableBW_SFL,
+	DataTableBW_Cart,
+	QuantityStyle,
+	TrashIcon,
+	StyledDeleteButton,
+	StyledSubtitleStatic
+} from './compStyles';
 import {
 	StyledCoverArt,
-	StyledDeleteButton,
-	StyledActionButton,
 	StyledBookTitle,
 	StyledShoppingCartTitle,
 	StyledSFLTitle,
@@ -52,6 +57,7 @@ class ShoppingCart extends Component {
 		updateLocalStorage();
 	};
 
+	/* Delete button component. */
 	displayDeleteButton = (id, action) => {
 		return (
 			<StyledDeleteButton
@@ -64,18 +70,22 @@ class ShoppingCart extends Component {
 		);
 	};
 
+	/* Create toggles for the quantity fields for items.  */
 	initQuantityToggles = (num_items) => {
 		let new_toggles = [];
 		for (let i = 0; i < num_items; i++) new_toggles.push(true);
 		return new_toggles;
 	};
 
+	/* 	Toggle between displaying the current quantity and displaying a 
+		field to change the quantity */
 	toggleQuantity = (item, value) => {
 		let new_toggles = this.state.quantity_toggles;
 		new_toggles[item] = value;
 		this.setState({ quantity_toggles: new_toggles });
 	};
 
+	/* Check for valid input and update quantity accordingly */
 	handleQuantityChange = (e, id) => {
 		const { value } = e.target;
 		let numerical_value = value - 0;
@@ -84,6 +94,7 @@ class ShoppingCart extends Component {
 		}
 	};
 
+	/* Render quantity field */
 	quantityField = (id, index) => {
 		return (
 			<ClickAwayListener
@@ -93,7 +104,7 @@ class ShoppingCart extends Component {
 			>
 				<StyledTooltip title="Quantity should only contain integer numbers from 1-9999.">
 					<Textfield
-						className="quantity-field"
+						className="bw-text-field"
 						onChange={(e) => {
 							this.handleQuantityChange(e, id);
 						}}
@@ -111,6 +122,7 @@ class ShoppingCart extends Component {
 		);
 	};
 
+	/* Render shopping cart */
 	createCart = () => {
 		let items = cart.map((book, index) => ({
 			cover_art: <StyledCoverArt src={img_url_prefix + book.img_link} alt={book.title + ' cover art'} />,
@@ -141,8 +153,8 @@ class ShoppingCart extends Component {
 		items.push(subtotal);
 
 		return (
-			<DataTableBW
-				className="sc-data-table"
+			<DataTableBW_Cart
+				className="bw-data-table"
 				shadow={0}
 				style={{ width: '800px', width: 'fit-content' }}
 				rows={items}
@@ -165,13 +177,15 @@ class ShoppingCart extends Component {
 				<TableHeader name="delete" style={{ color: 'transparent' }}>
 					Delete
 				</TableHeader>
-			</DataTableBW>
+			</DataTableBW_Cart>
 		);
 	};
 
+	/* Render saved-for-later */
 	createSFL = () => {
 		return (
-			<DataTableBW
+			<DataTableBW_SFL
+				className="bw-data-table"
 				shadow={0}
 				style={{ width: '650px', width: 'fit-content' }}
 				rows={save_for_later.map((book, index) => ({
@@ -199,19 +213,27 @@ class ShoppingCart extends Component {
 				<TableHeader name="delete" style={{ color: 'transparent' }}>
 					Delete
 				</TableHeader>
-			</DataTableBW>
+			</DataTableBW_SFL>
 		);
 	};
 
 	render() {
+		{
+			/* Update shopping cart and saved-for-later with local storage. */
+		}
 		updateShoppingCart();
 		updateSFL();
+		{
+			/* Render shopping cart page. */
+		}
 		return (
 			<div style={{ display: 'flex', justifyContent: 'center', paddingTop: '10px' }}>
 				<div style={{ display: 'flex', flexFlow: 'column', width: 'fit-content' }}>
 					<StyledShoppingCartTitle>Shopping Cart</StyledShoppingCartTitle>
 					{cart.length === 0 ? (
-						<p1 style={{ fontSize: '20px' }}>Your cart is empty.</p1>
+						<StyledSubtitleStatic style={{ textAlign: 'center', fontSize: '28px' }}>
+							Your cart is empty.
+						</StyledSubtitleStatic>
 					) : (
 						<this.createCart />
 					)}

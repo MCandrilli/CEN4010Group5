@@ -2,169 +2,166 @@ import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import { Card, CardText, CardTitle, Button, Textfield, FABButton, Icon } from 'react-mdl';
+import { ButtonBW, ButtonBW3, ButtonRed3, TextfieldBW } from '../compStyles';
 
 class CreditCardInfo extends React.Component {
-  constructor(props){
-    super(props);
-    
-    this.state = {
-      cardNumber: null,
-      expirationDate: null,
-      securityCode: null,
-      name: null,
-      edit: false,
-      _id: null,
-      newCard: true
-    }
-  }
+	constructor(props) {
+		super(props);
 
-  handleChange = (e) => {
-    const { name, value } = e.target;
-    if(name === 'cardNumber' || name === 'securityCode'){
-      const re = /^[0-9\b]+$/;
-      if(value === '' || re.test(value)){
-        this.setState({ [name]: value })
-      }
-    } 
-    else{
-      this.setState({ [name]: value });
-    }
-  }
+		this.state = {
+			cardNumber: null,
+			expirationDate: null,
+			securityCode: null,
+			name: null,
+			edit: false,
+			_id: null,
+			newCard: true
+		};
+	}
 
-  handleChangeDate = e => {
-    const { value } = e.target;
+	handleChange = (e) => {
+		const { name, value } = e.target;
+		if (name === 'cardNumber' || name === 'securityCode') {
+			const re = /^[0-9\b]+$/;
+			if (value === '' || re.test(value)) {
+				this.setState({ [name]: value });
+			}
+		} else {
+			this.setState({ [name]: value });
+		}
+	};
 
-    if(value.length <= 5){
-      this.setState({ expirationDate: value });
-    }
-  };
+	handleChangeDate = (e) => {
+		const { value } = e.target;
 
-  handleEdit = () => {
-    const { edit } = this.state;
-    this.setState({ edit: !edit});
-  }
+		if (value.length <= 5) {
+			this.setState({ expirationDate: value });
+		}
+	};
 
-  handleSave = async () => {
-    const { _id, cardNumber, expirationDate, securityCode, name, newCard, edit } = this.state;
+	handleEdit = () => {
+		const { edit } = this.state;
+		this.setState({ edit: !edit });
+	};
 
-    try{
-      const [day, month] = expirationDate.split('/');
-      console.log(day)
-      console.log(month);
-      if(typeof(day) !== 'number' || typeof(month) !=='number'){
-        throw new Error();
-      }
+	handleSave = async () => {
+		const { _id, cardNumber, expirationDate, securityCode, name, newCard, edit } = this.state;
 
-      if(day > 31 || day < 1){
-        throw new Error();
-      }
-      
-    } catch(e) {
-      alert('Please enter a valid date')
-    }
-    
-    if(!newCard){
-      const fields = { cardNumber, expirationDate, securityCode, name };
-      await axios.put('http://localhost:5000/card', { _id, fields });
-    }
+		try {
+			const [ day, month ] = expirationDate.split('/');
+			console.log(day);
+			console.log(month);
+			if (typeof day !== 'number' || typeof month !== 'number') {
+				throw new Error();
+			}
 
-    else{
-      const fields = { cardNumber, expirationDate, securityCode, name, userId: 'john123' };
-      await axios.post('http://localhost:5000/card', fields);
-      this.setState({ newCard: false })
-    }
+			if (day > 31 || day < 1) {
+				throw new Error();
+			}
+		} catch (e) {
+			alert('Please enter a valid date');
+		}
 
-    this.setState({ edit: !edit })
-  }
+		if (!newCard) {
+			const fields = { cardNumber, expirationDate, securityCode, name };
+			await axios.put('http://localhost:5000/card', { _id, fields });
+		} else {
+			const fields = { cardNumber, expirationDate, securityCode, name, userId: 'john123' };
+			await axios.post('http://localhost:5000/card', fields);
+			this.setState({ newCard: false });
+		}
 
-  handleDelete = async () => {
-    const { _id } = this.state;
+		this.setState({ edit: !edit });
+	};
 
-    if(_id){
-      await axios.delete(`http://localhost:5000/card?_id=${_id}`);
-    }
+	handleDelete = async () => {
+		const { _id } = this.state;
 
-    this.props.update(this.props.ind);
-  }
+		if (_id) {
+			await axios.delete(`http://localhost:5000/card?_id=${_id}`);
+		}
 
-  componentDidMount(){
-    const { data } = this.props;
+		this.props.update(this.props.ind);
+	};
 
-    if(data._id){
-      this.setState(data);
-      this.setState({ newCard: false });
-    }
-  }
+	componentDidMount() {
+		const { data } = this.props;
 
-  render(){
-    const { edit, cardNumber, expirationDate, securityCode, name } = this.state;
+		if (data._id) {
+			this.setState(data);
+			this.setState({ newCard: false });
+		}
+	}
 
-    return(
-      <div>
-        <Button raised onClick={ this.handleEdit }>
-          Edit
-        </Button>
-        <Button raised colored disabled={ !edit } onClick={ this.handleSave } style={{ marginLeft: 20 }}>
-          Save Changes
-        </Button>
-        <Button raised accent disabled={ !edit } onClick={ this.handleDelete } style={{ marginLeft: 20 }}>
-          Delete
-        </Button>
-        <CardText>
-          <CardText>
-            CardNumber
-          </CardText>
-            <Textfield
-              onChange={this.handleChange}
-              label=''
-              style={{width: '200px', marginTop: '-10px', marginBottom: '-20px'}}
-              disabled={ !edit }
-              value={ cardNumber }
-              name='cardNumber'
-            />
-        </CardText>
-        <CardText>
-          <CardText>
-            ExpirationDate
-          </CardText>
-          <Textfield
-              onChange={this.handleChangeDate}
-              label='Format: mm/yy'
-              style={{width: '200px', marginTop: '-10px', marginBottom: '-20px'}}
-              disabled={ !edit }
-              value={ expirationDate }
-              name='expirationDate'
-            />
-        </CardText>
-        <CardText>
-          <CardText>
-            Security Code
-          </CardText>
-            <Textfield
-              onChange={this.handleChange}
-              label=''
-              style={{width: '200px', marginTop: '-10px', marginBottom: '-20px'}}
-              disabled={ !edit }
-              value={ securityCode }
-              name='securityCode'
-            />
-        </CardText>
-        <CardText>
-          <CardText>
-            Cardholder Name
-          </CardText>
-            <Textfield
-              onChange={this.handleChange}
-              label=''
-              style={{width: '200px', marginTop: '-10px', marginBottom: '-20px'}}
-              disabled={ !edit }
-              value={ name }
-              name='name'
-            />
-        </CardText>
-      </div>
-    )
-  }
+	render() {
+		const { edit, cardNumber, expirationDate, securityCode, name } = this.state;
+
+		return (
+			<div>
+				<ButtonBW onClick={this.handleEdit}>Edit</ButtonBW>
+				<ButtonBW3
+					className="disabled-button"
+					disabled={!edit}
+					onClick={this.handleSave}
+					style={{ marginLeft: 20 }}
+				>
+					Save Changes
+				</ButtonBW3>
+				<ButtonRed3
+					className="disabled-button"
+					disabled={!edit}
+					onClick={this.handleDelete}
+					style={{ marginLeft: 20 }}
+				>
+					Delete
+				</ButtonRed3>
+				<CardText>
+					<CardText className="card-text">CardNumber</CardText>
+					<TextfieldBW
+						className="bw-text-field"
+						onChange={this.handleChange}
+						label=""
+						disabled={!edit}
+						value={cardNumber}
+						name="cardNumber"
+					/>
+				</CardText>
+				<CardText>
+					<CardText className="card-text">Expiration Date</CardText>
+					<TextfieldBW
+						className="bw-text-field"
+						onChange={this.handleChangeDate}
+						label="Format: mm/yy"
+						disabled={!edit}
+						value={expirationDate}
+						name="expirationDate"
+					/>
+				</CardText>
+				<CardText>
+					<CardText className="card-text">Security Code</CardText>
+					<TextfieldBW
+						className="bw-text-field"
+						onChange={this.handleChange}
+						label=""
+						disabled={!edit}
+						value={securityCode}
+						name="securityCode"
+					/>
+				</CardText>
+				<CardText>
+					<CardText className="card-text">Cardholder Name</CardText>
+					<TextfieldBW
+						className="bw-text-field"
+						onChange={this.handleChange}
+						label=""
+						disabled={!edit}
+						value={name}
+						name="name"
+					/>
+				</CardText>
+			</div>
+		);
+	}
 }
 
 export default CreditCardInfo;

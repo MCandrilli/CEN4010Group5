@@ -7,6 +7,16 @@ import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { Button } from 'reactstrap';
 import { addToCart } from './shoppingcart';
 import { Link } from 'react-router-dom';
+import {
+	DataTableBW,
+	TrashIcon,
+	DropdownBW,
+	ButtonRed2,
+	ButtonBW,
+	StyledDeleteButton,
+	StyledPageTitleStatic,
+	StyledSubtitleStatic
+} from './compStyles';
 
 const StyledWishListTitle = styled.h3`
 	font-variant: all-petite-caps;
@@ -145,7 +155,7 @@ class Wishlist extends Component {
 			return (
 				<div>
 					{' '}
-					<DropdownButton id="dropdown-basic-button" title="Move">
+					<DropdownBW id="dropdown-basic-button" title="Move">
 						<Dropdown.Item
 							onClick={() =>
 								element != null &&
@@ -159,13 +169,13 @@ class Wishlist extends Component {
 							Add to Cart.
 						</Dropdown.Item>
 						<Dropdown.Item>No other lists available.</Dropdown.Item>
-					</DropdownButton>
+					</DropdownBW>
 				</div>
 			);
 		} else
 			return (
 				<div>
-					<DropdownButton id="dropdown-basic-button" title="Move">
+					<DropdownBW id="dropdown-basic-button" title="Move">
 						<Dropdown.Item
 							onClick={() =>
 								element != null &&
@@ -176,7 +186,7 @@ class Wishlist extends Component {
 									price: element.price
 								})}
 						>
-							Add to Cart.
+							Add to Cart
 						</Dropdown.Item>
 						{this.state.items.map(function(item, index) {
 							if (item.title !== listTitle)
@@ -196,7 +206,7 @@ class Wishlist extends Component {
 									</Dropdown.Item>
 								);
 						}, this)}
-					</DropdownButton>
+					</DropdownBW>
 				</div>
 			);
 	}
@@ -206,12 +216,10 @@ class Wishlist extends Component {
 
 		if (user === null) {
 			return (
-				<div style={{ marginTop: '10%', marginLeft: '20%' }}>
-					<StyledWishListTitle>Login to Use WishLists</StyledWishListTitle>
+				<div style={{ marginTop: '10%', display: 'flex', flexFlow: 'column', alignItems: 'center' }}>
+					<StyledPageTitleStatic>Login to Use WishLists</StyledPageTitleStatic>
 					<Link to="/profile">
-						<Button style={{ width: '200px', marginLeft: '30%' }} color="success">
-							Login
-						</Button>
+						<ButtonBW style={{ width: '200px', fontSize: '18px', fontWeight: '500' }}>Login</ButtonBW>
 					</Link>
 				</div>
 			);
@@ -219,25 +227,45 @@ class Wishlist extends Component {
 
 		return (
 			<div style={{ width: '95%', marginLeft: 'auto', marginRight: 'auto', marginTop: '30px' }}>
-				<StyledWishListTitle>Wishlist</StyledWishListTitle>
-				<div style={{ width: '25%', margin: 'auto', boxShadow: '0px 0px 3px 3px #ccc' }}>
-					<StyledCreateWishlist>Create a Wishlist</StyledCreateWishlist>
-					<form style={{ margin: '10px' }} onSubmit={this.handleSubmit}>
-						<label style={{ marginLeft: '15%', marginTop: '10px' }}>
+				<StyledPageTitleStatic style={{ paddingLeft: '300px', textDecoration: 'overline' }}>
+					Wish Lists
+				</StyledPageTitleStatic>
+				<div
+					style={{
+						width: '25%',
+						margin: 'auto',
+						background: 'rgba(0, 0, 0, 0.5)',
+						border: '#fff groove thin'
+					}}
+				>
+					<StyledSubtitleStatic style={{ textAlign: 'center', fontVariant: 'petite-caps', fontSize: '28px' }}>
+						Create a Wish List
+					</StyledSubtitleStatic>
+					<form
+						style={{ margin: '10px', display: 'flex', flexFlow: 'column', alignItems: 'center' }}
+						onSubmit={this.handleSubmit}
+					>
+						<label>
 							<Textfield
+								className="bw-text-field"
 								value={this.state.value}
 								onChange={this.handleChange}
-								label="Type Name for Wishlist..."
-								style={{ width: '200px' }}
+								label="new wish list..."
+								style={{
+									width: '200px',
+									paddingBottom: 'unset',
+									color: '#fff',
+									borderBottom: '#fff groove thin'
+								}}
 							/>
 						</label>
-						<Button color="primary" style={{ marginLeft: '10px' }} type="submit" value="Create">
+						<ButtonBW style={{ marginLeft: '10px' }} type="submit" value="Create">
 							Create
-						</Button>
+						</ButtonBW>
 					</form>
 				</div>
 
-				<Grid className="demo-grid-1">
+				<Grid className="demo-grid-1" style={{ display: 'flex', justifyContent: 'center' }}>
 					{this.state.items.map(function(item, index) {
 						let wishListItems = [];
 						this.state.listItems.forEach((element) => {
@@ -245,9 +273,8 @@ class Wishlist extends Component {
 								wishListItems.push({
 									booktitle: element.title,
 									delete: (
-										<Button
-											outline
-											color="danger"
+										<StyledDeleteButton
+											style={{ border: 'none', background: 'transparent' }}
 											onClick={() => {
 												axios
 													.delete(`http://localhost:5000/wishlistItems/delete/` + element._id)
@@ -259,8 +286,8 @@ class Wishlist extends Component {
 												window.location.reload();
 											}}
 										>
-											X
-										</Button>
+											<TrashIcon color="#fff" size={'30px'} />
+										</StyledDeleteButton>
 									),
 									moveTo: this.moveListDropdown(
 										item.title,
@@ -283,11 +310,22 @@ class Wishlist extends Component {
 
 						if (item.owner === localStorage.getItem('id')) {
 							return (
-								<Cell col={4} key={item._id}>
-									<h3 style={{ display: 'flex', justifyContent: 'center' }}>{item.title}</h3>
+								<Cell
+									col={4}
+									key={item._id}
+									style={{ width: 'fit-content', paddingLeft: '20px', paddingRight: '20px' }}
+								>
+									<StyledSubtitleStatic style={{ display: 'flex', justifyContent: 'start' }}>
+										{item.title}
+									</StyledSubtitleStatic>
 
-									<DataTable style={{ width: '30%' }} shadow={0} rows={wishListItems}>
-										<TableHeader name="booktitle" tooltip="The Book' title">
+									<DataTableBW
+										className="bw-data-table"
+										style={{ width: '30%' }}
+										shadow={0}
+										rows={wishListItems}
+									>
+										<TableHeader name="booktitle" fontSize="16px">
 											Book Title
 										</TableHeader>
 										<TableHeader name="delete" tooltip="Delete">
@@ -297,18 +335,17 @@ class Wishlist extends Component {
 											{' '}
 										</TableHeader>
 										<TableHeader name="toCart" tooltip="" />
-									</DataTable>
+									</DataTableBW>
 
-									<Button
-										style={{ marginLeft: '30px', marginTop: '10px' }}
-										color="danger"
+									<ButtonRed2
+										style={{ marginTop: '10px', marginRight: 'unset', float: 'right' }}
 										key={item._id}
 										onClick={() => {
 											this.deleteSubmit(item._id);
 										}}
 									>
 										Delete List
-									</Button>
+									</ButtonRed2>
 								</Cell>
 							);
 						}
