@@ -17,6 +17,12 @@ div.bw-text-field input fieldset[disabled] .mdl-textfield .mdl-textfield__input,
 
 div.bw-text-field input.mdl-textfield__input {
 	font-family: monospace;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.bw-text-field .mdl-textfield__label:after {
+	background-color: #fff;
+	bottom: 15px;
 }
 
 table.bw-data-table tbody tr:hover {
