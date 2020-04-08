@@ -124,10 +124,6 @@ class bookByAuthor extends Component {
 					{' '}
 					SORT BY TITLE{' '}
 				</ButtonBW>
-				<ButtonBW style={{ margin: '5px' }} onClick={this.sortByAuthor.bind(this)}>
-					{' '}
-					SORT BY AUTHOR{' '}
-				</ButtonBW>
 				<ButtonBW style={{ margin: '5px' }} onClick={this.sortByPages.bind(this)}>
 					{' '}
 					SORT BY PAGES{' '}
