@@ -168,17 +168,12 @@ class Profile extends Component {
 		return id && creditCards && shippingAddresses ? (
 			<div>
 				<CardBW2 shadow={0} style={{ width: '512px', margin: 'auto' }}>
-					<CardTitle className="card-title">My Profile</CardTitle>
+					<CardTitle className="card-title-top">My Profile</CardTitle>
 					<CardText>
 						<ButtonBW raised onClick={this.handleEdit}>
 							Edit
 						</ButtonBW>
-						<ButtonBW3
-							className="disabled-button"
-							disabled={!edit}
-							onClick={this.handleSaveProfile}
-							style={{ marginLeft: 20 }}
-						>
+						<ButtonBW3 disabled={!edit} onClick={this.handleSaveProfile} style={{ marginLeft: 20 }}>
 							Save Changes
 						</ButtonBW3>
 						<ButtonRed2 raised accent onClick={this.handleSignOut} style={{ marginLeft: 20 }}>
@@ -277,7 +272,7 @@ class Profile extends Component {
 					</CardText>
 				</CardBW2>
 				<CardBW2 shadow={0} style={{ width: '512px', margin: 'auto' }}>
-					<CardTitle className="card-title">Credit Cards</CardTitle>
+					<CardTitle className="card-title-top">Credit Cards</CardTitle>
 					{creditCards.map((card) => {
 						const { ind, card: cardInfo } = card;
 						return (
@@ -293,7 +288,7 @@ class Profile extends Component {
 					</CardText>
 				</CardBW2>
 				<CardBW2 shadow={0} style={{ width: '512px', margin: 'auto' }}>
-					<CardTitle className="card-title">Shipping Addresses</CardTitle>
+					<CardTitle className="card-title-bottom">Shipping Addresses</CardTitle>
 					{shippingAddresses.map((address) => {
 						const { ind, address: addressInfo } = address;
 						return (

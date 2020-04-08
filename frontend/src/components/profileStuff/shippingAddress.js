@@ -73,20 +73,10 @@ class ShippingAddress extends Component {
 		return (
 			<div>
 				<ButtonBW onClick={this.handleEdit}>Edit</ButtonBW>
-				<ButtonBW3
-					className="disabled-button"
-					disabled={!edit}
-					onClick={this.handleSave}
-					style={{ marginLeft: 20 }}
-				>
+				<ButtonBW3 disabled={!edit} onClick={this.handleSave} style={{ marginLeft: 20 }}>
 					Save Changes
 				</ButtonBW3>
-				<ButtonRed3
-					className="disabled-button"
-					disabled={!edit}
-					onClick={this.handleDelete}
-					style={{ marginLeft: 20 }}
-				>
+				<ButtonRed3 disabled={!edit} onClick={this.handleDelete} style={{ marginLeft: 20 }}>
 					Delete
 				</ButtonRed3>
 				<CardText>
@@ -95,7 +85,6 @@ class ShippingAddress extends Component {
 						className="bw-text-field"
 						onChange={this.handleChange}
 						label=""
-						style={{ width: '200px', marginTop: '-10px', marginBottom: '-20px' }}
 						disabled={!edit}
 						value={street}
 						name="street"
@@ -107,7 +96,6 @@ class ShippingAddress extends Component {
 						className="bw-text-field"
 						onChange={this.handleChange}
 						label="Format: mm/yy"
-						style={{ width: '200px', marginTop: '-10px', marginBottom: '-20px' }}
 						disabled={!edit}
 						value={country}
 						name="country"
@@ -119,7 +107,6 @@ class ShippingAddress extends Component {
 						className="bw-text-field"
 						onChange={this.handleChange}
 						label=""
-						style={{ width: '200px', marginTop: '-10px', marginBottom: '-20px' }}
 						disabled={!edit}
 						value={city}
 						name="city"
@@ -131,7 +118,6 @@ class ShippingAddress extends Component {
 						className="bw-text-field"
 						onChange={this.handleChange}
 						label=""
-						style={{ width: '200px', marginTop: '-10px', marginBottom: '-20px' }}
 						disabled={!edit}
 						value={state}
 						name="state"
