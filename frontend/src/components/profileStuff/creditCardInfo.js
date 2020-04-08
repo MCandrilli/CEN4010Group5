@@ -99,20 +99,10 @@ class CreditCardInfo extends React.Component {
 		return (
 			<div>
 				<ButtonBW onClick={this.handleEdit}>Edit</ButtonBW>
-				<ButtonBW3
-					className="disabled-button"
-					disabled={!edit}
-					onClick={this.handleSave}
-					style={{ marginLeft: 20 }}
-				>
+				<ButtonBW3 disabled={!edit} onClick={this.handleSave} style={{ marginLeft: 20 }}>
 					Save Changes
 				</ButtonBW3>
-				<ButtonRed3
-					className="disabled-button"
-					disabled={!edit}
-					onClick={this.handleDelete}
-					style={{ marginLeft: 20 }}
-				>
+				<ButtonRed3 disabled={!edit} onClick={this.handleDelete} style={{ marginLeft: 20 }}>
 					Delete
 				</ButtonRed3>
 				<CardText>

@@ -127,7 +127,7 @@ class BookDetails extends Component {
 									<StarRatings
 										rating={myData.book.rating}
 										starRatedColor="goldenrod"
-										starEmptyColor="darkslategrey"
+										starEmptyColor="white"
 										numberOfStars={5}
 										name="rating"
 										starDimension="20px"
