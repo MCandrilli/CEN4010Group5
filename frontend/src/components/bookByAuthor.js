@@ -144,8 +144,8 @@ class bookByAuthor extends Component {
 						let lists = this.state.wishlists;
 
 						return (
-							<Cell col={4}>
-								<CardBW shadow={0} style={{ width: '360px', height: '720px', margin: '50px' }}>
+							<Cell col={3}>
+								<CardBW shadow={6} style={{ width: '360px', height: '720px', margin: '50px' }}>
 									<Link
 										to={{
 											pathname: '/bookdetails',
