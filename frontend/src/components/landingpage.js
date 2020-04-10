@@ -2,15 +2,10 @@ import React, { Component } from 'react';
 import { Card, CardTitle, CardText, CardActions, Grid, Cell } from 'react-mdl';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Select from 'react-select';
-<<<<<<< HEAD
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Pagination from "react-js-pagination";
 import { Button } from 'reactstrap';
-=======
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
->>>>>>> fcf5871d7618a3306a9cb067a820705c27b9b37d
 import WishlistDropMenu from './wishlistdropmenu';
 import { Link } from 'react-router-dom';
 import { addToCart } from './shoppingcart';
@@ -23,20 +18,23 @@ class LandingPage extends Component {
 		super();
 
 		this.state = {
-			items: [],
+      items: [],
+      items2: [],
 			wishlists: [],
 			selected_genre: '',
 			is_cart_toggle_on: true
 		};
 		this.handleClick = this.handleClick.bind(this);
-	}
+  }
+
 	componentDidMount() {
 		this.getItems();
 		this.getWishLists();
 	}
 
 	getItems() {
-		fetch('/books').then((results) => results.json()).then((results) => this.setState({ items: results.data }));
+    fetch('/books').then((results) => results.json()).then((results) => this.setState({ items: results.data }));
+    fetch('/books').then((results) => results.json()).then((results) => this.setState({ items2: results.data }));
 	}
 
 	getWishLists() {
@@ -80,24 +78,28 @@ class LandingPage extends Component {
 		this.setState({ items: tempArray2 });
 	}
 	filterByGenre(genre) {
-		let tempArray1 = [];
-		let tempArray2 = [];
+		
+    let tempArray1 = this.state.items2;
+    let tempArray2 = [];
+    this.setState({items : tempArray1})
 		tempArray1 = this.state.items;
 
 		tempArray2 = tempArray1.filter(function(book) {
 			return book.genre == genre;
 		});
-		this.setState({ items: tempArray2 });
+    this.setState({ items: tempArray2 });
 	}
 	sortByBestSellers() {
-		let tempArray1 = [];
-		let tempArray2 = [];
+		
+    let tempArray1 = this.state.items2;
+    let tempArray2 = [];
+    this.setState({items : tempArray1})
 		tempArray1 = this.state.items;
 
 		tempArray2 = tempArray1.filter(function(book) {
 			return book.ratingCount >= 6;
 		});
-		this.setState({ items: tempArray2 });
+    this.setState({ items: tempArray2 });
 	}
 
 
@@ -105,7 +107,8 @@ class LandingPage extends Component {
 sortByTitle(){
     let tempArray =[];
     tempArray = this.state.items;
-    tempArray.sort(function(a,b){
+    if(!(this.state.reverse_sort)){
+      tempArray.sort(function(a,b){
       if (a.title >b.title){
         return 1;
       }
@@ -114,6 +117,18 @@ sortByTitle(){
       }
       return 0
     });
+    }
+    if(this.state.reverse_sort){
+      tempArray.sort(function(a,b){
+        if (b.title >a.title){
+          return 1;
+        }
+        if (a.title > b.title){
+          return -1;
+        }
+        return 0
+      });
+    }
     this.setState({'items' : tempArray})
   }
   sortByAuthor(){
@@ -166,9 +181,16 @@ sortByTitle(){
   sortByYear(){
     let tempArray =[];
     tempArray = this.state.items;
-    tempArray.sort(function(a,b){
-      return parseInt(a.year) - parseInt(b.year)
-    });
+    if(!(this.state.reverse_sort)){
+      tempArray.sort(function(a,b){
+        return parseInt(a.year) - parseInt(b.year)
+      });
+    }
+    if(this.state.reverse_sort){
+      tempArray.sort(function(a,b){
+        return parseInt(b.year) - parseInt(a.year)
+      });
+    }
     this.setState({'items' : tempArray})
   }
 
