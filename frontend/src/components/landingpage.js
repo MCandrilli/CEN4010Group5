@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Select from 'react-select';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
+import Pagination from "react-js-pagination";
 import { Button } from 'reactstrap';
 import WishlistDropMenu from './wishlistdropmenu';
 import { Link } from 'react-router-dom';
@@ -20,7 +21,9 @@ class LandingPage extends Component {
               'items': [],
               'wishlists': [],
               selected_genre : "",
-              is_cart_toggle_on: true
+              is_cart_toggle_on: true,
+              activePage : 1,
+              reverse_sort : false
           }
           this.handleClick = this.handleClick.bind(this);
       }
@@ -62,6 +65,10 @@ class LandingPage extends Component {
     sendToCart(item) {
       console.log('The helper function was called.');
       this.addToCart(item);
+    }
+    handlePageChange(pageNumber) {
+      console.log(`active page is ${pageNumber}`);
+      this.setState({activePage: pageNumber});
     }
     filterByRating(rating){
       let tempArray1 =[];
@@ -114,24 +121,48 @@ class LandingPage extends Component {
       sortByAuthor(){
         let tempArray =[];
         tempArray = this.state.items;
-        tempArray.sort(function(a,b){
-          if (a.author >b.author){
-            return 1;
-          }
-          if (b.author > a.author){
-            return -1;
-          }
+        if(!(this.state.reverse_sort)){
+          tempArray.sort(function(a,b){
+            if (a.author >b.author){
+              return 1;
+            }
+            if (b.author > a.author){
+              return -1;
+            }
           return 0
-        });
-        this.setState({'items' : tempArray})
-      }
+          });
+          this.setState({reverse_sort:true});
+        }
+        if(this.state.reverse_sort){
+          tempArray.sort(function(a,b){
+            if (b.author > a.author){
+              return 1;
+            }
+            if (a.author > b.author){
+              return -1;
+            }
+          return 0
+          });
+          this.setState({reverse_sort:false});
+        }
+          this.setState({'items' : tempArray})
+        }
 
       sortByPages(){
         let tempArray =[];
         tempArray = this.state.items;
-        tempArray.sort(function(a,b){
-          return parseInt(a.pages) - parseInt(b.pages)
-        });
+        if(!(this.state.reverse_sort)){
+          tempArray.sort(function(a,b){
+            return parseInt(a.pages) - parseInt(b.pages)
+          });
+          this.setState({reverse_sort:true});
+        }
+        if(this.state.reverse_sort){
+          tempArray.sort(function(a,b){
+            return parseInt(b.pages) - parseInt(a.pages)
+          });
+          this.setState({reverse_sort:false});
+        }
         this.setState({'items' : tempArray})
       }
       sortByYear(){
@@ -169,13 +200,14 @@ class LandingPage extends Component {
                   <Dropdown.Item as="button" onClick = {this.filterByRating.bind(this,4)}>Four Star and Up</Dropdown.Item>
                   <Dropdown.Item as="button" onClick = {this.filterByRating.bind(this,5)}>Five Star</Dropdown.Item>
                   </DropdownButton>
+
                     <Grid className="demo-grid-1">
                     {this.state.items.map((item, index) => {
                       let imageUrl =
                         'https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/' +
                         item.imageLink;
                       let lists = this.state.wishlists;
-
+      
                       var usersLists = lists.filter(function (element) {
                         return element.owner === localStorage.getItem('id');
                       });
@@ -257,6 +289,7 @@ class LandingPage extends Component {
                       );
                     })}
                   </Grid>
+                
                 </div>
               );
             }
