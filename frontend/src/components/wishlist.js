@@ -247,7 +247,7 @@ class Wishlist extends Component {
 					>
 						<label>
 							<Textfield
-								className="bw-text-field"
+								className="bw-text-field2"
 								value={this.state.value}
 								onChange={this.handleChange}
 								label="new wish list..."
