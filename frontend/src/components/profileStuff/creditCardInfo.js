@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
+import moment from 'moment';
 import { Card, CardText, CardTitle, Button, Textfield, FABButton, Icon } from 'react-mdl';
 import { ButtonBW, ButtonBW3, ButtonRed3, TextfieldBW } from '../compStyles';
 
@@ -45,28 +46,26 @@ class CreditCardInfo extends React.Component {
 	};
 
 	handleSave = async () => {
-		const { _id, cardNumber, expirationDate, securityCode, name, newCard, edit } = this.state;
+    const { _id, cardNumber, expirationDate, securityCode, name, newCard, edit } = this.state;
+    const userId = localStorage.getItem('id');
+    
+    if(!cardNumber || !expirationDate || !securityCode || !name){
+      alert('Fill out card fields');
+      return;
+    }
 
-		try {
-			const [ day, month ] = expirationDate.split('/');
-			console.log(day);
-			console.log(month);
-			if (typeof day !== 'number' || typeof month !== 'number') {
-				throw new Error();
-			}
+    const date = moment(expirationDate, 'MM-YY');
 
-			if (day > 31 || day < 1) {
-				throw new Error();
-			}
-		} catch (e) {
-			alert('Please enter a valid date');
-		}
+    if(!date.isValid()){
+      alert('invalid date');
+      return
+    }
 
 		if (!newCard) {
 			const fields = { cardNumber, expirationDate, securityCode, name };
 			await axios.put('http://localhost:5000/card', { _id, fields });
 		} else {
-			const fields = { cardNumber, expirationDate, securityCode, name, userId: 'john123' };
+			const fields = { cardNumber, expirationDate, securityCode, name, userId };
 			await axios.post('http://localhost:5000/card', fields);
 			this.setState({ newCard: false });
 		}
