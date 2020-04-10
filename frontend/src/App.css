@@ -1,38 +1,92 @@
-.App {
-  text-align: center;
+body {
+	background-image: url('./components/images/background3.jpg');
+	background-size: cover;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.bw-text-field .mdl-textfield__label {
+	color: #fff;
+	font-family: monospace;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+div.bw-text-field input fieldset[disabled] .mdl-textfield .mdl-textfield__input,
+.mdl-textfield.is-disabled .mdl-textfield__input {
+	color: rgba(225, 225, 225, 0.8) !important;
+	border-bottom: 1px dotted rgba(225, 225, 225, 0.5) !important;
+	font-family: monospace;
 }
 
-.App-header {
-  background-color: #28234;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+div.bw-text-field input.mdl-textfield__input {
+	font-family: monospace;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-.App-link {
-  color: #61dafb;
+.bw-text-field .mdl-textfield__label:after {
+	background-color: #fff;
+	bottom: 15px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+table.bw-data-table tbody tr:hover {
+	background-color: inherit;
+}
+
+label.white-switch .mdl-switch__track fieldset[disabled] .mdl-switch,
+.mdl-switch.is-disabled div.mdl-switch__track {
+	background: rgba(128, 128, 128, 0.5);
+}
+
+label.white-switch .mdl-switch__thumb fieldset[disabled] .mdl-switch,
+.mdl-switch.is-disabled div.mdl-switch__thumb {
+	background: #fff;
+}
+
+label.white-switch span {
+	color: #fff;
+	font-family: monospace;
+}
+
+div.review-card div p {
+	font-size: 18px;
+}
+
+div.card-text {
+	color: #fff;
+	font-family: monospace;
+	font-size: 16px;
+}
+
+div.card-title {
+	font-variant: petite-caps;
+	color: #fff;
+	height: 176px;
+	text-shadow: rgba(0, 0, 0, 0.7) 2px 4px;
+	background: url('./components/images/backdrop.webp') center / cover;
+}
+
+div.card-title-top {
+	font-variant: petite-caps;
+	color: #fff;
+	height: 176px;
+	text-shadow: rgba(0, 0, 0, 0.7) 2px 4px;
+	background: url('./components/images/backdrop.webp') top / cover;
+}
+
+div.card-title-bottom {
+	font-variant: petite-caps;
+	color: #fff;
+	height: 176px;
+	text-shadow: rgba(0, 0, 0, 0.7) 2px 4px;
+	background: url('./components/images/backdrop.webp') bottom / cover;
+}
+
+div.card-title h2 {
+	font-family: monospace;
+	font-size: 35px;
+}
+
+button.mdl-button[disabled][disabled],
+.mdl-button.mdl-button--disabled.mdl-button--disabled {
+	color: lightgray;
+	background-color: rgba(100, 100, 100, 0.8);
+	border-style: groove;
+	pointer-events: none;
 }

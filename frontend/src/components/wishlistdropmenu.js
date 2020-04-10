@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Menu, MenuItem } from 'react-mdl';
 import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
+import { ButtonRed } from './compStyles';
 
 class WishlistDropMenu extends Component {
 	handleClick(title, listid, imageLink, price, itemId) {
@@ -29,7 +30,6 @@ class WishlistDropMenu extends Component {
 	handleClose() {}
 
 	render() {
-
 		const user = localStorage.getItem('id');
 
 		let createlist;
@@ -39,30 +39,26 @@ class WishlistDropMenu extends Component {
 					<Link to="/wishlist">Add a Wishlist</Link>
 				</MenuItem>
 			);
-		
 
 		if (user === null) {
-			return <div style={{ position: 'relative', float: 'left', paddingLeft: '4px' }}>
-			<Button color="success" id={this.props.booktitle}>
-				ADD TO WISHLIST
-			</Button>
-			<Menu target={this.props.booktitle} valign="top" ripple>
-				
+			return (
+				<div style={{ position: 'relative', float: 'left', paddingLeft: '4px' }}>
+					<ButtonRed color="success" id={this.props.booktitle}>
+						ADD TO WISHLIST
+					</ButtonRed>
+					<Menu target={this.props.booktitle} valign="top" ripple>
 						<div style={{ float: 'left' }}>
 							<MenuItem>
-								<Link to="/profile">
-									Sign in to use
-								</Link>
+								<Link to="/profile">Sign in to use</Link>
 							</MenuItem>
 						</div>
-			</Menu>
-		</div>
+					</Menu>
+				</div>
+			);
 		}
 		return (
 			<div style={{ position: 'relative', float: 'left', paddingLeft: '4px' }}>
-				<Button color="success" id={this.props.booktitle}>
-					ADD TO WISHLIST
-				</Button>
+				<ButtonRed id={this.props.booktitle}>ADD TO WISHLIST</ButtonRed>
 				<Menu target={this.props.booktitle} valign="top" ripple>
 					{this.props.lists.map(function(list, index) {
 						return (

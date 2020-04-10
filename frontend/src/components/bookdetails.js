@@ -3,6 +3,7 @@ import { Grid, Cell, Button } from 'react-mdl';
 import { Card, CardText } from 'react-mdl';
 import { addToCart } from './shoppingcart';
 import { Link } from 'react-router-dom';
+import { ButtonBlue, ButtonBW } from './compStyles';
 import StarRatings from 'react-star-ratings';
 import WishlistDropMenu from './wishlistdropmenu';
 
@@ -32,12 +33,13 @@ class BookDetails extends Component {
 	}
 
 	getWishLists() {
-		    
-            
-        fetch('/wishlists').then((results) => results.json())
-        .then((results) => this.setState({ wishlists: results.data
-            .filter(function(element) {return element.owner === localStorage.getItem('id')}) }));
-
+		fetch('/wishlists').then((results) => results.json()).then((results) =>
+			this.setState({
+				wishlists: results.data.filter(function(element) {
+					return element.owner === localStorage.getItem('id');
+				})
+			})
+		);
 	}
 
 	render() {
@@ -58,14 +60,32 @@ class BookDetails extends Component {
 								style={{
 									width: '360px',
 									height: '720px',
-									background: 'url(' + imageUrl + ') center / cover rgb(207,217,226)'
+									background: 'url(' + imageUrl + ') center / cover rgb(207,217,226)',
+									border: '#fff groove thin',
+									boxShadow: '0 10px 4px 0 rgba(0, 0, 0, 0.3)'
 								}}
 							/>
 						</Cell>
 						<Cell>
-							<Card style={{ width: '500px', height: 'auto' }}>
-								<CardText style={{ paddingTop: '5px' }}>
-									<h3 style={{ marginTop: '0px', marginBottom: '5px' }}>{myData.book.title}</h3>
+							<Card
+								style={{
+									width: '500px',
+									height: 'auto',
+									background: 'rgba(0, 0 , 0, 0.5)',
+									border: '#fff groove thin',
+									boxShadow: '0 10px 4px 0 rgba(0, 0, 0, 0.3)'
+								}}
+							>
+								<CardText style={{ paddingTop: '5px', color: '#fff' }}>
+									<h3
+										style={{
+											marginTop: '0px',
+											marginBottom: '5px',
+											fontVariant: 'all-petite-caps'
+										}}
+									>
+										{myData.book.title}
+									</h3>
 									<overline style={{ marginTop: '0px' }}>
 										by:
 										<Link
@@ -77,7 +97,7 @@ class BookDetails extends Component {
 											}}
 											style={{ color: '#6fa3f7' }}
 										>
-											{myData.book.author}
+											{' ' + myData.book.author}
 										</Link>
 									</overline>
 									<h4>
@@ -85,7 +105,13 @@ class BookDetails extends Component {
 										<p>{myData.book.aboutAuthor}</p>
 									</h4>
 
-									<h4 style={{ backgroundColor: '#f0f0f0', padding: '10px' }}>
+									<h4
+										style={{
+											backgroundColor: 'rgba(240, 240, 240, 0.2)',
+											padding: '10px',
+											border: 'black solid thin'
+										}}
+									>
 										Overview
 										<p>{myData.book.Overview}</p>
 										<p>
@@ -101,6 +127,7 @@ class BookDetails extends Component {
 									<StarRatings
 										rating={myData.book.rating}
 										starRatedColor="goldenrod"
+										starEmptyColor="white"
 										numberOfStars={5}
 										name="rating"
 										starDimension="20px"
@@ -109,19 +136,17 @@ class BookDetails extends Component {
 									<h5>
 										<strong>${myData.book.price}</strong>
 									</h5>
-									<Button
+									<ButtonBlue
 										style={{
 											float: 'left',
-											height: '33px',
-											backgroundColor: '#6fa3f7',
-											color: '#fff'
+											height: '33px'
 										}}
 										onClick={() => {
 											myData.book != null && addToCart(myData.book);
 										}}
 									>
 										Add to Shopping Cart
-									</Button>
+									</ButtonBlue>
 									<WishlistDropMenu
 										style={{ paddingLeft: '5px' }}
 										booktitle={myData.book.title}
@@ -139,10 +164,14 @@ class BookDetails extends Component {
 											}
 										}}
 									>
-										<Button shadow={0} align={'center'} style={{ width: '100%', height: '50%' }}>
+										<ButtonBW
+											shadow={0}
+											align={'center'}
+											style={{ width: '100%', height: '50%', fontSize: '18px' }}
+										>
 											{' '}
 											Book Reviews{' '}
-										</Button>
+										</ButtonBW>
 									</Link>
 								</CardText>
 							</Card>

@@ -51,13 +51,13 @@ const updateLocalStorage = () => {
 	setSFL();
 };
 
-const beforeReload = () => {
-	return { localCart: getShoppingCart(), localSFL: getSFL() };
+/* Return the length of the cart */
+const getCartLength = () => {
+	let count = 0;
+	for (const [ index, book ] of getShoppingCart().entries()) {
+		count += book.quantity;
+	}
+	return count;
 };
 
-const afterReload = (localCart, localSFL) => {
-	localStorage.setItem('ShoppingCart', JSON.stringify(localCart));
-	localStorage.setItem('SavedForLater', JSON.stringify(localSFL));
-};
-
-export { cart, save_for_later, updateLocalStorage, updateShoppingCart, updateSFL, beforeReload, afterReload };
+export { cart, save_for_later, getCartLength, updateLocalStorage, updateShoppingCart, updateSFL };
