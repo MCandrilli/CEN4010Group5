@@ -22,8 +22,6 @@ class ShippingAddress extends Component {
 
 	handleChange = (e) => {
 		const { name, value } = e.target;
-		console.log(name);
-		console.log(value);
 		this.setState({ [name]: value });
 	};
 
@@ -42,14 +40,19 @@ class ShippingAddress extends Component {
 	}
 
 	handleSave = async () => {
-		const { _id, street, city, state, country, newAddress, edit } = this.state;
-		console.log(this.state);
+    const { _id, street, city, state, country, newAddress, edit } = this.state;
+    const userId = localStorage.getItem('id');
+    
+    if(!street || !city || !state || !country || !newAddress){
+      alert('Please fill out address fields');
+      return;
+    }
 
 		if (!newAddress) {
 			const fields = { street, city, state, country };
 			await axios.put(SERVER_URL + '/address', { _id, fields });
 		} else {
-			const fields = { _id, street, city, state, country, userId: 'john123' };
+			const fields = { _id, street, city, state, country, userId };
 			await axios.post(SERVER_URL + '/address', fields);
 			this.setState({ newAddress: false });
 		}
@@ -95,7 +98,7 @@ class ShippingAddress extends Component {
 					<TextfieldBW
 						className="bw-text-field"
 						onChange={this.handleChange}
-						label="Format: mm/yy"
+						label=""
 						disabled={!edit}
 						value={country}
 						name="country"

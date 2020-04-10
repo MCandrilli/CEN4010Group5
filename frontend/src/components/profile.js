@@ -3,7 +3,7 @@ import axios from 'axios';
 import CreditCardInfo from './profileStuff/creditCardInfo';
 import ShippingAddressInfo from './profileStuff/shippingAddress';
 import { CardBW2, ButtonBW, ButtonBW3, ButtonRed2, TextfieldBW } from './compStyles';
-import { Card, CardText, CardTitle, Button, Textfield, FABButton, Icon } from 'react-mdl';
+import { CardText, CardTitle, FABButton, Icon } from 'react-mdl';
 
 const SERVER_URL = 'http://localhost:5000';
 
@@ -39,7 +39,7 @@ class Profile extends Component {
 		const { data: shippingAddressData } = await axios.get(SERVER_URL + `/address?id=${id}`);
 		const profileInfo = profileData.data;
 		const creditCardInfo = creditCardData.data;
-		const shippingAddressInfo = shippingAddressData.data;
+    const shippingAddressInfo = shippingAddressData.data;
 
 		let cardInd = 0;
 		let cardArr = [];
