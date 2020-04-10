@@ -25,6 +25,27 @@ div.bw-text-field input.mdl-textfield__input {
 	bottom: 15px;
 }
 
+.bw-text-field2 .mdl-textfield__label {
+	color: #fff;
+	font-family: monospace;
+}
+
+div.bw-text-field2 input fieldset[disabled] .mdl-textfield .mdl-textfield__input,
+.mdl-textfield.is-disabled .mdl-textfield__input {
+	color: rgba(225, 225, 225, 0.8) !important;
+	border-bottom: 1px dotted rgba(225, 225, 225, 0.5) !important;
+	font-family: monospace;
+}
+
+div.bw-text-field2 input.mdl-textfield__input {
+	font-family: monospace;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.bw-text-field2 .mdl-textfield__label:after {
+	background-color: #fff;
+}
+
 table.bw-data-table tbody tr:hover {
 	background-color: inherit;
 }
