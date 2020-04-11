@@ -5,6 +5,7 @@ import { TrashFill } from 'react-bootstrap-icons';
 import { Textfield } from 'react-mdl';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import styled from 'styled-components';
+import Image from 'react-bootstrap/Image';
 
 const StyledTitle = styled(Link)`
 	font-size: 32px;
@@ -64,6 +65,12 @@ const CardBW = styled(Card)`
         }
 	}
 }`;
+
+const ImgAction = styled(Image)`
+	&:hover{
+		transform: scale(1.15);
+		transition: 0.5s ease;
+	}`;
 
 const CardBW2 = styled(Card)`
 	background-color: rgba(0, 0, 0, 0.5);
@@ -314,6 +321,7 @@ export {
 	StyledPageTitleStatic,
 	StyledSubtitleStatic,
 	CardBW,
+	ImgAction,
 	CardBW2,
 	ButtonBW,
 	ButtonBW2,

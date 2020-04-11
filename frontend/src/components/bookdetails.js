@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Grid, Cell, Button } from 'react-mdl';
+import { Grid, Cell, Button} from 'react-mdl';
 import { Card, CardText } from 'react-mdl';
 import { addToCart } from './shoppingcart';
 import { Link } from 'react-router-dom';
-import { ButtonBlue, ButtonBW } from './compStyles';
+import {ButtonBlue, ButtonBW, ImgAction} from './compStyles';
 import StarRatings from 'react-star-ratings';
 import WishlistDropMenu from './wishlistdropmenu';
+
 
 let data;
 class BookDetails extends Component {
@@ -42,6 +43,7 @@ class BookDetails extends Component {
 		);
 	}
 
+
 	render() {
 		let myData = data || {};
 
@@ -53,23 +55,21 @@ class BookDetails extends Component {
 			return (
 				<div>
 					<Grid>
-						<Cell style={{ width: '25%' }} />
+						<Cell style={{ width: '20%' }} />
 						<Cell style={{ width: '360px' }}>
-							<Card
-								shadow={0}
-								style={{
-									width: '360px',
-									height: '720px',
-									background: 'url(' + imageUrl + ') center / cover rgb(207,217,226)',
-									border: '#fff groove thin',
-									boxShadow: '0 10px 4px 0 rgba(0, 0, 0, 0.3)'
-								}}
-							/>
+							<ImgAction 
+							style = {{paddingTop: '10%',
+									  height: '720px',
+									  width: '360px'
+									}}
+							src = {imageUrl}/>
 						</Cell>
 						<Cell>
 							<Card
 								style={{
-									width: '500px',
+									top: '5%',
+									left: '5%',
+									width: '750px',
 									height: 'auto',
 									background: 'rgba(0, 0 , 0, 0.5)',
 									border: '#fff groove thin',
@@ -113,8 +113,9 @@ class BookDetails extends Component {
 										}}
 									>
 										Overview
-										<p>{myData.book.Overview}</p>
 										<p>
+											{myData.book.Overview}</p>
+										<p style = {{marginBottom: '0px'}}>
 											Genre: {myData.book.genre}
 											<br />
 											Language: {myData.book.language}
