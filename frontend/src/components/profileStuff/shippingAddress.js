@@ -43,7 +43,7 @@ class ShippingAddress extends Component {
     const { _id, street, city, state, country, newAddress, edit } = this.state;
     const userId = localStorage.getItem('id');
     
-    if(!street || !city || !state || !country || !newAddress){
+    if(!street || !city || !state || !country){
       alert('Please fill out address fields');
       return;
     }
