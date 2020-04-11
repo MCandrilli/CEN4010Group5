@@ -117,6 +117,7 @@ sortByTitle(){
       }
       return 0
     });
+    this.setState({reverse_sort:true});
     }
     if(this.state.reverse_sort){
       tempArray.sort(function(a,b){
@@ -128,6 +129,7 @@ sortByTitle(){
         }
         return 0
       });
+      this.setState({reverse_sort:false});
     }
     this.setState({'items' : tempArray})
   }
@@ -185,11 +187,13 @@ sortByTitle(){
       tempArray.sort(function(a,b){
         return parseInt(a.year) - parseInt(b.year)
       });
+      this.setState({reverse_sort:true});
     }
     if(this.state.reverse_sort){
       tempArray.sort(function(a,b){
         return parseInt(b.year) - parseInt(a.year)
       });
+      this.setState({reverse_sort:false});
     }
     this.setState({'items' : tempArray})
   }
